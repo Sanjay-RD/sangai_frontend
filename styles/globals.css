@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
- background-color: red;
+.filter-green {
+ filter: invert(25%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
 }
