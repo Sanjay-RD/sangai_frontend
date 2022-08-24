@@ -1,5 +1,7 @@
 function HomePage() {
-  return <div>Welcome to Next.js!</div>;
+  return (
+    <div className="underline text-4xl">Welcome From Tailwind Css Test </div>
+  );
 }
 
 export default HomePage;
