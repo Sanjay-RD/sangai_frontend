@@ -7,7 +7,7 @@ import passengerSeat from "../public/passenger-seat.svg";
 
 const Navbar = () => {
   return (
-    <nav className="border">
+    <nav className="">
       <Container>
         <div className="flex justify-between items-center">
           {/* logo */}

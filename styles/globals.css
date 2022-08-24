@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+ font-family: gt-eesti,
+  "Helvetica Neue",
+  Helvetica,
+  Arial,
+  sans-serif;
+}
+
 .filter-green {
  filter: invert(25%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
 }
