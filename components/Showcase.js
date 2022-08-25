@@ -2,10 +2,54 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import Container from "./Container";
+import { useDispatch, useSelector } from "react-redux";
+import { createMate } from "../redux/actions/mateAction";
+import { createPilot } from "../redux/actions/pilotActon";
 
 const Showcase = () => {
+  const dispatch = useDispatch();
   const [chooseOption, setChooseOption] = useState("pilot");
-  console.log("chooseOption", chooseOption);
+  // console.log("chooseOption", chooseOption);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [leaving, setLeaving] = useState("");
+  const [going, setGoing] = useState("");
+  const [date, setDate] = useState("");
+  const [seats, setSeats] = useState("");
+  const [vehicle_type, setVehicleType] = useState("");
+  const [vehicle_color, setVehicleColor] = useState("");
+  const [vehicle_number, setVehicleNumber] = useState("");
+
+  const handleSubmitPilot = (e) => {
+    e.preventDefault();
+    console.log("pilot");
+    dispatch(
+      createPilot(
+        name,
+        email,
+        address,
+        phone,
+        leaving,
+        going,
+        date,
+        seats,
+        vehicle_type,
+        vehicle_color,
+        vehicle_number
+      )
+    );
+  };
+  const handleSubmitMate = (e) => {
+    e.preventDefault();
+    console.log("mate");
+    dispatch(
+      createMate(name, email, address, phone, leaving, going, date, seats)
+    );
+  };
+  console.log("first", name, email, address);
   return (
     <div>
       <div className=" w-full h-48 md:h-[82vh] overflow-hidden bg-gray-200 relative">
@@ -31,7 +75,7 @@ const Showcase = () => {
             </select>
           </div>
           {chooseOption === "pilot" ? (
-            <form className="">
+            <form className="" onSubmit={handleSubmitPilot}>
               <Container>
                 <div className="flex flex-col space-y-5">
                   {/* basic info form */}
@@ -43,6 +87,8 @@ const Showcase = () => {
                           type="text"
                           placeholder="Name"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setName(e.target.value)}
+                          defaultValue={name}
                           required
                         />
                       </div>
@@ -55,6 +101,9 @@ const Showcase = () => {
                           type="email"
                           placeholder="Email"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setEmail(e.target.value)}
+                          defaultValue={email}
+                          required
                         />
                       </div>
                       <div className="border-r border-gray-300 mx-3"></div>
@@ -66,6 +115,9 @@ const Showcase = () => {
                           type="text"
                           placeholder="Address"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setAddress(e.target.value)}
+                          defaultValue={address}
+                          required
                         />
                       </div>
                       <div className="border-r border-gray-300 mx-3"></div>
@@ -77,6 +129,9 @@ const Showcase = () => {
                           type="tel"
                           placeholder="Phone"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setPhone(e.target.value)}
+                          defaultValue={phone}
+                          required
                         />
                       </div>
                     </div>
@@ -104,6 +159,8 @@ const Showcase = () => {
                           type="text"
                           placeholder="Vehicle Type"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setVehicleType(e.target.value)}
+                          defaultValue={vehicle_type}
                           required
                         />
                       </div>
@@ -126,9 +183,12 @@ const Showcase = () => {
                           />
                         </svg>
                         <input
-                          type="email"
+                          type="text"
                           placeholder="Vehicle Color"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setVehicleColor(e.target.value)}
+                          defaultValue={vehicle_color}
+                          required
                         />
                       </div>
                       <div className="border-r border-gray-300 mx-3"></div>
@@ -153,6 +213,9 @@ const Showcase = () => {
                           type="text"
                           placeholder="Vehicle Number"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setVehicleNumber(e.target.value)}
+                          defaultValue={vehicle_number}
+                          required
                         />
                       </div>
                     </div>
@@ -169,6 +232,9 @@ const Showcase = () => {
                               type="text"
                               placeholder="Leaving From..."
                               className="text-primary outline-none  w-full text-xl py-1"
+                              onChange={(e) => setLeaving(e.target.value)}
+                              defaultValue={leaving}
+                              required
                             />
                           </div>
                           <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
@@ -180,6 +246,9 @@ const Showcase = () => {
                               type="text"
                               placeholder="Going to..."
                               className="text-primary outline-none  w-full text-xl py-1"
+                              onChange={(e) => setGoing(e.target.value)}
+                              defaultValue={going}
+                              required
                             />
                           </div>
                           <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
@@ -188,9 +257,12 @@ const Showcase = () => {
                           <div className="flex items-center space-x-2 h-[56px]">
                             <i class="fa-regular fa-calendar text-gray-400 text-xl"></i>
                             <input
-                              type="text"
+                              type="date"
                               placeholder="Today"
                               className="text-primary outline-none  w-full text-xl py-1"
+                              onChange={(e) => setDate(e.target.value)}
+                              defaultValue={date}
+                              required
                             />
                           </div>
                           <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
@@ -199,9 +271,12 @@ const Showcase = () => {
                           <div className="flex items-center space-x-2 h-[56px]">
                             <i class="fa-regular fa-user text-gray-400 text-xl"></i>
                             <input
-                              type="tel"
+                              type="number"
                               placeholder="1"
                               className="text-primary outline-none  w-full text-xl py-1"
+                              onChange={(e) => setSeats(e.target.value)}
+                              defaultValue={seats}
+                              required
                             />
                           </div>
                         </div>
@@ -218,7 +293,7 @@ const Showcase = () => {
               </Container>
             </form>
           ) : (
-            <form className="mt-[90px]">
+            <form className="mt-[90px]" onSubmit={handleSubmitMate}>
               <Container>
                 <div className="flex flex-col space-y-5">
                   {/* basic info form */}
@@ -230,6 +305,8 @@ const Showcase = () => {
                           type="text"
                           placeholder="Name"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setName(e.target.value)}
+                          defaultValue={name}
                           required
                         />
                       </div>
@@ -242,6 +319,9 @@ const Showcase = () => {
                           type="email"
                           placeholder="Email"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setEmail(e.target.value)}
+                          defaultValue={email}
+                          required
                         />
                       </div>
                       <div className="border-r border-gray-300 mx-3"></div>
@@ -253,6 +333,9 @@ const Showcase = () => {
                           type="text"
                           placeholder="Address"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setAddress(e.target.value)}
+                          defaultValue={address}
+                          required
                         />
                       </div>
                       <div className="border-r border-gray-300 mx-3"></div>
@@ -264,6 +347,9 @@ const Showcase = () => {
                           type="tel"
                           placeholder="Phone"
                           className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setPhone(e.target.value)}
+                          defaultValue={phone}
+                          required
                         />
                       </div>
                     </div>
@@ -280,6 +366,9 @@ const Showcase = () => {
                               type="text"
                               placeholder="Leaving From..."
                               className="text-primary outline-none  w-full text-xl py-1"
+                              onChange={(e) => setLeaving(e.target.value)}
+                              defaultValue={leaving}
+                              required
                             />
                           </div>
                           <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
@@ -291,6 +380,9 @@ const Showcase = () => {
                               type="text"
                               placeholder="Going to..."
                               className="text-primary outline-none  w-full text-xl py-1"
+                              onChange={(e) => setGoing(e.target.value)}
+                              defaultValue={going}
+                              required
                             />
                           </div>
                           <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
@@ -299,9 +391,12 @@ const Showcase = () => {
                           <div className="flex items-center space-x-2 h-[56px]">
                             <i class="fa-regular fa-calendar text-gray-400 text-xl"></i>
                             <input
-                              type="text"
+                              type="date"
                               placeholder="Today"
                               className="text-primary outline-none  w-full text-xl py-1"
+                              onChange={(e) => setDate(e.target.value)}
+                              defaultValue={date}
+                              required
                             />
                           </div>
                           <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
@@ -310,9 +405,12 @@ const Showcase = () => {
                           <div className="flex items-center space-x-2 h-[56px]">
                             <i class="fa-regular fa-user text-gray-400 text-xl"></i>
                             <input
-                              type="tel"
+                              type="number"
                               placeholder="1"
                               className="text-primary outline-none  w-full text-xl py-1"
+                              onChange={(e) => setSeats(e.target.value)}
+                              defaultValue={seats}
+                              required
                             />
                           </div>
                         </div>
