@@ -1,0 +1,4 @@
+export const MATE_ADD_REQUEST = "MATE_ADD_REQUEST";
+export const MATE_ADD_SUCCESS = "MATE_ADD_SUCCESS";
+export const MATE_ADD_FAIL = "MATE_ADD_FAIL";
+export const MATE_ADD_RESET = "MATE_ADD_RESET";
