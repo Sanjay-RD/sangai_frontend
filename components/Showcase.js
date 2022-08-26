@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "./Container";
 import { useDispatch, useSelector } from "react-redux";
 import { createMate } from "../redux/actions/mateAction";
@@ -8,7 +8,11 @@ import { createPilot } from "../redux/actions/pilotActon";
 
 const Showcase = () => {
   const dispatch = useDispatch();
-  const [chooseOption, setChooseOption] = useState("pilot");
+
+  const createMateSate = useSelector((state) => state.createMate);
+  const { success } = createMateSate;
+
+  const [chooseOption, setChooseOption] = useState("");
   // console.log("chooseOption", chooseOption);
 
   const [name, setName] = useState("");
@@ -49,7 +53,12 @@ const Showcase = () => {
       createMate(name, email, address, phone, leaving, going, date, seats)
     );
   };
-  console.log("first", name, email, address);
+
+  useEffect(() => {
+    if (success) {
+      setName("");
+    }
+  }, [success]);
   return (
     <div>
       <div className=" w-full h-48 md:h-[82vh] overflow-hidden bg-gray-200 relative">

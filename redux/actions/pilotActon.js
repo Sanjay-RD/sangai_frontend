@@ -5,7 +5,7 @@ import {
   PILOT_ADD_REQUEST,
   PILOT_ADD_SUCCESS,
 } from "../constants/pilotConstant";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const createPilot =
   (
@@ -51,15 +51,18 @@ export const createPilot =
         type: PILOT_ADD_SUCCESS,
         payload: data,
       });
+      toast.info("Information Added", {
+        autoClose: 700,
+      });
     } catch (err) {
-      // toast.error(
-      //   err.response && err.response.data.message
-      //     ? err.response.data.message
-      //     : err.message,
-      //   {
-      //     autoClose: 700,
-      //   }
-      // );
+      toast.error(
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+        {
+          autoClose: 700,
+        }
+      );
       dispatch({
         type: PILOT_ADD_FAIL,
         payload:
