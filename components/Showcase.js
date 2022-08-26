@@ -12,7 +12,7 @@ const Showcase = () => {
   const createMateSate = useSelector((state) => state.createMate);
   const { success } = createMateSate;
 
-  const [chooseOption, setChooseOption] = useState("");
+  const [chooseOption, setChooseOption] = useState("pilot");
   // console.log("chooseOption", chooseOption);
 
   const [name, setName] = useState("");
@@ -61,7 +61,7 @@ const Showcase = () => {
   }, [success]);
   return (
     <div>
-      <div className=" w-full h-48 md:h-[82vh] overflow-hidden bg-gray-200 relative">
+      <div className=" w-full h-[1000px] md:h-[82vh] overflow-hidden bg-gray-200 relative">
         <Image
           alt="Mountains"
           src="/sharing3.png"
@@ -69,8 +69,8 @@ const Showcase = () => {
           objectFit="cover"
           layout="fill"
         />
-        <div className="absolute top-[10%] w-full text-center">
-          <h1 className="text-7xl text-white capitalize">
+        <div className="absolute top-[5%] md:top-[10%] w-full text-center">
+          <h1 className="text-xl md:text-7xl text-white capitalize">
             our pick of rides at low prices
           </h1>
           <div className="my-[30px]">
@@ -88,7 +88,7 @@ const Showcase = () => {
               <Container>
                 <div className="flex flex-col space-y-5">
                   {/* basic info form */}
-                  <div className="bg-white rounded-xl grid grid-cols-4 py-2 px-5 h-[56px]">
+                  <div className="bg-white rounded-xl grid grid-cols-2 md:grid-cols-4 gap-2 py-2 px-5 h-max md:h-[56px]">
                     <div className="flex">
                       <div className="flex items-center space-x-2">
                         <i class="fa-regular fa-user text-gray-400 text-xl"></i>
@@ -115,7 +115,7 @@ const Showcase = () => {
                           required
                         />
                       </div>
-                      <div className="border-r border-gray-300 mx-3"></div>
+                      <div className="hidden md:block border-r border-gray-300 mx-3"></div>
                     </div>
                     <div className="flex">
                       <div className="flex items-center space-x-2">
@@ -147,7 +147,7 @@ const Showcase = () => {
                   </div>
                   {/* basic info form end */}
                   {/* vehicle info form */}
-                  <div className="bg-white rounded-xl grid grid-cols-3 py-2 px-5 h-[56px]">
+                  <div className="bg-white rounded-xl grid grid-cols-1 md:grid-cols-3 gap-2 py-2 px-5 h-max md:h-[56px]">
                     <div className="flex">
                       <div className="flex items-center space-x-2 w-full">
                         <svg
@@ -173,7 +173,7 @@ const Showcase = () => {
                           required
                         />
                       </div>
-                      <div className="border-r border-gray-300 mx-3"></div>
+                      <div className="hidden md:block border-r border-gray-300 mx-3"></div>
                     </div>
                     <div className="flex">
                       <div className="flex items-center space-x-2 w-full">
@@ -200,7 +200,7 @@ const Showcase = () => {
                           required
                         />
                       </div>
-                      <div className="border-r border-gray-300 mx-3"></div>
+                      <div className="hidden md:block border-r border-gray-300 mx-3"></div>
                     </div>
                     <div className="flex">
                       <div className="flex items-center space-x-2 w-full">
@@ -231,24 +231,24 @@ const Showcase = () => {
                   </div>
                   {/* vehicle info form end */}
                   {/* ride info */}
-                  <div className="bg-white rounded-xl grid grid-cols-12 h-[56px]">
+                  <div className="bg-white rounded-xl md:grid md:grid-cols-12 h-max md:h-[56px]">
                     <div className="col-span-10">
-                      <div className="grid grid-cols-12">
-                        <div className="flex col-span-4 items-center ml-3">
+                      <div className="md:grid md:grid-cols-12">
+                        <div className="md:flex md:col-span-4 items-center ml-3 px-5 md:px-0">
                           <div className="flex items-center space-x-2 h-[56px]">
                             <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
                             <input
                               type="text"
                               placeholder="Leaving From..."
-                              className="text-primary outline-none  w-full text-xl py-1"
+                              className="text-primary outline-none w-full text-xl py-1"
                               onChange={(e) => setLeaving(e.target.value)}
                               defaultValue={leaving}
                               required
                             />
                           </div>
-                          <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
+                          <div className="hidden md:block border-r border-gray-300 mx-3 h-[40px]"></div>
                         </div>
-                        <div className="flex col-span-4 items-center">
+                        <div className="md:flex md:col-span-4 items-center ml-3 px-5 md:px-0">
                           <div className="flex items-center space-x-2 h-[56px]">
                             <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
                             <input
@@ -260,23 +260,23 @@ const Showcase = () => {
                               required
                             />
                           </div>
-                          <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
+                          <div className="hidden md:block border-r border-gray-300 mx-3 h-[40px]"></div>
                         </div>
-                        <div className="flex col-span-3 items-center">
+                        <div className="md:flex md:col-span-3 items-center ml-3 px-5 md:px-0">
                           <div className="flex items-center space-x-2 h-[56px]">
                             <i class="fa-regular fa-calendar text-gray-400 text-xl"></i>
                             <input
                               type="date"
                               placeholder="Today"
-                              className="text-primary outline-none  w-full text-xl py-1"
+                              className="text-gray-400 outline-none  w-full text-xl py-1"
                               onChange={(e) => setDate(e.target.value)}
                               defaultValue={date}
                               required
                             />
                           </div>
-                          <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
+                          <div className="hidden md:block border-r border-gray-300 mx-3 h-[40px]"></div>
                         </div>
-                        <div className="flex col-span-1 items-center">
+                        <div className="flex col-span-1 items-center ml-3 px-5 md:px-0">
                           <div className="flex items-center space-x-2 h-[56px]">
                             <i class="fa-regular fa-user text-gray-400 text-xl"></i>
                             <input
@@ -292,7 +292,7 @@ const Showcase = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <button className="w-full h-[56px] rounded-tr-xl rounded-br-xl bg-primary text-2xl text-white">
+                      <button className="w-full h-[56px] rounded-xl md:rounded-none md:rounded-tr-xl md:rounded-br-xl bg-primary text-2xl text-white">
                         Submit
                       </button>
                     </div>
@@ -306,7 +306,7 @@ const Showcase = () => {
               <Container>
                 <div className="flex flex-col space-y-5">
                   {/* basic info form */}
-                  <div className="bg-white rounded-xl grid grid-cols-4 py-2 px-5">
+                  <div className="bg-white rounded-xl grid grid-cols-2 md:grid-cols-4 gap-2 py-2 px-5">
                     <div className="flex">
                       <div className="flex items-center space-x-2">
                         <i class="fa-regular fa-user text-gray-400 text-xl"></i>
@@ -333,7 +333,7 @@ const Showcase = () => {
                           required
                         />
                       </div>
-                      <div className="border-r border-gray-300 mx-3"></div>
+                      <div className="hidden md:bock border-r border-gray-300 mx-3"></div>
                     </div>
                     <div className="flex">
                       <div className="flex items-center space-x-2">
@@ -365,11 +365,11 @@ const Showcase = () => {
                   </div>
                   {/* basic info form end */}
                   {/* ride info */}
-                  <div className="bg-white rounded-xl grid grid-cols-12 h-[56px]">
+                  <div className="bg-white rounded-xl md:grid md:grid-cols-12 h-max md:h-[56px]">
                     <div className="col-span-10">
-                      <div className="grid grid-cols-12">
-                        <div className="flex col-span-4 items-center ml-3">
-                          <div className="flex items-center space-x-2 h-[56px]">
+                      <div className="md:grid md:grid-cols-12">
+                        <div className="flex col-span-4 items-center ml-3 px-5 md:px-0">
+                          <div className="flex items-center space-x-2 h-[56px] w-full">
                             <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
                             <input
                               type="text"
@@ -380,10 +380,10 @@ const Showcase = () => {
                               required
                             />
                           </div>
-                          <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
+                          <div className="hidden md:block border-r border-gray-300 mx-3 h-[40px]"></div>
                         </div>
-                        <div className="flex col-span-4 items-center">
-                          <div className="flex items-center space-x-2 h-[56px]">
+                        <div className="flex col-span-4 items-center ml-3 px-5 md:px-0">
+                          <div className="flex items-center space-x-2 h-[56px] w-full">
                             <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
                             <input
                               type="text"
@@ -394,24 +394,24 @@ const Showcase = () => {
                               required
                             />
                           </div>
-                          <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
+                          <div className="hidden md:block border-r border-gray-300 mx-3 h-[40px]"></div>
                         </div>
-                        <div className="flex col-span-3 items-center">
-                          <div className="flex items-center space-x-2 h-[56px]">
+                        <div className="flex col-span-3 items-center ml-3 px-5 md:px-0">
+                          <div className="flex items-center space-x-2 h-[56px] w-full">
                             <i class="fa-regular fa-calendar text-gray-400 text-xl"></i>
                             <input
                               type="date"
                               placeholder="Today"
-                              className="text-primary outline-none  w-full text-xl py-1"
+                              className="text-gray-400 outline-none  w-full text-xl py-1"
                               onChange={(e) => setDate(e.target.value)}
                               defaultValue={date}
                               required
                             />
                           </div>
-                          <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
+                          <div className="hidden md:block border-r border-gray-300 mx-3 h-[40px]"></div>
                         </div>
-                        <div className="flex col-span-1 items-center">
-                          <div className="flex items-center space-x-2 h-[56px]">
+                        <div className="flex col-span-1 items-center ml-3 px-5 md:px-0">
+                          <div className="flex items-center space-x-2 h-[56px] w-full">
                             <i class="fa-regular fa-user text-gray-400 text-xl"></i>
                             <input
                               type="number"
@@ -426,7 +426,7 @@ const Showcase = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <button className="w-full h-[56px] rounded-tr-xl rounded-br-xl bg-primary text-2xl text-white">
+                      <button className="w-full h-[56px] rounded-lg md:rounded-none md:rounded-tr-xl md:rounded-br-xl bg-primary text-2xl text-white">
                         Submit
                       </button>
                     </div>
