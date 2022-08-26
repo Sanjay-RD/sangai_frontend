@@ -40,7 +40,7 @@ const Navbar = () => {
                     height="24"
                     className="filter-green"
                   />{" "}
-                  <span>Sathi</span>
+                  <span>Mate(Sathi)</span>
                 </a>
               </Link>
             </li>
