@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 *{
- font-family: gt-eesti,
+ /* font-family: gt-eesti,
   "Helvetica Neue",
   Helvetica,
   Arial,
-  sans-serif;
+  sans-serif; */
+  font-family: 'Open Sans', sans-serif;
 }
 
 .filter-green {
