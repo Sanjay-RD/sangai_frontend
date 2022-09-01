@@ -61,7 +61,7 @@ const Showcase = () => {
   }, [success]);
   return (
     <div>
-      <div className=" w-full h-[1000px] md:h-[95vh] overflow-hidden bg-gray-200 relative">
+      <div className=" w-full h-[1000px] md:h-[82vh] overflow-hidden bg-gray-200 relative">
         <Image
           alt="Mountains"
           src="/sharing3.png"
@@ -86,9 +86,9 @@ const Showcase = () => {
           {chooseOption === "pilot" ? (
             <form className="" onSubmit={handleSubmitPilot}>
               <Container>
-                <div className="md:grid md:grid-cols-12 gap-9 space-y-4 md:space-y-0">
+                <div className="flex flex-col space-y-5">
                   {/* basic info form */}
-                  {/* <div className="bg-white rounded-xl grid grid-cols-2 md:grid-cols-4 gap-2 py-2 px-5 h-max md:h-[56px]">
+                  <div className="bg-white rounded-xl grid grid-cols-2 md:grid-cols-4 gap-2 py-2 px-5 h-max md:h-[56px]">
                     <div className="flex">
                       <div className="flex items-center space-x-2">
                         <i class="fa-regular fa-user text-gray-400 text-xl"></i>
@@ -144,83 +144,11 @@ const Showcase = () => {
                         />
                       </div>
                     </div>
-                  </div> */}
-                  <div className="bg-white rounded-xl py-2 px-5 col-span-4 h-max">
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-user text-gray-400 text-xl"></i>
-                        <input
-                          type="text"
-                          placeholder="Name"
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setName(e.target.value)}
-                          defaultValue={name}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-address-book text-gray-400 text-xl"></i>
-                        <input
-                          type="text"
-                          placeholder="Address (City)"
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setAddress(e.target.value)}
-                          defaultValue={address}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-address-book text-gray-400 text-xl"></i>
-                        <input
-                          type="text"
-                          placeholder="Address (Location)"
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setAddress(e.target.value)}
-                          defaultValue={address}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-envelope text-gray-400 text-xl"></i>
-                        <input
-                          type="email"
-                          placeholder="Email"
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setEmail(e.target.value)}
-                          defaultValue={email}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="flex">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-solid fa-phone text-gray-400 text-xl"></i>
-                        <input
-                          type="tel"
-                          placeholder="Phone"
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setPhone(e.target.value)}
-                          defaultValue={phone}
-                          required
-                        />
-                      </div>
-                    </div>
                   </div>
                   {/* basic info form end */}
                   {/* vehicle info form */}
-                  <div className="bg-white rounded-xl py-2 px-5 col-span-4 h-max">
-                    <div className="my-2">
+                  <div className="bg-white rounded-xl grid grid-cols-1 md:grid-cols-3 gap-2 py-2 px-5 h-max md:h-[56px]">
+                    <div className="flex">
                       <div className="flex items-center space-x-2 w-full">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -245,9 +173,9 @@ const Showcase = () => {
                           required
                         />
                       </div>
-                      <div className="border-b border-gray-300"></div>
+                      <div className="hidden md:block border-r border-gray-300 mx-3"></div>
                     </div>
-                    <div className="my-2">
+                    <div className="flex">
                       <div className="flex items-center space-x-2 w-full">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -272,9 +200,9 @@ const Showcase = () => {
                           required
                         />
                       </div>
-                      <div className="border-b border-gray-300"></div>
+                      <div className="hidden md:block border-r border-gray-300 mx-3"></div>
                     </div>
-                    <div className="my-2">
+                    <div className="flex">
                       <div className="flex items-center space-x-2 w-full">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -303,64 +231,7 @@ const Showcase = () => {
                   </div>
                   {/* vehicle info form end */}
                   {/* ride info */}
-                  <div className="bg-white rounded-xl py-2 px-5 col-span-4 h-max">
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
-                        <input
-                          type="text"
-                          placeholder="Leaving From..."
-                          className="text-primary outline-none w-full text-xl py-1"
-                          onChange={(e) => setLeaving(e.target.value)}
-                          defaultValue={leaving}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
-                        <input
-                          type="text"
-                          placeholder="Going to..."
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setGoing(e.target.value)}
-                          defaultValue={going}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-calendar text-gray-400 text-xl"></i>
-                        <input
-                          type="date"
-                          placeholder="Today"
-                          className="text-gray-400 outline-none  w-full text-xl py-1"
-                          onChange={(e) => setDate(e.target.value)}
-                          defaultValue={date}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="flex">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-user text-gray-400 text-xl"></i>
-                        <input
-                          type="number"
-                          placeholder="1"
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setSeats(e.target.value)}
-                          defaultValue={seats}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  {/* <div className="bg-white rounded-xl md:grid md:grid-cols-12 h-max md:h-[56px] col-span-4">
+                  <div className="bg-white rounded-xl md:grid md:grid-cols-12 h-max md:h-[56px]">
                     <div className="col-span-10">
                       <div className="md:grid md:grid-cols-12">
                         <div className="md:flex md:col-span-4 items-center ml-3 px-5 md:px-0">
@@ -425,21 +296,18 @@ const Showcase = () => {
                         Submit
                       </button>
                     </div>
-                  </div> */}
+                  </div>
                   {/* ride info end */}
                 </div>
-                <button className="mt-2 py-2 px-8 rounded-xl bg-primary text-2xl text-white">
-                  Submit
-                </button>
               </Container>
             </form>
           ) : (
-            <form className="mt-[0px]" onSubmit={handleSubmitMate}>
+            <form className="mt-[90px]" onSubmit={handleSubmitMate}>
               <Container>
-                <div className="md:grid md:grid-cols-12 gap-9 space-y-4 md:space-y-0">
+                <div className="flex flex-col space-y-5">
                   {/* basic info form */}
-                  <div className="bg-white rounded-xl py-2 px-5 col-span-4 h-max">
-                    <div className="my-2">
+                  <div className="bg-white rounded-xl grid grid-cols-2 md:grid-cols-4 gap-2 py-2 px-5">
+                    <div className="flex">
                       <div className="flex items-center space-x-2">
                         <i class="fa-regular fa-user text-gray-400 text-xl"></i>
                         <input
@@ -451,37 +319,9 @@ const Showcase = () => {
                           required
                         />
                       </div>
-                      <div className="border-b border-gray-300"></div>
+                      <div className="border-r border-gray-300 mx-3"></div>
                     </div>
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-address-book text-gray-400 text-xl"></i>
-                        <input
-                          type="text"
-                          placeholder="Address (City)"
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setAddress(e.target.value)}
-                          defaultValue={address}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-address-book text-gray-400 text-xl"></i>
-                        <input
-                          type="text"
-                          placeholder="Address (Location)"
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setAddress(e.target.value)}
-                          defaultValue={address}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="my-2">
+                    <div className="flex">
                       <div className="flex items-center space-x-2">
                         <i class="fa-regular fa-envelope text-gray-400 text-xl"></i>
                         <input
@@ -493,7 +333,21 @@ const Showcase = () => {
                           required
                         />
                       </div>
-                      <div className="border-b border-gray-300"></div>
+                      <div className="hidden md:bock border-r border-gray-300 mx-3"></div>
+                    </div>
+                    <div className="flex">
+                      <div className="flex items-center space-x-2">
+                        <i class="fa-regular fa-address-book text-gray-400 text-xl"></i>
+                        <input
+                          type="text"
+                          placeholder="Address"
+                          className="text-primary outline-none  w-full text-xl py-1"
+                          onChange={(e) => setAddress(e.target.value)}
+                          defaultValue={address}
+                          required
+                        />
+                      </div>
+                      <div className="border-r border-gray-300 mx-3"></div>
                     </div>
                     <div className="flex">
                       <div className="flex items-center space-x-2">
@@ -511,66 +365,9 @@ const Showcase = () => {
                   </div>
                   {/* basic info form end */}
                   {/* ride info */}
-                  <div className="bg-white rounded-xl py-2 px-5 col-span-4 h-max">
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
-                        <input
-                          type="text"
-                          placeholder="Pickup..."
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setLeaving(e.target.value)}
-                          defaultValue={leaving}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
-                        <input
-                          type="text"
-                          placeholder="Destination..."
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setGoing(e.target.value)}
-                          defaultValue={going}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="my-2">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-calendar text-gray-400 text-xl"></i>
-                        <input
-                          type="date"
-                          placeholder="Today"
-                          className="text-gray-400 outline-none  w-full text-xl py-1"
-                          onChange={(e) => setDate(e.target.value)}
-                          defaultValue={date}
-                          required
-                        />
-                      </div>
-                      <div className="border-b border-gray-300"></div>
-                    </div>
-                    <div className="flex">
-                      <div className="flex items-center space-x-2">
-                        <i class="fa-regular fa-user text-gray-400 text-xl"></i>
-                        <input
-                          type="number"
-                          placeholder="1"
-                          className="text-primary outline-none  w-full text-xl py-1"
-                          onChange={(e) => setSeats(e.target.value)}
-                          defaultValue={seats}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  {/* <div className="bg-white rounded-xl h-max md:h-[56px] col-span-4">
+                  <div className="bg-white rounded-xl md:grid md:grid-cols-12 h-max md:h-[56px]">
                     <div className="col-span-10">
-                      <div className="">
+                      <div className="md:grid md:grid-cols-12">
                         <div className="flex col-span-4 items-center ml-3 px-5 md:px-0">
                           <div className="flex items-center space-x-2 h-[56px] w-full">
                             <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
@@ -633,12 +430,9 @@ const Showcase = () => {
                         Submit
                       </button>
                     </div>
-                  </div> */}
+                  </div>
                   {/* ride info end */}
                 </div>
-                <button className="mt-2 py-2 px-8 rounded-xl bg-primary text-2xl text-white">
-                  Submit
-                </button>
               </Container>
             </form>
           )}
