@@ -75,7 +75,7 @@ const Showcase = () => {
           </h1>
           <div className="flex justify-center items-center mt-14 space-x-10">
             <Link href="/">
-              <a className="border px-4 py-1 rounded-lg bg-white text-lg flex space-x-2">
+              <a className="border px-4 py-1 rounded-lg bg-white text-lg flex items-center space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -94,7 +94,7 @@ const Showcase = () => {
               </a>
             </Link>
             <Link href="/">
-              <a className="border px-4 py-1 rounded-lg bg-white text-lg flex space-x-2">
+              <a className="border px-4 py-1 rounded-lg bg-white text-lg items-center flex space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

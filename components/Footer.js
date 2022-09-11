@@ -10,7 +10,7 @@ const Footer = () => {
           <div>
             <ul className="text-primaryDark">
               <li className="">
-                <Link href="/">
+                <Link href="/how-it-work">
                   <a>How it works</a>
                 </Link>
               </li>
@@ -34,7 +34,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li className="my-3">
-                <Link href="/">
+                <Link href="/help-centre">
                   <a>Help Centre</a>
                 </Link>
               </li>

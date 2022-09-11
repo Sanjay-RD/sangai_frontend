@@ -113,11 +113,11 @@ function HomePage({ getFAQ }) {
                 <i class="fa-solid fa-user text-2xl text-primaryDark"></i>
                 <div>
                   <h1 className="text-lg text-primaryDark">
-                    Create a BlaBlaCar account
+                    Create a Sangai account
                   </h1>
                   <p className="text-primaryDark opacity-70">
-                    Add your profile picture, a few words about you and your
-                    phone number to increase trust between members.
+                    Login into sangai and fill up other form to become rider or
+                    send the detail in whatsapp.
                   </p>
                 </div>
               </div>
@@ -181,9 +181,8 @@ function HomePage({ getFAQ }) {
                     At your service 24/7
                   </h1>
                   <p className="text-primaryDark">
-                    Our team is at your disposal to answer any questions by
-                    email or social media. You can also have a live chat
-                    directly with experienced members.
+                    Our team is always available to serve your request. You can
+                    contact us via chat, email, or other social media platforms.
                   </p>
                 </div>
               </div>
@@ -193,12 +192,11 @@ function HomePage({ getFAQ }) {
                 </div>
                 <div>
                   <h1 className="text-xl font-medium my-1 text-primaryDark">
-                    BlaBlaCar at your side
+                    Sangai at your side
                   </h1>
                   <p className="text-primaryDark">
-                    For just 2 €, benefit from the reimbursement of up to 1,500€
-                    of your excess when you publish a ride as a driver on
-                    BlaBlaCar.
+                    Save money on your regular travel expenses. Your work also
+                    gets completed, and you can save money too.
                   </p>
                 </div>
               </div>
@@ -221,12 +219,13 @@ function HomePage({ getFAQ }) {
                 </div>
                 <div>
                   <h1 className="text-xl font-medium my-1 text-primaryDark">
-                    100% secure information
+                    Ensure Security
                   </h1>
                   <p className="text-primaryDark">
-                    Our team is dedicated to the protection of your data, which
-                    is always 100% confidential thanks to monitoring tools,
-                    secure navigation and encrypted data.
+                    Our team is committed to ensuring the security of your data,
+                    which is always kept completely confidential. Personal
+                    information about both the driver and the passenger is kept
+                    private.
                   </p>
                 </div>
               </div>
@@ -253,8 +252,13 @@ function HomePage({ getFAQ }) {
                       {value.question}
                     </h1>
                     {openAnswer === i && (
-                      <p className="text-primaryDark opacity-90 px-2 mt-2">
-                        {value.answer}
+                      <p className="text-primaryDark opacity-90 px-2 mt-2 Faq_description">
+                        {/* {value.answer} */}
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: value.answer,
+                          }}
+                        />
                       </p>
                     )}
                   </div>

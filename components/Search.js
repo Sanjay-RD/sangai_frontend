@@ -3,7 +3,7 @@ import React from "react";
 const Search = () => {
   return (
     <div className="px-20 absolute left-0 right-0 bottom-[-70px]">
-      <div className="border bg-white h-[150px] m-auto rounded-lg">
+      <div className="border bg-white h-[150px] m-auto rounded-2xl">
         <div className="p-5">
           <h1 className="text-xl mb-2">Search Ride</h1>
           <form className="grid grid-cols-12 gap-8">

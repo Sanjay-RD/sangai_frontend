@@ -12,7 +12,9 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* logo */}
           <div>
-            <h1 className="text-primary text-3xl font-medium">संगै</h1>
+            <Link href="/">
+              <a className="text-primary text-3xl font-medium">संगै</a>
+            </Link>
           </div>
           {/* logo end */}
           <ul className="flex space-x-4 md:space-x-8">
@@ -46,7 +48,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/login">
                 <a className="text-primary text-lg font-medium flex items-center space-x-2">
                   {/* <Image
                     src={passengerSeat}
