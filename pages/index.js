@@ -1,42 +1,54 @@
+import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import Container from "../components/Container";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Notification from "../components/Notification";
+import Search from "../components/Search";
 import Showcase from "../components/Showcase";
+import { API } from "../config";
 
-function HomePage() {
-  const [openAnswer, setOpenAnswer] = useState(false);
+function HomePage({ getFAQ }) {
+  console.log("getFAQ", getFAQ);
+  const [openAnswer, setOpenAnswer] = useState();
+
+  const handleClickOpenFAQ = (i) => {
+    setOpenAnswer(true);
+  };
   return (
     <>
       <Navbar />
-      <Notification />
-      <Showcase />
-      <div className="my-9">
+      {/* <Notification /> */}
+      <div className="relative">
+        <Showcase />
+        <Search />
+      </div>
+      <div className="mt-32 mb-10">
         <Container>
           <div>
-            <h1 className="text-3xl font-[400] text-primaryDark">
-              The best of carpooling with BlaBlaCar
+            <h1 className="text-4xl font-[400] text-primaryDark">
+              Get best Services at Sangai
             </h1>
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 my-7">
-              <div>
+            <div className="grid sm:grid-cols-2 md:grid-cols-2 gap-8 my-9">
+              <div className="flex space-x-5">
                 <div>
-                  <i class="fa-solid fa-piggy-bank text-4xl text-primaryDark"></i>
+                  <i class="fa-solid fa-piggy-bank text-8xl text-primaryDark"></i>
                 </div>
                 <div>
-                  <h1 className="text-xl font-medium my-1 text-primaryDark">
+                  <h1 className="text-2xl font-medium my-1 text-primaryDark">
                     Save on travel costs
                   </h1>
                   <p className="text-primaryDark">
-                    Share your travel costs and save every time you travel by
-                    car. Plus, for your 1st ride on BlaBlaCar with at least one
-                    passenger, you’ll get a 25€ fuel voucher or 40€ car wash
-                    voucher.
+                    You have to travel frequently and the problem is the
+                    traveling cost, May be due to an increase in the price of
+                    petrol? So, let’s solve the problem by sharing your ride.
+                    ‘Sangai’ is the best platform where you can save your
+                    traveling money by sharing your ride with passengers.
                   </p>
                 </div>
               </div>
-              <div>
+              <div className="flex space-x-5">
                 <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +56,7 @@ function HomePage() {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-9 h-9 text-primaryDark"
+                    class="w-[96px] h-[96px] text-primaryDark"
                   >
                     <path
                       stroke-linecap="round"
@@ -54,28 +66,29 @@ function HomePage() {
                   </svg>
                 </div>
                 <div>
-                  <h1 className="text-xl font-medium my-1 text-primaryDark">
+                  <h1 className="text-2xl font-medium my-1 text-primaryDark">
                     Join a trustworthy community
                   </h1>
                   <p className="text-primaryDark">
-                    We know each of our members: both drivers and passengers. We
-                    verify ratings, profiles and IDs, so you know exactly who
-                    you’re travelling with.
+                    Our support is available at any time. If you find any danger
+                    or problem during the traveling, you can contact our team
+                    members of ‘Sangai’. All drivers are background-checked
+                    before their first trip.
                   </p>
                 </div>
               </div>
-              <div>
+              <div className="flex space-x-5">
                 <div>
-                  <i class="fa-solid fa-rocket text-3xl text-primaryDark"></i>
+                  <i class="fa-solid fa-rocket text-8xl text-primaryDark"></i>
                 </div>
                 <div>
-                  <h1 className="text-xl font-medium my-1 text-primaryDark">
-                    Carpooling made simple
+                  <h1 className="text-2xl font-medium my-1 text-primaryDark">
+                    Sangai made simple
                   </h1>
                   <p className="text-primaryDark">
-                    Our technology makes the entire experience with BlaBlaCar
-                    simple, so you can easily find, chat with and meet
-                    passengers right on your way.
+                    Our system is very easy to use both for riders and
+                    passengers. Riders can publish their ride details and
+                    passengers can choose and book their appropriate riders.
                   </p>
                 </div>
               </div>
@@ -143,7 +156,7 @@ function HomePage() {
         <Container>
           <div className="py-5">
             <h1 className="text-3xl font-[400] text-primaryDark">
-              We’re here every step of the way
+              Offerings and Safe travel
             </h1>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 my-7">
               <div>
@@ -232,73 +245,39 @@ function HomePage() {
             What to expect along the way
           </span>
           <div className="px-3 py-3">
-            <div className="border-b py-3">
-              <div className="flex justify-between">
-                <div>
-                  <h1 className="text-xl text-primaryDark">
-                    How to become a driver?
-                  </h1>
-                  {openAnswer && (
-                    <p className="text-primaryDark opacity-90 px-2 mt-2">
-                      You can pass online registration by yourself by uploading
-                      photos of your documents in inDriver app
-                    </p>
-                  )}
-                </div>
-                <div>
-                  {!openAnswer && (
-                    <div
-                      className="cursor-pointer text-primaryDark"
-                      onClick={() => setOpenAnswer(true)}
-                    >
-                      <i class="fa-solid fa-plus text-sm"></i>
-                    </div>
-                  )}
-                  {openAnswer && (
-                    <div
-                      className="cursor-pointer text-primaryDark"
-                      onClick={() => setOpenAnswer(false)}
-                    >
-                      <i class="fa-solid fa-minus text-sm"></i>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="border-b py-3">
-              <div className="flex justify-between">
-                <div>
-                  <h1 className="text-xl text-primaryDark">
-                    How long will I need to wait to be matched with other
-                    riders?
-                  </h1>
-                  {openAnswer && (
-                    <p className="text-primaryDark opacity-90 px-2 mt-2">
-                      You can pass online registration by yourself by uploading
-                      photos of your documents in inDriver app
-                    </p>
-                  )}
-                </div>
-                <div>
-                  {!openAnswer && (
-                    <div
-                      className="cursor-pointer text-primaryDark"
-                      onClick={() => setOpenAnswer(true)}
-                    >
-                      <i class="fa-solid fa-plus text-sm"></i>
-                    </div>
-                  )}
-                  {openAnswer && (
-                    <div
-                      className="cursor-pointer text-primaryDark"
-                      onClick={() => setOpenAnswer(false)}
-                    >
-                      <i class="fa-solid fa-minus text-sm"></i>
-                    </div>
-                  )}
+            {getFAQ.map((value, i) => (
+              <div className="border-b py-3">
+                <div className="flex justify-between">
+                  <div>
+                    <h1 className="text-xl text-primaryDark">
+                      {value.question}
+                    </h1>
+                    {openAnswer === i && (
+                      <p className="text-primaryDark opacity-90 px-2 mt-2">
+                        {value.answer}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    {openAnswer !== i ? (
+                      <div
+                        className="cursor-pointer text-primaryDark"
+                        onClick={() => setOpenAnswer(i)}
+                      >
+                        <i class="fa-solid fa-plus text-sm"></i>
+                      </div>
+                    ) : (
+                      <div
+                        className="cursor-pointer text-primaryDark"
+                        onClick={() => setOpenAnswer(false)}
+                      >
+                        <i class="fa-solid fa-minus text-sm"></i>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </Container>
       </div>
@@ -306,6 +285,16 @@ function HomePage() {
       <Footer />
     </>
   );
+}
+
+export async function getServerSideProps() {
+  // const { search, sort, category } = query;
+  const getFAQ = await axios.get(`${API}/faq/isPublished`);
+  return {
+    props: {
+      getFAQ: getFAQ.data,
+    },
+  };
 }
 
 export default HomePage;

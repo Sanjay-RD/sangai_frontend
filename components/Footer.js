@@ -16,12 +16,12 @@ const Footer = () => {
               </li>
               <li className="my-3">
                 <Link href="/">
-                  <a>Travel by bus with BlaBlaCar</a>
+                  <a>Travel by bus, car and bike with Sangai</a>
                 </Link>
               </li>
               <li>
                 <Link href="/">
-                  <a>All bus rides</a>
+                  <a>All rides</a>
                 </Link>
               </li>
             </ul>
