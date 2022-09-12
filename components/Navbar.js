@@ -19,7 +19,7 @@ const Navbar = () => {
           {/* logo end */}
           <ul className="flex space-x-4 md:space-x-8">
             <li>
-              <Link href="/">
+              <Link href="/publish-ride">
                 <a className="text-primary text-lg font-medium flex items-center space-x-2">
                   {/* <Image
                     src={steeringWheel}

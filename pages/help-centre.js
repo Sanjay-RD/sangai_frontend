@@ -87,7 +87,7 @@ const HelpCentre = ({ getFAQ }) => {
                 problems with anything so we can improve!
               </p>
             </div>
-            <form className="mt-5 space-y-10">
+            <form className="mt-10 space-y-10">
               <div className="grid grid-cols-2 gap-10">
                 <div className="flex flex-col space-y-1">
                   <label className="text-primaryDark opacity-95">
