@@ -6,82 +6,128 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { API } from "../config";
 
-const howItWork = ({ getFAQ }) => {
-  const [openAnswer, setOpenAnswer] = useState();
+const howItWork = () => {
   return (
     <div>
       <Navbar />
       <Container>
         <div className="my-6">
-          <h1 className="font-normal text-3xl">
-            We are here to assist you with any sangai related question and
-            queries.
-          </h1>
-          {/* FAQ */}
-          <div className="mt-7">
-            <h1 className="text-3xl font-[400] text-primaryDark">
-              Frequently asked questions
-            </h1>
-            <span className="text-primaryDark opacity-80">
-              What to expect along the way
-            </span>
-            <div className="px-3 py-3">
-              {getFAQ.map((value, i) => (
-                <div className="border-b py-3">
-                  <div className="flex justify-between">
-                    <div>
-                      <h1 className="text-xl text-primaryDark">
-                        {value.question}
-                      </h1>
-                      {openAnswer === i && (
-                        <p className="text-primaryDark opacity-90 px-2 mt-2 Faq_description">
-                          {/* {value.answer} */}
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: value.answer,
-                            }}
-                          />
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      {openAnswer !== i ? (
-                        <div
-                          className="cursor-pointer text-primaryDark"
-                          onClick={() => setOpenAnswer(i)}
-                        >
-                          <i class="fa-solid fa-plus text-sm"></i>
-                        </div>
-                      ) : (
-                        <div
-                          className="cursor-pointer text-primaryDark"
-                          onClick={() => setOpenAnswer(false)}
-                        >
-                          <i class="fa-solid fa-minus text-sm"></i>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+          <h1 className="font-normal text-3xl text-center">How Sangai Work</h1>
+          {/* work flow */}
+          <div className="w-[800px] m-auto mt-10 space-y-10">
+            <div className="flex space-x-9">
+              <img src="./laptop.png" alt="" />
+              <div>
+                <div className="w-[25px] h-[25px] rounded-full text-center bg-primary">
+                  <span className="">1</span>
                 </div>
-              ))}
+                <div
+                  className="border h-[80%] rounded-[100%] border-spacing-4 border-dashed"
+                  style={{
+                    borderColor: "transparent #000 transparent transparent",
+                  }}
+                ></div>
+              </div>
+              <div>
+                <h1>Driver</h1>
+                <p>
+                  Open the Sangai app or website to publish your ride by filling
+                  out a form with the necessary details. Then, confirm your
+                  ride.
+                </p>
+              </div>
+            </div>
+            <div className="flex space-x-9">
+              <img src="./laptop.png" alt="" />
+              <div>
+                <div className="w-[25px] h-[25px] rounded-full text-center bg-primary">
+                  <span className="">2</span>
+                </div>
+                <div
+                  className="border h-[80%] rounded-[100%] border-spacing-4 border-dashed"
+                  style={{
+                    borderColor: "transparent transparent transparent #000",
+                  }}
+                ></div>
+              </div>
+              <div>
+                <h1>Passenger</h1>
+                <p>
+                  You can request a ride by filling out the form. If your
+                  request is available, just Book the ride that matches your
+                  destination at the lowest possible cost.
+                </p>
+              </div>
+            </div>
+            <div className="flex space-x-9">
+              <img src="./laptop.png" alt="" />
+              <div>
+                <div className="w-[25px] h-[25px] rounded-full text-center bg-primary">
+                  <span className="">3</span>
+                </div>
+                <div
+                  className="border h-[80%] rounded-[100%] border-spacing-4 border-dashed"
+                  style={{
+                    borderColor: "transparent #000 transparent transparent",
+                  }}
+                ></div>
+              </div>
+              <div>
+                <h1>Get started to share ride</h1>
+                <p>
+                  When the published ride of the Driver matches the passenger’s
+                  request and gets booked, Be ready to start your journey.
+                </p>
+              </div>
+            </div>
+            <div className="flex space-x-9">
+              <img src="./laptop.png" alt="" />
+              <div>
+                <div className="w-[25px] h-[25px] rounded-full text-center bg-primary">
+                  <span className="">4</span>
+                </div>
+                <div
+                  className="border h-[80%] rounded-[100%] border-spacing-4 border-dashed"
+                  style={{
+                    borderColor: "transparent transparent transparent #000",
+                  }}
+                ></div>
+              </div>
+              <div>
+                <h1>Payment</h1>
+                <p>
+                  The payment method is also done during the booking process.
+                </p>
+              </div>
+            </div>
+            <div className="flex space-x-9">
+              <img src="./laptop.png" alt="" />
+              <div>
+                <div className="w-[25px] h-[25px] rounded-full text-center bg-primary">
+                  <span className="">5</span>
+                </div>
+                <div
+                  className="border h-[80%] rounded-[100%] border-spacing-4 border-dashed"
+                  style={{
+                    borderColor: "transparent transparent transparent #000",
+                  }}
+                ></div>
+              </div>
+              <div>
+                <h1>Share Ride</h1>
+                <p>
+                  Share your ride and reach your destination on time. Enjoy the
+                  ride-sharing.
+                </p>
+              </div>
             </div>
           </div>
-          {/* FAQ end */}
+          {/* work flow end */}
         </div>
       </Container>
       <Footer />
     </div>
   );
 };
-
-export async function getServerSideProps() {
-  // const { search, sort, category } = query;
-  const getFAQ = await axios.get(`${API}/faq/isPublished`);
-  return {
-    props: {
-      getFAQ: getFAQ.data,
-    },
-  };
-}
 
 export default howItWork;
