@@ -19,3 +19,6 @@
   list-style-type: circle;
   margin-left: 25px;
 }
+.rc-time-picker-input{
+  height: 50px !important;
+}
