@@ -4,10 +4,22 @@ import thunk from "redux-thunk";
 
 import { createMateReducer } from "./reducers/mateReducer";
 import { createPilotReducer } from "./reducers/pilotReducer";
+import {
+  listRidesReducer,
+  listRideReducer,
+  listRidesByUserIdReducer,
+  createRideReducer,
+  updateRideReducer,
+  deleteRideReducer,
+} from "./reducers/rideReducer";
 
 const reducer = combineReducers({
-  createMate: createMateReducer,
-  createPilot: createPilotReducer,
+  listRides: listRidesReducer,
+  listRide: listRideReducer,
+  listRidesByUserId: listRidesByUserIdReducer,
+  createRide: createRideReducer,
+  updateRide: updateRideReducer,
+  deleteRide: deleteRideReducer,
 });
 
 const initialState = {};

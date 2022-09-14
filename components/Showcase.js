@@ -3,17 +3,11 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Container from "./Container";
 import { useDispatch, useSelector } from "react-redux";
-import { createMate } from "../redux/actions/mateAction";
-import { createPilot } from "../redux/actions/pilotActon";
 
 const Showcase = () => {
   const dispatch = useDispatch();
 
-  const createMateSate = useSelector((state) => state.createMate);
-  const { success } = createMateSate;
-
   const [chooseOption, setChooseOption] = useState("pilot");
-  // console.log("chooseOption", chooseOption);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -54,11 +48,6 @@ const Showcase = () => {
     );
   };
 
-  useEffect(() => {
-    if (success) {
-      setName("");
-    }
-  }, [success]);
   return (
     <div>
       <div className=" w-full h-[1000px] md:h-[70vh] overflow-hidden bg-gray-200 relative">
@@ -93,7 +82,7 @@ const Showcase = () => {
                 <p>Publish a ride</p>
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/search">
               <a className="border px-4 py-1 rounded-lg bg-white text-lg items-center flex space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
