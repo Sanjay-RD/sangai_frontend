@@ -96,13 +96,16 @@ export const getRide = (uuid) => async (dispatch) => {
 };
 export const createRide =
   (slug, leaving, heading, date, price, seat, time, book_instantly, userId) =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     try {
       dispatch({ type: RIDE_ADD_REQUEST });
-
+      const {
+        userLogin: { userInfo },
+      } = getState();
       const config = {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getCookie("token")}`,
         },
       };
       const { data } = await axios.post(

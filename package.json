@@ -20,8 +20,10 @@
   "author": "Sanjay-RD",
   "license": "MIT",
   "dependencies": {
+    "@headlessui/react": "^1.7.1",
     "axios": "^0.27.2",
     "js-cookie": "^3.0.1",
+    "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "next": "^12.2.5",
     "rc-time-picker": "^3.7.3",

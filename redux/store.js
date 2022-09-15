@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 
 import { createMateReducer } from "./reducers/mateReducer";
 import { createPilotReducer } from "./reducers/pilotReducer";
+import { userLoginReducer, userUpdateReducer } from "./reducers/userReducer";
 import {
   listRidesReducer,
   listRideReducer,
@@ -14,6 +15,7 @@ import {
 } from "./reducers/rideReducer";
 
 const reducer = combineReducers({
+  userLogin: userLoginReducer,
   listRides: listRidesReducer,
   listRide: listRideReducer,
   listRidesByUserId: listRidesByUserIdReducer,
@@ -22,7 +24,14 @@ const reducer = combineReducers({
   deleteRide: deleteRideReducer,
 });
 
-const initialState = {};
+const adminInfoFromStrorage =
+  process.browser && localStorage.getItem("userInfo")
+    ? process.browser && JSON.parse(localStorage.getItem("userInfo"))
+    : null;
+
+const initialState = {
+  userLogin: { userInfo: adminInfoFromStrorage },
+};
 
 const middleware = [thunk];
 const store = createStore(
