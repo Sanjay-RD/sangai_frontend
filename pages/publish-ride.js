@@ -9,9 +9,14 @@ import "rc-time-picker/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createRide, getRides } from "../redux/actions/rideAction";
 import { API } from "../config";
+import { isAuth } from "../redux/utils";
+import { useRouter } from "next/router";
 
 const PublishRode = () => {
   const dispatch = useDispatch();
+  const userLoginState = useSelector((state) => state.userLogin);
+  const { userInfo } = userLoginState;
+  const router = useRouter();
   const [location, setLocation] = useState([]);
   const [startLocation, setStartLocation] = useState("");
   const [endLocation, setEndLocation] = useState("");
@@ -29,7 +34,10 @@ const PublishRode = () => {
     };
     loadLocations();
     // dispatch(getRides());
-  }, []);
+    if (!isAuth()) {
+      router.push("/login");
+    }
+  }, [userInfo]);
 
   const handleStartLocation = (startLocation) => {
     let matches = [];
@@ -78,39 +86,6 @@ const PublishRode = () => {
         1
       )
     );
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
-    // const { data } = await axios.post(
-    //   `${API}/ride`,
-    //   {
-    //     slug: "djflakdj",
-    //     leaving: startLocation,
-    //     heading: endLocation,
-    //     date: startDate,
-    //     price,
-    //     seat: seats,
-    //     time,
-    //     book_instantly: 1,
-    //     userId: 1,
-    //   },
-    //   config
-    // );
-    // var config = {
-    //   method: "get",
-    //   url: "http://localhost:5000/api/ride",
-    //   headers: {},
-    // };
-
-    // axios(config)
-    //   .then(function (response) {
-    //     console.log(JSON.stringify(response.data));
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
   };
   return (
     <div>

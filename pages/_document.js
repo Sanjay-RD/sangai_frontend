@@ -20,6 +20,11 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap"
           rel="stylesheet"
         ></link>
+        <script
+          src="https://accounts.google.com/gsi/client"
+          async
+          defer
+        ></script>
       </Head>
       <body>
         <Main />
