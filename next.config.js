@@ -9,6 +9,6 @@ module.exports = {
     BASE_URL_PRODUCTION: "http://sangaiapi.biidhan.com",
     API_DEVELOPMENT: "http://localhost:5000/api",
     API_PRODUCTION: "http://sangaiapi.biidhan.com/api",
-    PRODUCTION: false,
+    PRODUCTION: true,
   },
 };
