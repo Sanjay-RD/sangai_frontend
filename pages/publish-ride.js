@@ -73,19 +73,24 @@ const PublishRode = () => {
   const handleSubmitPublishRide = async (e) => {
     e.preventDefault();
     console.log("first");
-    dispatch(
-      createRide(
-        "21dfadf",
-        startLocation,
-        endLocation,
-        startDate,
-        price,
-        seats,
-        time,
-        1,
-        1
-      )
-    );
+    console.log(isAuth());
+    if (isAuth().user.isDriver) {
+      dispatch(
+        createRide(
+          "21dfadf",
+          startLocation,
+          endLocation,
+          startDate,
+          price,
+          seats,
+          time,
+          1,
+          1
+        )
+      );
+    } else {
+      router.push("/driver");
+    }
   };
   return (
     <div>
@@ -169,14 +174,14 @@ const PublishRode = () => {
             </label>
             <div className="flex justify-between items-center w-[300px] m-auto">
               <div
-                className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary"
+                className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary cursor-pointer"
                 onClick={() => seats > 1 && setSeats(seats - 1)}
               >
                 <span className="text-2xl font-light text-primary">-</span>
               </div>
               <span className="text-3xl text-primaryDark">{seats}</span>
               <div
-                className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary"
+                className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary cursor-pointer"
                 onClick={() => setSeats(seats + 1)}
               >
                 <span className="text-3xl font-light text-primary">+</span>
@@ -189,14 +194,14 @@ const PublishRode = () => {
             </label>
             <div className="flex justify-between items-center w-[300px] m-auto">
               <div
-                className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary"
+                className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary cursor-pointer"
                 onClick={() => seats > 1 && setPrice(price - 1)}
               >
                 <span className="text-2xl font-light text-primary">-</span>
               </div>
               <span className="text-3xl text-primaryDark">Rs.{price}</span>
               <div
-                className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary"
+                className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary cursor-pointer"
                 onClick={() => setPrice(price + 1)}
               >
                 <span className="text-3xl font-light text-primary">+</span>

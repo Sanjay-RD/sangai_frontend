@@ -107,7 +107,9 @@ const Navbar = () => {
                     <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                       <ul className="px-1 py-1">
                         <li>
-                          <Link href="/profile">
+                          <Link
+                            href={`/profile/${isAuth() && isAuth().user.uuid}`}
+                          >
                             <a
                               // onClick={() => setToggleMenu(false)}
                               class="cursor-pointer block py-2 px-4 hover:bg-gray-100 rounded-md"
