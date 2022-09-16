@@ -53,13 +53,13 @@ const Showcase = () => {
       <div className=" w-full h-[1000px] md:h-[70vh] overflow-hidden bg-gray-200 relative">
         <Image
           alt="Mountains"
-          src="/sharing1.jpeg"
+          src="/showcase1.jpeg"
           priority
           objectFit="cover"
           layout="fill"
         />
         <div className="absolute top-[5%] md:top-[20%] w-full text-center">
-          <h1 className="text-xl md:text-5xl text-white capitalize">
+          <h1 className="text-xl md:text-5xl text-gray-700 capitalize">
             Share your ride, Share your traveling cost.
           </h1>
           <div className="flex justify-center items-center mt-14 space-x-10">
