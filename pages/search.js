@@ -18,12 +18,14 @@ const search = ({ rides, searchRide }) => {
   // console.log("path", router);
   const urlLength = router.asPath.split("&&");
   console.log("searchRide", searchRide);
+  const [stage, setStage] = useState(1);
   const [leaving, setLeaving] = useState("");
   const [heading, setHeading] = useState("");
   const [date, setDate] = useState("");
   const [seat, setSeat] = useState("");
   const [activeTag, setActiveTag] = useState("all");
   const [isUrlActive, setIsUrlActive] = useState(false);
+  const [isDetailShow, setIsDetailShow] = useState(false);
   const handleSubmitSearch = (e) => {
     e.preventDefault();
     console.log("first");
@@ -263,7 +265,213 @@ const search = ({ rides, searchRide }) => {
           </div> */}
           {/*  */}
           <div className="py-3 px-32">
-            {isUrlActive ? (
+            {isDetailShow ? (
+              <>
+                <button onClick={() => setIsDetailShow(false)}>Back</button>
+                <div
+                  className="border rounded-xl  my-5"
+                  style={{
+                    boxShadow: "3px 3px 23px -8px rgba(117,165,105,0.59)",
+                  }}
+                >
+                  <div className="border-b p-3 flex space-x-3 items-center">
+                    <img
+                      src="/sharing.jpeg"
+                      alt=""
+                      width={50}
+                      height={50}
+                      className="rounded-full"
+                    />
+                    <div>
+                      <h1 className="text-xl">Sanjay Rishidev</h1>
+                    </div>
+                  </div>
+                  <div className="border-b flex justify-between px-6 py-4">
+                    <div>
+                      <div className="flex items-center">
+                        <h2 className="text-lg font-medium">Location : </h2>
+                        <div className="flex space-x-2 items-center">
+                          <h2 className="text-lg">bhaktapur</h2>
+                          <span>to</span> <h2 className="text-lg">kathmandu</h2>
+                        </div>
+                      </div>
+                      <h1 className="text-lg">Date : 2234/32434/34</h1>
+                      <p className="text-lg">Availalble Seats : 2 Seats</p>
+                    </div>
+                    <div>
+                      <h1 className="text-2xl">Rs. 2384</h1>
+                    </div>
+                  </div>
+                  <div className="px-6 py-4">
+                    <div className="grid grid-cols-12 gap-7">
+                      <div className="col-span-4">
+                        <button
+                          className={
+                            stage === 1
+                              ? "border px-3 py-2 bg-primary text-white w-full flex justify-between items-center rounded"
+                              : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded border-primary"
+                          }
+                          onClick={() => setStage(1)}
+                        >
+                          <h1>Basic Information</h1>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          className={
+                            stage === 2
+                              ? "border px-3 py-2 bg-primary text-white w-full flex justify-between items-center rounded my-3"
+                              : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
+                          }
+                          onClick={() => setStage(2)}
+                        >
+                          <h1>Driver License</h1>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          className={
+                            stage === 3
+                              ? "border px-3 py-2 bg-primary text-white w-full flex justify-between items-center rounded my-3"
+                              : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
+                          }
+                          onClick={() => setStage(3)}
+                        >
+                          <h1>ID Information</h1>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          className={
+                            stage === 4
+                              ? "border px-3 py-2 bg-primary text-white w-full flex justify-between items-center rounded my-3"
+                              : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
+                          }
+                          onClick={() => setStage(4)}
+                        >
+                          <h1>Veicle Information</h1>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div className="col-span-8">
+                        {stage === 1 && (
+                          <div className="border rounded-md">
+                            <div className="border-b px-5 py-3 bg-primary text-white rounded-t-md">
+                              <h1 className="text-xl">Basic Information</h1>
+                            </div>
+                            <div className="px-6 py-5">
+                              <h1>First Name : Sanjay RD</h1>
+                              <h1>Last Name : Sanjay RD</h1>
+                              <h1>Date of Birth : 87349/97234</h1>
+                              <h1>Email : rishidevsanjay9@gmail.com</h1>
+                            </div>
+                          </div>
+                        )}
+                        {stage === 2 && (
+                          <div className="border rounded-md">
+                            <div className="border-b px-5 py-3 bg-primary text-white rounded-t-md">
+                              <h1 className="text-xl">Driver License</h1>
+                            </div>
+                            <div className="px-6 py-5">
+                              <h1>Driving License Number : 87329429</h1>
+                              <div>
+                                <h1>License Front Image</h1>
+                                <img src="/sharing.jpeg" alt="" />
+                              </div>
+                              <div>
+                                <h1>License Back Image</h1>
+                                <img src="/sharing.jpeg" alt="" />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {stage === 3 && (
+                          <div className="border rounded-md">
+                            <div className="border-b px-5 py-3 bg-primary text-white rounded-t-md">
+                              <h1 className="text-xl">ID Information</h1>
+                            </div>
+                            <div className="px-6 py-5">
+                              <div>
+                                <h1>User And License Image</h1>
+                                <img src="/sharing.jpeg" alt="" />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {stage === 4 && (
+                          <div className="border rounded-md">
+                            <div className="border-b px-5 py-3 bg-primary text-white rounded-t-md">
+                              <h1 className="text-xl">Vehicle Information</h1>
+                            </div>
+                            <div className="px-6 py-5">
+                              <h1>Vehicle Type : car</h1>
+                              <div>
+                                <h1>Vehicle Photo</h1>
+                                <img src="/sharing.jpeg" alt="" />
+                              </div>
+                              <div>
+                                <h1>Billbook Photo</h1>
+                                <img src="/sharing.jpeg" alt="" />
+                              </div>
+                              <h1>Vehicle Type : car</h1>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : isUrlActive ? (
               <div className="">
                 <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200">
                   <ul class="grid grid-cols-4 -mb-px">
@@ -414,37 +622,39 @@ const search = ({ rides, searchRide }) => {
                 </div>
                 {rides.map((value) => (
                   <>
-                    <div
-                      className="border rounded-xl  my-5"
-                      style={{
-                        boxShadow: "3px 3px 23px -8px rgba(117,165,105,0.59)",
-                      }}
-                    >
-                      <div className="flex justify-between px-6 py-4">
-                        <div>
-                          <h1>
-                            {value.rides.leaving} to {value.rides.heading}
-                          </h1>
-                          <p>
-                            {moment(value.rides.date).format("MMMM Do YYYY")}
-                          </p>
-                          <p>{value.rides.seat} Seats</p>
+                    <div onClick={() => setIsDetailShow(true)}>
+                      <div
+                        className="border rounded-xl  my-5 cursor-pointer"
+                        style={{
+                          boxShadow: "3px 3px 23px -8px rgba(117,165,105,0.59)",
+                        }}
+                      >
+                        <div className="flex justify-between px-6 py-4">
+                          <div>
+                            <h1>
+                              {value.rides.leaving} to {value.rides.heading}
+                            </h1>
+                            <p>
+                              {moment(value.rides.date).format("MMMM Do YYYY")}
+                            </p>
+                            <p>{value.rides.seat} Seats</p>
+                          </div>
+                          <div>
+                            <h1>Rs. {value.rides.price}</h1>
+                          </div>
                         </div>
-                        <div>
-                          <h1>Rs. {value.rides.price}</h1>
-                        </div>
-                      </div>
-                      <div className="border-t p-3 flex space-x-3">
-                        <img
-                          src={value.rides.users.picture}
-                          alt=""
-                          width={50}
-                          height={50}
-                          className="rounded-full"
-                        />
-                        <div>
-                          <h1>{value.rides.users.name}</h1>
-                          <h1>{value.rides.users.email}</h1>
+                        <div className="border-t p-3 flex space-x-3">
+                          <img
+                            src={value.rides.users.picture}
+                            alt=""
+                            width={50}
+                            height={50}
+                            className="rounded-full"
+                          />
+                          <div>
+                            <h1>{value.rides.users.name}</h1>
+                            <h1>{value.rides.users.email}</h1>
+                          </div>
                         </div>
                       </div>
                     </div>
