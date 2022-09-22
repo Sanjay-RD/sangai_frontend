@@ -30,6 +30,7 @@ const PublishRode = () => {
   useEffect(() => {
     const loadLocations = async () => {
       const res = await axios.get("https://fakestoreapi.com/products");
+
       setLocation(res.data);
     };
     loadLocations();

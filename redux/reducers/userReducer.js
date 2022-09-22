@@ -1,4 +1,7 @@
 import {
+  USER_DETAIL_FAIL,
+  USER_DETAIL_REQUEST,
+  USER_DETAIL_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_RESET,
@@ -66,6 +69,29 @@ export const userUpdateReducer = (state = {}, action) => {
       };
     case USER_UPDATE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+export const userDetailReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_DETAIL_REQUEST:
+      return {
+        loading: true,
+      };
+    case USER_DETAIL_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        user: action.payload,
+      };
+
+    case USER_DETAIL_FAIL:
+      return {
+        loading: true,
+        success: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

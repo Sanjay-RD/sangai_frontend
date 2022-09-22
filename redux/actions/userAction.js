@@ -12,6 +12,9 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
+  USER_DETAIL_REQUEST,
+  USER_DETAIL_SUCCESS,
+  USER_DETAIL_FAIL,
 } from "../constants/userConstant";
 import {
   removeLocalStorage,
@@ -61,6 +64,38 @@ export const userLogin = (profile, credential) => async (dispatch) => {
     );
     dispatch({
       type: USER_LOGIN_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
+
+export const getUser = (uuid) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_DETAIL_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.get(`${API}/user/${uuid}`, config);
+    dispatch({
+      type: USER_DETAIL_SUCCESS,
+      payload: data,
+    });
+  } catch (err) {
+    toast.error(
+      err.response && err.response.data.message
+        ? err.response.data.message
+        : err.message,
+      {
+        autoClose: 700,
+      }
+    );
+    dispatch({
+      type: USER_DETAIL_FAIL,
       payload:
         err.response && err.response.data.message
           ? err.response.data.message

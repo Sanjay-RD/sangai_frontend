@@ -29,7 +29,7 @@ const Footer = () => {
           <div>
             <ul className="text-primaryDark">
               <li className="">
-                <Link href="/">
+                <Link href="/about-us">
                   <a>About Us</a>
                 </Link>
               </li>
