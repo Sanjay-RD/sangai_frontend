@@ -21,7 +21,7 @@ const OfferDriveSangai = () => {
             </div>
             <Container>
                 <HelpOfferDriveSangaiLayout>
-                                      
+                    <h1 className='text-2xl text-blue-700 font-bold'>You can get the info of offer and drive at sangai </h1>              
                 </HelpOfferDriveSangaiLayout>
             </Container>
             <Footer />

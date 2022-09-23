@@ -36,7 +36,7 @@ const HowPassengerBook = ({ getHelp }) => {
 };
 
 export async function getStaticProps() {
-  const getHelp = await axios.get(`${API}/help/choosing-route`);
+  const getHelp = await axios.get(`${API}/help/how-passenger-book`);
   return {
     props: {
       getHelp: getHelp.data,

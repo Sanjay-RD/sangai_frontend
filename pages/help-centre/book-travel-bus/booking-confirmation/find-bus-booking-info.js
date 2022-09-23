@@ -4,9 +4,10 @@ import Container from '../../../../components/Container'
 import Footer from '../../../../components/Footer'
 import Navbar from '../../../../components/Navbar'
 import HelpBookTravelBusLayout from '../../../../components/help-components/HelpBookTravelBusLayout'
+import { API } from '../../../../config'
+import axios from 'axios'
 
-
-const FindBusBookingInfo = () => {
+const FindBusBookingInfo = ({ getHelp }) => {
     return (
         <div>
             <Navbar />
@@ -21,7 +22,12 @@ const FindBusBookingInfo = () => {
             </div>
             <Container>
                 <HelpBookTravelBusLayout>
-                    <h1 className="text-blue-900 text-2xl font-bold">Find your bus booking info</h1>                   
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: getHelp.description,
+                        }}
+                        className="description"
+                    ></div>
                 </HelpBookTravelBusLayout>
             </Container>
             <Footer />
@@ -29,5 +35,13 @@ const FindBusBookingInfo = () => {
 
     )
 }
+export async function getStaticProps() {
+    const getHelp = await axios.get(`${API}/help/find-bus-booking-info`);
+    return {
+      props: {
+        getHelp: getHelp.data,
+      },
+    };
+  }
 
 export default FindBusBookingInfo

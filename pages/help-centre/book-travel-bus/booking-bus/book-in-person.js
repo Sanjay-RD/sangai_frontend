@@ -4,8 +4,9 @@ import Container from '../../../../components/Container'
 import Footer from '../../../../components/Footer'
 import HelpBookTravelBusLayout from '../../../../components/help-components/HelpBookTravelBusLayout'
 import Navbar from '../../../../components/Navbar'
-
-const BookingInPerson = () => {
+import { API } from '../../../../config'
+import axios from 'axios'
+const BookingInPerson = ({ getHelp }) => {
     return (
         <div>
             <Navbar />
@@ -20,7 +21,12 @@ const BookingInPerson = () => {
             </div>
             <Container>
                 <HelpBookTravelBusLayout>
-                    <h1 className="text-blue-900 text-2xl font-bold">Can I book a bus in person?</h1>                   
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: getHelp.description,
+                        }}
+                        className="description"
+                    ></div>
                 </HelpBookTravelBusLayout>
             </Container>
             <Footer />
@@ -28,5 +34,13 @@ const BookingInPerson = () => {
 
     )
 }
+export async function getStaticProps() {
+    const getHelp = await axios.get(`${API}/help/book-in-person`);
+    return {
+      props: {
+        getHelp: getHelp.data,
+      },
+    };
+  }
 
 export default BookingInPerson

@@ -1,11 +1,13 @@
+import axios from 'axios'
 import Image from 'next/image'
 import React from 'react'
 import Container from '../../../../components/Container'
 import Footer from '../../../../components/Footer'
 import HelpBookTravelSangaiLayout from '../../../../components/help-components/HelpBookTravelSangaiLayout'
 import Navbar from '../../../../components/Navbar'
+import { API } from '../../../../config'
 
-const PayingSangaiRide = () => {
+const PayingSangaiRide = ({ getHelp }) => {
     return (
         <div>
             <Navbar />
@@ -20,7 +22,12 @@ const PayingSangaiRide = () => {
             </div>
             <Container>
                 <HelpBookTravelSangaiLayout>
-                    <h1 className="text-blue-900 text-2xl font-bold">Paying for Sangai ride</h1>                   
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: getHelp.description,
+                        }}
+                        className="description"
+                    ></div>
                 </HelpBookTravelSangaiLayout>
             </Container>
             <Footer />
@@ -28,5 +35,13 @@ const PayingSangaiRide = () => {
 
     )
 }
+export async function getStaticProps() {
+    const getHelp = await axios.get(`${API}/help/paying-sangai-ride`);
+    return {
+      props: {
+        getHelp: getHelp.data,
+      },
+    };
+  }
 
 export default PayingSangaiRide

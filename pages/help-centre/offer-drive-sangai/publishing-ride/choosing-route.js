@@ -22,9 +22,6 @@ const ChoosingRoute = ({ getHelp }) => {
       </div>
       <Container>
         <HelpOfferDriveSangaiLayout>
-          {/* <h1 className="text-blue-900 text-2xl font-bold">
-            Choosing your route
-          </h1> */}
           <div
             dangerouslySetInnerHTML={{
               __html: getHelp.description,
@@ -39,7 +36,6 @@ const ChoosingRoute = ({ getHelp }) => {
 };
 
 export async function getStaticProps() {
-  // const { search, sort, category } = query;
   const getHelp = await axios.get(`${API}/help/choosing-route`);
   return {
     props: {

@@ -21,7 +21,8 @@ const BookTravelSangai = () => {
             </div>
             <Container>
                 <HelpBookTravelSangaiLayout>
-                                      
+
+                    <h1 className='text-2xl text-blue-700 font-bold'>You can get the info of book and travel by sangai </h1>
                 </HelpBookTravelSangaiLayout>
             </Container>
             <Footer />
