@@ -5,8 +5,9 @@ import FeedbackForm from '../../../../components/FeedbackForm'
 import Footer from '../../../../components/Footer'
 import HelpBookTravelBusLayout from '../../../../components/help-components/HelpBookTravelBusLayout'
 import Navbar from '../../../../components/Navbar'
-
-const ChoosingBusSeat = () => {
+import { API } from '../../../../config'
+import axios from 'axios'
+const ChoosingBusSeat = ({ getHelp }) => {
     return (
         <div>
             <Navbar />
@@ -21,14 +22,27 @@ const ChoosingBusSeat = () => {
             </div>
             <Container>
                 <HelpBookTravelBusLayout>
-                    <h1 className="text-blue-900 text-2xl font-bold">Choosing your bus seat</h1>                   
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: getHelp.description,
+                        }}
+                        className="description"
+                    ></div>
                 </HelpBookTravelBusLayout>
-                <FeedbackForm/>
+                <FeedbackForm />
             </Container>
             <Footer />
         </div>
 
     )
 }
+export async function getStaticProps() {
+    const getHelp = await axios.get(`${API}/help/choosing-bus-seat`);
+    return {
+      props: {
+        getHelp: getHelp.data,
+      },
+    };
+  }
 
 export default ChoosingBusSeat

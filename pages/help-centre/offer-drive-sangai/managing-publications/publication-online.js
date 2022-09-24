@@ -36,8 +36,7 @@ const PublicationOnline = ({ getHelp }) => {
 };
 
 export async function getStaticProps() {
-  // const { search, sort, category } = query;
-  const getHelp = await axios.get(`${API}/help/choosing-route`);
+  const getHelp = await axios.get(`${API}/help/publication-online`);
   return {
     props: {
       getHelp: getHelp.data,

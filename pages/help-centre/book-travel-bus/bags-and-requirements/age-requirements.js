@@ -4,9 +4,11 @@ import Container from '../../../../components/Container'
 import Footer from '../../../../components/Footer'
 import Navbar from '../../../../components/Navbar'
 import HelpBookTravelBusLayout from '../../../../components/help-components/HelpBookTravelBusLayout'
+import { API } from '../../../../config'
+import axios from 'axios'
 
 
-const AgeRequirements = () => {
+const AgeRequirements = ({ getHelp }) => {
     return (
         <div>
             <Navbar />
@@ -21,7 +23,12 @@ const AgeRequirements = () => {
             </div>
             <Container>
                 <HelpBookTravelBusLayout>
-                    <h1 className="text-blue-900 text-2xl font-bold">Age requirements</h1>                   
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: getHelp.description,
+                        }}
+                        className="description"
+                    ></div>
                 </HelpBookTravelBusLayout>
             </Container>
             <Footer />
@@ -29,5 +36,13 @@ const AgeRequirements = () => {
 
     )
 }
+export async function getStaticProps() {
+    const getHelp = await axios.get(`${API}/help/age-requirements`);
+    return {
+      props: {
+        getHelp: getHelp.data,
+      },
+    };
+  }
 
 export default AgeRequirements

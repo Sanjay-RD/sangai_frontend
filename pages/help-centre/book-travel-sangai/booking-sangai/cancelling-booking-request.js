@@ -5,7 +5,7 @@ import Footer from '../../../../components/Footer'
 import HelpBookTravelSangaiLayout from '../../../../components/help-components/HelpBookTravelSangaiLayout'
 import Navbar from '../../../../components/Navbar'
 
-const CancellingBookingRequest = () => {
+const CancellingBookingRequest = ({ getHelp }) => {
     return (
         <div>
             <Navbar />
@@ -20,7 +20,12 @@ const CancellingBookingRequest = () => {
             </div>
             <Container>
                 <HelpBookTravelSangaiLayout>
-                    <h1 className="text-blue-900 text-2xl font-bold">Cancelling a booking request</h1>                   
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: getHelp.description,
+                        }}
+                        className="description"
+                    ></div>
                 </HelpBookTravelSangaiLayout>
             </Container>
             <Footer />
@@ -28,5 +33,13 @@ const CancellingBookingRequest = () => {
 
     )
 }
+export async function getStaticProps() {
+    const getHelp = await axios.get(`${API}/help/cancelling-booking-request`);
+    return {
+      props: {
+        getHelp: getHelp.data,
+      },
+    };
+  }
 
 export default CancellingBookingRequest

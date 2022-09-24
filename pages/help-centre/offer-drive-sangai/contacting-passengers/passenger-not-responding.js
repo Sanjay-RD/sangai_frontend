@@ -1,11 +1,13 @@
+import axios from 'axios'
 import Image from 'next/image'
 import React from 'react'
 import Container from '../../../../components/Container'
 import Footer from '../../../../components/Footer'
 import HelpOfferDriveSangaiLayout from '../../../../components/help-components/HelpOfferDriveSangaiLayout'
 import Navbar from '../../../../components/Navbar'
+import { API } from '../../../../config'
 
-const PassengerNotResponding = () => {
+const PassengerNotResponding = ({ getHelp }) => {
     return (
         <div>
             <Navbar />
@@ -20,7 +22,12 @@ const PassengerNotResponding = () => {
             </div>
             <Container>
                 <HelpOfferDriveSangaiLayout>
-                    <h1 className="text-blue-900 text-2xl font-bold">If the passenger is not responding</h1>                   
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: getHelp.description,
+                        }}
+                        className="description"
+                    ></div>
                 </HelpOfferDriveSangaiLayout>
             </Container>
             <Footer />
@@ -28,5 +35,13 @@ const PassengerNotResponding = () => {
 
     )
 }
+export async function getStaticProps() {
+    const getHelp = await axios.get(`${API}/help/passenger-not-responding`);
+    return {
+      props: {
+        getHelp: getHelp.data,
+      },
+    };
+  }
 
 export default PassengerNotResponding

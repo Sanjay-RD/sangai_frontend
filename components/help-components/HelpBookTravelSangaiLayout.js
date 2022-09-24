@@ -6,7 +6,7 @@ const HelpBookTravelSangaiLayout = ({ children }) => {
         <div className="flex divide-x-2" >
             <div className="w-1/4"><HelpBookTravelSangaiSidebar /></div>
             
-            <div className="w-3/4 ml-2 ">{children}</div>
+            <div className="w-3/4 pl-7 ml-5">{children}</div>
         </div >
 
     );

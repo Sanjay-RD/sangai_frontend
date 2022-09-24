@@ -106,20 +106,6 @@ const HelpOfferDriveSangaiSidebar = () => {
           {isManagingPublicationsShown && (
             <ul className="my-2">
               <li className="mb-2 ml-3 ">
-                <Link href="/help-centre/offer-drive-sangai/managing-publications/rides-price">
-                  <h1
-                    className={
-                      urlRealPath ===
-                      "/help-centre/offer-drive-sangai/managing-publications/rides-price"
-                        ? "text-md cursor-pointer underline"
-                        : "text-md cursor-pointer"
-                    }
-                  >
-                    Why your ride's price may look different?
-                  </h1>
-                </Link>
-              </li>
-              <li className="mb-2 ml-3 ">
                 <Link href="/help-centre/offer-drive-sangai/managing-publications/publication-online">
                   <h1
                     className={

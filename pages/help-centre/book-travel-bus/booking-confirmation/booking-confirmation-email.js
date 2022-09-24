@@ -4,10 +4,11 @@ import Container from '../../../../components/Container'
 import Footer from '../../../../components/Footer'
 import HelpBookTravelBusLayout from '../../../../components/help-components/HelpBookTravelBusLayout'
 import Navbar from '../../../../components/Navbar'
+import { API } from '../../../../config'
+import axios from 'axios'
 
 
-
-const BookingConfiramtionEmail = () => {
+const BookingConfiramtionEmail = ({ getHelp }) => {
     return (
         <div>
             <Navbar />
@@ -22,7 +23,12 @@ const BookingConfiramtionEmail = () => {
             </div>
             <Container>
                 <HelpBookTravelBusLayout>
-                    <h1 className="text-blue-900 text-2xl font-bold">If you didn't receive a booking confirmation email</h1>                   
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: getHelp.description,
+                        }}
+                        className="description"
+                    ></div>
                 </HelpBookTravelBusLayout>
             </Container>
             <Footer />
@@ -30,5 +36,13 @@ const BookingConfiramtionEmail = () => {
 
     )
 }
+export async function getStaticProps() {
+    const getHelp = await axios.get(`${API}/help/booking-confirmation-email`);
+    return {
+      props: {
+        getHelp: getHelp.data,
+      },
+    };
+  }
 
 export default BookingConfiramtionEmail
