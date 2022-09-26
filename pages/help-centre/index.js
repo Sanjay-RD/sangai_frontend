@@ -8,7 +8,7 @@ import Footer from "../../components/Footer";
 import { API } from "../../config";
 import Link from "next/link";
 
-const HelpCentre = ({ getFAQ }) => {
+const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookingConfirmed,cancellingBookingRequest,seatAssignment }) => {
   return (
     <div>
       <Navbar />
@@ -46,12 +46,16 @@ const HelpCentre = ({ getFAQ }) => {
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">Article 1</h5>
-                <p class="mb-3 font-normal text-lg text-gray-700">
-                  Here are the biggest enterprise technology acquisitions of
-                  2021 so far, in reverse chronological order.
-                </p>
-                <Link href="/help-centre/booking-bus/fares-schedules/bus-departure-arrival">
+                <h5 class="mb-2 text-xl font-bold text-gray-900">{chooseRoute.tag}</h5>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: chooseRoute.description.split(" ")
+                    .slice(0, 20)
+                    .join(" ") + "...",
+                  }}
+                  className="mb-3 font-normal text-lg text-gray-700"
+                ></div>
+                <Link href="/help-centre/offer-drive-sangai/publishing-ride/choosing-route">
                   <a class="inline-flex items-center py-1 text-lg font-medium text-center text-black">
                     Read more
                     <svg
@@ -88,12 +92,16 @@ const HelpCentre = ({ getFAQ }) => {
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">Article 1</h5>
-                <p class="mb-3 font-normal text-lg text-gray-700">
-                  Here are the biggest enterprise technology acquisitions of
-                  2021 so far, in reverse chronological order.
-                </p>
-                <Link href="/help-centre/booking-bus/fares-schedules/bus-departure-arrival">
+                <h5 class="mb-2 text-xl font-bold text-gray-900">{howToSearch.tag}</h5>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: howToSearch.description.split(" ")
+                    .slice(0, 20)
+                    .join(" ") + "...",
+                  }}
+                  className="mb-3 font-normal text-lg text-gray-700"
+                ></div>
+                <Link href="/help-centre/book-travel-sangai/searching-and-booking/how-to-search">
                   <a class="inline-flex items-center py-1 text-lg font-medium text-center text-black">
                     Read more
                     <svg
@@ -130,12 +138,16 @@ const HelpCentre = ({ getFAQ }) => {
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">Article 1</h5>
-                <p class="mb-3 font-normal text-lg text-gray-700">
-                  Here are the biggest enterprise technology acquisitions of
-                  2021 so far, in reverse chronological order.
-                </p>
-                <Link href="/help-centre/booking-bus/fares-schedules/bus-departure-arrival">
+                <h5 class="mb-2 text-xl font-bold text-gray-900">{travellingWithChildren.tag}</h5>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: travellingWithChildren.description.split(" ")
+                    .slice(0, 20)
+                    .join(" ") + "...",
+                  }}
+                  className="mb-3 font-normal text-lg text-gray-700"
+                ></div>
+                <Link href="/help-centre/book-travel-bus/bags-and-requirements/travelling-with-children">
                   <a class="inline-flex items-center py-1 text-lg font-medium text-center text-black">
                     Read more
                     <svg
@@ -172,12 +184,16 @@ const HelpCentre = ({ getFAQ }) => {
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">Article 1</h5>
-                <p class="mb-3 font-normal text-lg text-gray-700">
-                  Here are the biggest enterprise technology acquisitions of
-                  2021 so far, in reverse chronological order.
-                </p>
-                <Link href="/help-centre/booking-bus/fares-schedules/bus-departure-arrival">
+                <h5 class="mb-2 text-xl font-bold text-gray-900">{checkBookingConfirmed.tag}</h5>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: checkBookingConfirmed.description.split(" ")
+                    .slice(0, 20)
+                    .join(" ") + "...",
+                  }}
+                  className="mb-3 font-normal text-lg text-gray-700"
+                ></div>
+                <Link href="/help-centre/offer-drive-sangai/booking-status-ride-info/check-booking-confirmed">
                   <a class="inline-flex items-center py-1 text-lg font-medium text-center text-black">
                     Read more
                     <svg
@@ -214,12 +230,16 @@ const HelpCentre = ({ getFAQ }) => {
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">Article 1</h5>
-                <p class="mb-3 font-normal text-lg text-gray-700">
-                  Here are the biggest enterprise technology acquisitions of
-                  2021 so far, in reverse chronological order.
-                </p>
-                <Link href="/help-centre/booking-bus/fares-schedules/bus-departure-arrival">
+                <h5 class="mb-2 text-xl font-bold text-gray-900">{cancellingBookingRequest.tag}</h5>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: cancellingBookingRequest.description.split(" ")
+                    .slice(0, 20)
+                    .join(" ") + "...",
+                  }}
+                  className="mb-3 font-normal text-lg text-gray-700"
+                ></div>
+                <Link href="/help-centre/book-travel-sangai/booking-sangai/cancelling-booking-request">
                   <a class="inline-flex items-center py-1 text-lg font-medium text-center text-black">
                     Read more
                     <svg
@@ -256,12 +276,16 @@ const HelpCentre = ({ getFAQ }) => {
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">Article 1</h5>
-                <p class="mb-3 font-normal text-lg text-gray-700">
-                  Here are the biggest enterprise technology acquisitions of
-                  2021 so far, in reverse chronological order.
-                </p>
-                <Link href="/help-centre/booking-bus/fares-schedules/bus-departure-arrival">
+                <h5 class="mb-2 text-xl font-bold text-gray-900">{seatAssignment.tag}</h5>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: seatAssignment.description.split(" ")
+                    .slice(0, 20)
+                    .join(" ") + "...",
+                  }}
+                  className="mb-3 font-normal text-lg text-gray-700"
+                ></div>
+                <Link href="/help-centre/book-travel-bus/booking-confirmation/seat-assignment">
                   <a class="inline-flex items-center py-1 text-lg font-medium text-center text-black">
                     Read more
                     <svg
@@ -333,12 +357,22 @@ const HelpCentre = ({ getFAQ }) => {
   );
 };
 
-export async function getServerSideProps() {
-  // const { search, sort, category } = query;
-  const getFAQ = await axios.get(`${API}/faq/isPublished`);
+
+export async function getStaticProps() {
+  const chooseRoute = await axios.get(`${API}/help/choosing-route`);
+  const howToSearch = await axios.get(`${API}/help/how-to-search`);
+  const travellingWithChildren = await axios.get(`${API}/help/travelling-with-children`);
+  const checkBookingConfirmed = await axios.get(`${API}/help/check-booking-confirmed`);
+  const cancellingBookingRequest = await axios.get(`${API}/help/cancelling-booking-request`);
+  const seatAssignment = await axios.get(`${API}/help/seat-assignment`);
   return {
     props: {
-      getFAQ: getFAQ.data,
+      chooseRoute: chooseRoute.data,
+      howToSearch: howToSearch.data,
+      travellingWithChildren: travellingWithChildren.data,
+      checkBookingConfirmed: checkBookingConfirmed.data,
+      cancellingBookingRequest: cancellingBookingRequest.data,
+      seatAssignment: seatAssignment.data,
     },
   };
 }
