@@ -5,15 +5,22 @@ import Navbar from "../components/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import axios from "axios";
-import { API } from "../config";
+import { API, baseUrl } from "../config";
 import moment from "moment";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { getRide } from "../redux/actions/rideAction";
+import { createRequest } from "../redux/actions/requestAction";
+import { isAuth } from "../redux/utils";
 
 const search = ({ rides, searchRide }) => {
   console.log("rides", rides);
   const dispatch = useDispatch();
   const router = useRouter();
+  const userLoginState = useSelector((state) => state.userLogin);
+  const { userInfo } = userLoginState;
+  // const { user: userData } = userInfo;
+  console.log("userId", userInfo && userInfo.user.id);
 
   // console.log("path", router);
   const urlLength = router.asPath.split("&&");
@@ -26,6 +33,13 @@ const search = ({ rides, searchRide }) => {
   const [activeTag, setActiveTag] = useState("all");
   const [isUrlActive, setIsUrlActive] = useState(false);
   const [isDetailShow, setIsDetailShow] = useState(false);
+  const [seats, setSeats] = useState(1);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const listRide = useSelector((state) => state.listRide);
+  const { ride } = listRide;
+  const rideDetail = ride && ride[0];
+  console.log("rideDetail", rideDetail && rideDetail);
+  console.log("rideDetail87687", rideDetail && rideDetail.rides.request);
   const handleSubmitSearch = (e) => {
     e.preventDefault();
     console.log("first");
@@ -45,6 +59,14 @@ const search = ({ rides, searchRide }) => {
       console.log("Longitude is :", position.coords.longitude);
     });
   }, []);
+
+  useEffect(() => {
+    if (isAuth()) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     setHeading(router.query.heading);
@@ -67,6 +89,11 @@ const search = ({ rides, searchRide }) => {
       `/search?heading=${heading}&&leaving=${leaving}&&date=${date}&&seat=${seat}&&vehicle=${value}`
     );
     setActiveTag(value);
+  };
+
+  const handleSubmitRequest = (userId, rideId, riderId) => {
+    console.log("first");
+    dispatch(createRequest(userId, rideId, riderId, seats));
   };
 
   return (
@@ -129,141 +156,6 @@ const search = ({ rides, searchRide }) => {
         {/* line */}
         {/* show ride available */}
         <Container>
-          {/* <div className="py-3">
-            {searchRide.length > 0 ? (
-              <div className="px-32">
-                <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200">
-                  <ul class="grid grid-cols-4 -mb-px">
-                    <li class="mr-2">
-                      <a
-                        href="#"
-                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 w-full"
-                      >
-                        All
-                      </a>
-                    </li>
-                    <li class="mr-2">
-                      <a
-                        href="#"
-                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 w-full"
-                      >
-                        Bike
-                      </a>
-                    </li>
-                    <li class="mr-2">
-                      <a
-                        href="#"
-                        class="inline-block p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 active w-full"
-                        aria-current="page"
-                      >
-                        Car
-                      </a>
-                    </li>
-                    <li class="mr-2">
-                      <a
-                        href="#"
-                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 w-full"
-                      >
-                        Bus
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="">
-                  {searchRide.map((value) => (
-                    <div
-                      className="border rounded-xl  my-5"
-                      style={{
-                        boxShadow: "3px 3px 23px -8px rgba(117,165,105,0.59)",
-                      }}
-                    >
-                      <div className="flex justify-between px-6 py-4">
-                        <div>
-                          <h1>
-                            {value.leaving} to {value.heading}
-                          </h1>
-                          <p>{moment(value.date).format("MMMM Do YYYY")}</p>
-                          <p>{value.seat} Seats</p>
-                        </div>
-                        <div>
-                          <h1>Rs. {value.price}</h1>
-                        </div>
-                      </div>
-                      <div className="border-t p-3 flex space-x-3">
-                        <img
-                          src={value.users.picture}
-                          alt=""
-                          width={50}
-                          height={50}
-                          className="rounded-full"
-                        />
-                        <div>
-                          <h1>{value.users.name}</h1>
-                          <h1>{value.users.email}</h1>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <>
-                <h1>Available Ride</h1>
-                {rides.map((value) => (
-                  <Link
-                    href={`/search?heading=${value.heading}&&leaving=${value.leaving}&&date=&&seat=`}
-                  >
-                    <a className="">
-                      <div className="flex justify-between items-center hover:bg-gray-100 px-6 py-2 my-3">
-                        <div>
-                          <h1 className="flex space-x-3">
-                            <span>{value.leaving} </span>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class="w-6 h-6"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                              />
-                            </svg>
-                            <span>{value.heading}</span>
-                          </h1>
-                          <p>
-                            {moment(value.date).format("MMMM Do YYYY")},{" "}
-                            {value.seat} passenger
-                          </p>
-                        </div>
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-6 h-6"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    </a>
-                  </Link>
-                ))}
-              </>
-            )}
-          </div> */}
-          {/*  */}
           <div className="py-3 px-32">
             {isDetailShow ? (
               <>
@@ -276,14 +168,16 @@ const search = ({ rides, searchRide }) => {
                 >
                   <div className="border-b p-3 flex space-x-3 items-center">
                     <img
-                      src="/sharing.jpeg"
+                      src={rideDetail && rideDetail.rides.users.picture}
                       alt=""
                       width={50}
                       height={50}
                       className="rounded-full"
                     />
                     <div>
-                      <h1 className="text-xl">Sanjay Rishidev</h1>
+                      <h1 className="text-xl">
+                        {rideDetail && rideDetail.rides.users.name}
+                      </h1>
                     </div>
                   </div>
                   <div className="border-b flex justify-between px-6 py-4">
@@ -291,18 +185,33 @@ const search = ({ rides, searchRide }) => {
                       <div className="flex items-center">
                         <h2 className="text-lg font-medium">Location : </h2>
                         <div className="flex space-x-2 items-center">
-                          <h2 className="text-lg">bhaktapur</h2>
-                          <span>to</span> <h2 className="text-lg">kathmandu</h2>
+                          <h2 className="text-lg">
+                            {rideDetail && rideDetail.rides.leaving}
+                          </h2>
+                          <span>to</span>{" "}
+                          <h2 className="text-lg">
+                            {rideDetail && rideDetail.rides.heading}
+                          </h2>
                         </div>
                       </div>
-                      <h1 className="text-lg">Date : 2234/32434/34</h1>
-                      <p className="text-lg">Availalble Seats : 2 Seats</p>
+                      <h1 className="text-lg">
+                        Date :{" "}
+                        {moment(rideDetail && rideDetail.rides.date).format(
+                          "MMMM Do YYYY"
+                        )}
+                      </h1>
+                      <p className="text-lg">
+                        Availalble Seats : {rideDetail && rideDetail.rides.seat}{" "}
+                        Seats
+                      </p>
                     </div>
                     <div>
-                      <h1 className="text-2xl">Rs. 2384</h1>
+                      <h1 className="text-2xl">
+                        Rs. {rideDetail && rideDetail.rides.price}
+                      </h1>
                     </div>
                   </div>
-                  <div className="px-6 py-4">
+                  <div className="px-6 py-4 border-b">
                     <div className="grid grid-cols-12 gap-7">
                       <div className="col-span-4">
                         <button
@@ -409,10 +318,23 @@ const search = ({ rides, searchRide }) => {
                               <h1 className="text-xl">Basic Information</h1>
                             </div>
                             <div className="px-6 py-5">
-                              <h1>First Name : Sanjay RD</h1>
-                              <h1>Last Name : Sanjay RD</h1>
-                              <h1>Date of Birth : 87349/97234</h1>
-                              <h1>Email : rishidevsanjay9@gmail.com</h1>
+                              <h1>
+                                First Name :{" "}
+                                {rideDetail && rideDetail.driverInfo.first_name}
+                              </h1>
+                              <h1>
+                                Last Name :{" "}
+                                {rideDetail && rideDetail.driverInfo.last_name}
+                              </h1>
+                              <h1>
+                                Date of Birth :{" "}
+                                {rideDetail &&
+                                  rideDetail.driverInfo.date_of_birth}
+                              </h1>
+                              <h1>
+                                Email :{" "}
+                                {rideDetail && rideDetail.driverInfo.email}
+                              </h1>
                             </div>
                           </div>
                         )}
@@ -422,14 +344,84 @@ const search = ({ rides, searchRide }) => {
                               <h1 className="text-xl">Driver License</h1>
                             </div>
                             <div className="px-6 py-5">
-                              <h1>Driving License Number : 87329429</h1>
-                              <div>
-                                <h1>License Front Image</h1>
-                                <img src="/sharing.jpeg" alt="" />
+                              <h1>
+                                Driving License Number :{" "}
+                                {rideDetail &&
+                                  rideDetail.licenseInfo.license_number}
+                              </h1>
+                              <div className="flex space-x-3">
+                                <h1>License Front Image : </h1>
+                                <span>
+                                  {rideDetail &&
+                                  rideDetail.licenseInfo.isVerified ? (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-6 h-6 text-primary"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                  ) : (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-6 h-6 text-red-600"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                  )}
+                                </span>
                               </div>
-                              <div>
-                                <h1>License Back Image</h1>
-                                <img src="/sharing.jpeg" alt="" />
+                              <div className="flex space-x-3">
+                                <h1>License Back Image : </h1>
+                                <span>
+                                  {rideDetail &&
+                                  rideDetail.licenseInfo.isVerified ? (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-6 h-6 text-primary"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                  ) : (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-6 h-6 text-red-600"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                  )}
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -440,9 +432,42 @@ const search = ({ rides, searchRide }) => {
                               <h1 className="text-xl">ID Information</h1>
                             </div>
                             <div className="px-6 py-5">
-                              <div>
-                                <h1>User And License Image</h1>
-                                <img src="/sharing.jpeg" alt="" />
+                              <div className="flex space-x-3">
+                                <h1>Id Information</h1>
+                                <span>
+                                  {rideDetail &&
+                                  rideDetail.IdInfo.isVerified ? (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-6 h-6 text-primary"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                  ) : (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-6 h-6 text-red-600"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                  )}
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -453,21 +478,147 @@ const search = ({ rides, searchRide }) => {
                               <h1 className="text-xl">Vehicle Information</h1>
                             </div>
                             <div className="px-6 py-5">
-                              <h1>Vehicle Type : car</h1>
+                              <h1>
+                                Vehicle Type :{" "}
+                                {rideDetail &&
+                                  rideDetail.vehicleInfo.select_vehicle}
+                              </h1>
+                              <h1>
+                                Vehicle Number Plate :{" "}
+                                {rideDetail &&
+                                  rideDetail.vehicleInfo.number_plate}
+                              </h1>
                               <div>
                                 <h1>Vehicle Photo</h1>
-                                <img src="/sharing.jpeg" alt="" />
+                                <img
+                                  src={`${baseUrl}/${
+                                    rideDetail &&
+                                    rideDetail.vehicleInfo.vehicle_image
+                                  }`}
+                                  alt=""
+                                />
                               </div>
-                              <div>
+                              <div className="flex space-x-3">
                                 <h1>Billbook Photo</h1>
-                                <img src="/sharing.jpeg" alt="" />
+                                <span>
+                                  {rideDetail &&
+                                  rideDetail.vehicleInfo.isVerified ? (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-6 h-6 text-primary"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                  ) : (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-6 h-6 text-red-600"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                  )}
+                                </span>
                               </div>
-                              <h1>Vehicle Type : car</h1>
                             </div>
                           </div>
                         )}
                       </div>
                     </div>
+                  </div>
+                  <div className="px-6 py-4 flex justify-center items-center space-x-5">
+                    <div className="flex justify-between items-center space-x-5">
+                      <div
+                        className="border-2 rounded-[100%] h-8 w-8 flex justify-center border-primary cursor-pointer items-center"
+                        onClick={() => seats > 1 && setSeats(seats - 1)}
+                      >
+                        <span className="text-3xl font-light text-primary items-center">
+                          -
+                        </span>
+                      </div>
+                      <span className="text-2xl text-primaryDark">{seats}</span>
+                      <div
+                        className="border-2 rounded-[100%] h-8 w-8 flex justify-center border-primary cursor-pointer items-center"
+                        onClick={() => {
+                          rideDetail &&
+                            rideDetail.rides.seat > seats &&
+                            setSeats(seats + 1);
+                        }}
+                      >
+                        <span className="text-2xl font-light text-primary items-center">
+                          +
+                        </span>
+                      </div>
+                    </div>
+                    {isLoggedIn ? (
+                      rideDetail && rideDetail.rides.request.length > 0 ? (
+                        <>
+                          {console.log(
+                            "filterdata",
+                            rideDetail.rides.request.filter(
+                              (value) => value.userId === userInfo.user.id
+                            )
+                          )}
+                          {rideDetail.rides.request.filter(
+                            (value) => value.userId === userInfo.user.id
+                          ).length > 0 ? (
+                            <button
+                              className="bg-blue-600 px-5 py-2 rounded-xl text-white"
+                              disabled
+                            >
+                              Request Sent
+                            </button>
+                          ) : (
+                            <button
+                              className="bg-primary px-5 py-2 rounded-xl text-white"
+                              onClick={() =>
+                                handleSubmitRequest(
+                                  userInfo && userInfo.user.id,
+                                  rideDetail && rideDetail.rides.id,
+                                  rideDetail && rideDetail.rides.userId
+                                )
+                              }
+                            >
+                              Request
+                            </button>
+                          )}
+                        </>
+                      ) : (
+                        <button
+                          className="bg-primary px-5 py-2 rounded-xl text-white"
+                          onClick={() =>
+                            handleSubmitRequest(
+                              userInfo && userInfo.user.id,
+                              rideDetail && rideDetail.rides.id,
+                              rideDetail && rideDetail.rides.userId
+                            )
+                          }
+                        >
+                          Request
+                        </button>
+                      )
+                    ) : (
+                      <Link href="/login">
+                        <a className="bg-primary px-5 py-2 rounded-xl text-white cursor-pointer">
+                          Request
+                        </a>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </>
@@ -622,7 +773,12 @@ const search = ({ rides, searchRide }) => {
                 </div>
                 {rides.map((value) => (
                   <>
-                    <div onClick={() => setIsDetailShow(true)}>
+                    <div
+                      onClick={() => (
+                        setIsDetailShow(true),
+                        dispatch(getRide(value.rides.uuid))
+                      )}
+                    >
                       <div
                         className="border rounded-xl  my-5 cursor-pointer"
                         style={{

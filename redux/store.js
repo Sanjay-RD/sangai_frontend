@@ -42,6 +42,12 @@ import {
   updateVehicleReducer,
 } from "./reducers/vehicleReducer";
 
+import {
+  createRequestReducer,
+  listRequestByRideIdReducer,
+  updateRequestToAcceptReducer,
+} from "./reducers/requestReducer";
+
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userDetail: userDetailReducer,
@@ -67,6 +73,9 @@ const reducer = combineReducers({
   listVehicle: listVehicleReducer,
   createVehicle: createVehicleReducer,
   updateVehicle: updateVehicleReducer,
+  createRequest: createRequestReducer,
+  listRequestByRideId: listRequestByRideIdReducer,
+  updateRequestToAccept: updateRequestToAcceptReducer,
 });
 
 const adminInfoFromStrorage =
