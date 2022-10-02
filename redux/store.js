@@ -46,6 +46,9 @@ import {
   createRequestReducer,
   listRequestByRideIdReducer,
   updateRequestToAcceptReducer,
+  updateRequestReducer,
+  deleteRequestReducer,
+  updateRequestToPayReducer,
 } from "./reducers/requestReducer";
 
 const reducer = combineReducers({
@@ -76,6 +79,9 @@ const reducer = combineReducers({
   createRequest: createRequestReducer,
   listRequestByRideId: listRequestByRideIdReducer,
   updateRequestToAccept: updateRequestToAcceptReducer,
+  updateRequestToPay: updateRequestToPayReducer,
+  updateRequest: updateRequestReducer,
+  deleteRequest: deleteRequestReducer,
 });
 
 const adminInfoFromStrorage =

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Container from "../components/Container";
 import Navbar from "../components/Navbar";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import "rc-time-picker/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -86,7 +85,7 @@ const PublishRode = () => {
           seats,
           time,
           1,
-          1
+          isAuth().user.id
         )
       );
     } else {

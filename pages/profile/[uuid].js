@@ -9,10 +9,17 @@ import Link from "next/link";
 import Footer from "../../components/Footer";
 import { getRide } from "../../redux/actions/rideAction";
 import {
+  deleteRequest,
   getAllRequestByRideId,
+  updateRequest,
   updateRequestToAccept,
+  updateRequestToPay,
 } from "../../redux/actions/requestAction";
 import { useEffect } from "react";
+import KhaltiCheckout from "khalti-checkout-web";
+import Router from "next/router";
+import { isAuth } from "../../redux/utils";
+import ModalWrapper from "../../components/ModalWrapper";
 
 const ProfileDetail = ({ userData, requestedRide }) => {
   const dispatch = useDispatch();
@@ -28,12 +35,78 @@ const ProfileDetail = ({ userData, requestedRide }) => {
     (state) => state.updateRequestToAccept
   );
   const { success: acceptSuccess } = updateRequestToAcceptState;
+  const updateRequestSuccess = useSelector((state) => state.updateRequest);
+  const { success: requestSuccess } = updateRequestSuccess;
+  const deleteRequestSuccess = useSelector((state) => state.deleteRequest);
+  const { success: deleteSuccess } = deleteRequestSuccess;
+  const updateRequestToPayState = useSelector(
+    (state) => state.updateRequestToPay
+  );
+  const { success: paySuccess } = updateRequestToPayState;
   const [isDetailShow, setIsDetailShow] = useState(0);
   const [tabValue, setTabValue] = useState(1);
+  const [checkout, setCheckout] = useState();
+  const [seats, setSeats] = useState(1);
+  const [index, setIndex] = useState(0);
+  let [isOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   useEffect(() => {
     setIsDetailShow(-1);
-  }, [acceptSuccess]);
+    if (requestSuccess || deleteSuccess || paySuccess) {
+      Router.reload();
+    }
+  }, [acceptSuccess, requestSuccess, deleteSuccess, paySuccess]);
+
+  useEffect(() => {
+    let config = {
+      // replace this key with yours
+      publicKey: "live_public_key_546eb6da05544d7d88961db04fdb9721",
+      productIdentity: "1234567890",
+      productName: "Drogon",
+      productUrl: "http://gameofthrones.com/buy/Dragons",
+      eventHandler: {
+        onSuccess(payload) {
+          // hit merchant api for initiating verfication
+          console.log(payload);
+        },
+        // onError handler is optional
+        onError(error) {
+          // handle errors
+          console.log(error);
+        },
+        onClose() {
+          console.log("widget is closing");
+        },
+      },
+      paymentPreference: [
+        "KHALTI",
+        "EBANKING",
+        "MOBILE_BANKING",
+        "CONNECT_IPS",
+        "SCT",
+      ],
+    };
+    let checkout = new KhaltiCheckout(config);
+    setCheckout(checkout);
+  }, []);
+
+  const handlePay = (uuid) => {
+    // minimum transaction amount must be 10, i.e 1000 in paisa.
+    // checkout.show({ amount: 1000 });
+    dispatch(updateRequestToPay(uuid));
+  };
+
+  const handleUpdateRequest = (uuid) => {
+    dispatch(updateRequest(seats, uuid));
+  };
   return (
     <div>
       <Navbar />
@@ -123,6 +196,14 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                             {moment(value.rides.date).format("MMMM Do YYYY")}
                           </p>
                           <p>{value.rides.seat} Seats</p>
+                          {value.isAccept && (
+                            <div>
+                              <h1 className="text-primary">
+                                {value.seat} seat is booked{" "}
+                                {value.rides.seat - value.seat} seat Available
+                              </h1>
+                            </div>
+                          )}
                         </div>
                         <div>
                           <h1>Rs. {value.rides.price}</h1>
@@ -131,26 +212,92 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                       <div className="border-t p-3 flex justify-between items-center">
                         <div className="flex space-x-3">
                           <img
-                            src={value.users.picture}
+                            src={value.rider.picture}
                             alt=""
                             width={50}
                             height={50}
                             className="rounded-full"
                           />
                           <div>
-                            <h1>{value.users.name}</h1>
-                            <h1>{value.users.email}</h1>
+                            <h1>{value.rider.name}</h1>
+                            <h1>{value.rider.email}</h1>
                           </div>
                         </div>
                         {value.isAccept ? (
-                          <div className="px-3 py-1 bg-primary text-white rounded-lg">
-                            Your Request has been accept
+                          <div className="flex space-x-4">
+                            <button
+                              className="px-3 py-1 border rounded-lg"
+                              onClick={() => handlePay(value.uuid)}
+                            >
+                              Pay
+                            </button>
+                            <div className="px-3 py-1 bg-primary text-white rounded-lg">
+                              Your Request has been accept
+                            </div>
                           </div>
                         ) : (
                           <div className="px-3 py-1 bg-blue-700 text-white rounded-lg">
                             No Response
                           </div>
                         )}
+                      </div>
+                      <div className="border-t p-3 flex justify-between items-center">
+                        {!value.isAccept && (
+                          <div className="flex items-center space-x-3">
+                            <div className="flex justify-between items-center space-x-5">
+                              <div
+                                className="border-2 rounded-[100%] h-8 w-8 flex justify-center border-primary cursor-pointer items-center"
+                                onClick={() =>
+                                  seats > 1 &&
+                                  (setSeats(seats - 1), setIndex(i + 1))
+                                }
+                              >
+                                <span className="text-3xl font-light text-primary items-center">
+                                  -
+                                </span>
+                              </div>
+                              <span className="text-2xl text-primaryDark">
+                                {index === i + 1 ? seats : value.seat}
+                              </span>
+                              <div
+                                className="border-2 rounded-[100%] h-8 w-8 flex justify-center border-primary cursor-pointer items-center"
+                                onClick={() => {
+                                  value.rides.seat > seats &&
+                                    (setSeats(seats + 1), setIndex(i + 1));
+                                }}
+                              >
+                                <span className="text-2xl font-light text-primary items-center">
+                                  +
+                                </span>
+                              </div>
+                            </div>
+                            <button
+                              className="bg-blue-500 px-3 py-1 rounded-lg text-white"
+                              onClick={() => handleUpdateRequest(value.uuid)}
+                            >
+                              Update Request
+                            </button>
+                          </div>
+                        )}
+                        {value.isPaid && (
+                          <button
+                            className="bg-primary px-3 py-1 rounded-lg text-white"
+                            onClick={openModal}
+                          >
+                            View Raider Detail
+                          </button>
+                        )}
+                        <ModalWrapper isOpen={isOpen} closeModal={closeModal} />
+                        <button
+                          className="bg-red-500 px-3 py-1 rounded-lg text-white"
+                          onClick={() =>
+                            dispatch(
+                              deleteRequest(value.uuid, isAuth().user.id)
+                            )
+                          }
+                        >
+                          Cancle Request
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -209,17 +356,22 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                             requestRideData &&
                             requestRideData.map((value) => (
                               <div className="flex justify-between items-center px-5 py-2">
-                                <div className=" flex space-x-3">
-                                  <img
-                                    src={value.users.picture}
-                                    alt=""
-                                    width={50}
-                                    height={50}
-                                    className="rounded-full"
-                                  />
-                                  <div>
-                                    <h1>{value.users.name}</h1>
-                                    <h1>{value.users.email}</h1>
+                                <div>
+                                  <div className=" flex space-x-3">
+                                    <img
+                                      src={value.users.picture}
+                                      alt=""
+                                      width={50}
+                                      height={50}
+                                      className="rounded-full"
+                                    />
+                                    <div>
+                                      <h1>{value.users.name}</h1>
+                                      <h1>{value.users.email}</h1>
+                                    </div>
+                                  </div>
+                                  <div className="mt-3">
+                                    Booked Seat : {value.seat}
                                   </div>
                                 </div>
                                 <div>
