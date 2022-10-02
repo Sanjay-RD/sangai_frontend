@@ -1,9 +1,11 @@
+import axios from 'axios'
 import Image from 'next/image'
 import React from 'react'
 import Container from '../../../../components/Container'
 import Footer from '../../../../components/Footer'
 import HelpBookTravelSangaiLayout from '../../../../components/help-components/HelpBookTravelSangaiLayout'
 import Navbar from '../../../../components/Navbar'
+import { API } from '../../../../config'
 
 const CancellingBookingRequest = ({ getHelp }) => {
     return (
