@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { getRide } from "../redux/actions/rideAction";
 import { createRequest } from "../redux/actions/requestAction";
-import { isAuth } from "../redux/utils";
+import { getLocalStorage, isAuth, setLocalStorage } from "../redux/utils";
 
 const search = ({ rides, searchRide }) => {
   console.log("rides", rides);
@@ -40,6 +40,8 @@ const search = ({ rides, searchRide }) => {
   const rideDetail = ride && ride[0];
   console.log("rideDetail", rideDetail && rideDetail);
   console.log("rideDetail87687", rideDetail && rideDetail.rides.request);
+  const createRequestState = useSelector((state) => state.createRequest);
+  const { success: requestSuccess } = createRequestState;
   const handleSubmitSearch = (e) => {
     e.preventDefault();
     console.log("first");
@@ -59,6 +61,12 @@ const search = ({ rides, searchRide }) => {
       console.log("Longitude is :", position.coords.longitude);
     });
   }, []);
+
+  console.log(
+    "localstorage",
+    process.browser && JSON.parse(localStorage.getItem("rideData"))
+    // getLocalStorage("rideData")
+  );
 
   useEffect(() => {
     if (isAuth()) {
@@ -94,6 +102,16 @@ const search = ({ rides, searchRide }) => {
   const handleSubmitRequest = (userId, rideId, riderId) => {
     console.log("first");
     dispatch(createRequest(userId, rideId, riderId, seats));
+  };
+
+  const handleShowDetail = (isBookedFull, rideId) => {
+    if (isBookedFull) {
+      setIsDetailShow(false);
+    } else {
+      setIsDetailShow(true);
+      dispatch(getRide(rideId));
+      // setLocalStorage("rideData", { isDetailShow: true, rideId: rideId });
+    }
   };
 
   return (
@@ -204,6 +222,25 @@ const search = ({ rides, searchRide }) => {
                         Availalble Seats : {rideDetail && rideDetail.rides.seat}{" "}
                         Seats
                       </p>
+                      {rideDetail &&
+                        rideDetail.bookedSeat !== 0 &&
+                        (rideDetail &&
+                        rideDetail.bookedSeat === rideDetail.rides.seat ? (
+                          <div>
+                            <h1 className="text-primary">All Seat Is Full</h1>
+                          </div>
+                        ) : (
+                          <div>
+                            <h1 className="text-primary">
+                              {rideDetail && rideDetail.bookedSeat} seat is
+                              booked{" "}
+                              {rideDetail &&
+                                rideDetail.rides.seat -
+                                  rideDetail.bookedSeat}{" "}
+                              seat Available
+                            </h1>
+                          </div>
+                        ))}
                     </div>
                     <div>
                       <h1 className="text-2xl">
@@ -774,13 +811,27 @@ const search = ({ rides, searchRide }) => {
                 {rides.map((value) => (
                   <>
                     <div
-                      onClick={() => (
-                        setIsDetailShow(true),
-                        dispatch(getRide(value.rides.uuid))
-                      )}
+                      // onClick={value.bookedSeat !== value.rides.seat}
+                      // onClick={() => (
+                      //   value.bookedSeat === value.rides.seat
+                      //     ? setIsDetailShow(false)
+                      //     : setIsDetailShow(true),
+                      //   value.bookedSeat !== value.rides.seat &&
+                      //     dispatch(getRide(value.rides.uuid))
+                      // )}
+                      onClick={() =>
+                        handleShowDetail(
+                          value.bookedSeat === value.rides.seat,
+                          value.rides.uuid
+                        )
+                      }
                     >
                       <div
-                        className="border rounded-xl  my-5 cursor-pointer"
+                        className={
+                          value.bookedSeat === value.rides.seat
+                            ? "border rounded-xl bg-gray-100  my-5"
+                            : "border rounded-xl  my-5 cursor-pointer"
+                        }
                         style={{
                           boxShadow: "3px 3px 23px -8px rgba(117,165,105,0.59)",
                         }}
@@ -794,6 +845,23 @@ const search = ({ rides, searchRide }) => {
                               {moment(value.rides.date).format("MMMM Do YYYY")}
                             </p>
                             <p>{value.rides.seat} Seats</p>
+                            {/* <p>{value.availableSeat} Seats</p> */}
+                            {value.bookedSeat !== 0 &&
+                              (value.bookedSeat === value.rides.seat ? (
+                                <div>
+                                  <h1 className="text-primary">
+                                    All Seat Is Full
+                                  </h1>
+                                </div>
+                              ) : (
+                                <div>
+                                  <h1 className="text-primary">
+                                    {value.bookedSeat} seat is booked{" "}
+                                    {value.rides.seat - value.bookedSeat} seat
+                                    Available
+                                  </h1>
+                                </div>
+                              ))}
                           </div>
                           <div>
                             <h1>Rs. {value.rides.price}</h1>
