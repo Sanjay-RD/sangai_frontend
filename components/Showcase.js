@@ -23,7 +23,6 @@ const Showcase = () => {
 
   const handleSubmitPilot = (e) => {
     e.preventDefault();
-    console.log("pilot");
     dispatch(
       createPilot(
         name,
@@ -42,7 +41,6 @@ const Showcase = () => {
   };
   const handleSubmitMate = (e) => {
     e.preventDefault();
-    console.log("mate");
     dispatch(
       createMate(name, email, address, phone, leaving, going, date, seats)
     );
@@ -50,7 +48,7 @@ const Showcase = () => {
 
   return (
     <div>
-      <div className=" w-full h-[1000px] md:h-[70vh] overflow-hidden bg-gray-200 relative">
+      <div className=" w-full h-[30vh] sm:h-[70vh] overflow-hidden bg-gray-200 relative">
         <Image
           alt="Mountains"
           src="/showcase1.jpeg"
@@ -58,13 +56,13 @@ const Showcase = () => {
           objectFit="cover"
           layout="fill"
         />
-        <div className="absolute top-[5%] md:top-[20%] w-full text-center">
-          <h1 className="text-xl md:text-5xl text-gray-700 capitalize">
+        <div className="absolute top-[10%] md:top-[20%] w-full text-center">
+          <h1 className="text-2xl md:text-4xl text-gray-700 capitalize">
             Share your ride, Share your traveling cost.
           </h1>
-          <div className="flex justify-center items-center mt-14 space-x-10">
-            <Link href="/">
-              <a className="border px-4 py-1 rounded-lg bg-white text-lg flex items-center space-x-2">
+          <div className="flex justify-center items-center mt-16 sm:mt-14 space-x-10">
+            <Link href="/publish-ride">
+              <a className="border px-2 py-0 md:px-4  md:py-1 rounded-lg bg-white text-sm sm:text-lg flex items-center space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -83,7 +81,7 @@ const Showcase = () => {
               </a>
             </Link>
             <Link href="/search">
-              <a className="border px-4 py-1 rounded-lg bg-white text-lg items-center flex space-x-2">
+              <a className="border px-2 py-0 md:px-4  md:py-1 rounded-lg bg-white text-sm sm:text-lg items-center flex space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

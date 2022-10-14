@@ -374,7 +374,7 @@ const BecomeDriver = () => {
       <Navbar />
       <Container>
         <div>
-          <div className="grid grid-cols-12 gap-16">
+          <div className="md:grid grid-cols-12 gap-16">
             <div className="col-span-3">
               <button
                 className={

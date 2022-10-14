@@ -43,8 +43,8 @@ const login = () => {
       <Navbar />
       <Container>
         <div className="mt-10">
-          <h1 className="text-4xl text-center font-bold mb-8">
-            Login With Sangai
+          <h1 className=" text-2xl sm:text-4xl text-center font-bold mb-8">
+            Login/Register With Sangai
           </h1>
           <div className="m-auto w-[400px] space-y-5">
             <div className="buttonDiv" id="buttonDiv">
@@ -55,12 +55,12 @@ const login = () => {
                 Login with Mobile Number
               </h1>
             </div>
-            <div className="flex space-x-2">
+            {/* <div className="flex space-x-2">
               <h1>New Member?</h1>
-              <Link href="/signup">
+              <Link href="/login">
                 <a>Create Account</a>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </Container>

@@ -112,9 +112,9 @@ const ProfileDetail = ({ userData, requestedRide }) => {
       <Navbar />
       <Container>
         <div className="my-10">
-          <div className="grid grid-cols-12 gap-10">
-            <div className="col-span-3">
-              <div className="border rounded-md">
+          <div className="md:grid grid-cols-12 gap-10">
+            <div className="col-span-3 mb-3">
+              <div className="border rounded-md ">
                 <img
                   src={userData.picture}
                   alt=""
@@ -128,11 +128,17 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                 </div>
               </div>
             </div>
-            <div className="col-span-9">
-              <div className="flex justify-between items-center">
+            <Link href="/profile/become-driver">
+              <a className="border md:hidden bg-primary rounded-md px-3 py-2 text-white">
+                Become A Rider
+              </a>
+            </Link>
+
+            <div className="col-span-9 mt-3">
+              <div className="flex justify-between items-center overflow-x-scroll md:overflow-hidden w-full">
                 <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-                  <ul class="flex flex-wrap -mb-px">
-                    <li class="mr-2">
+                  <ul class="flex md:flex-wrap -mb-px w-max">
+                    <li class="md:mr-2">
                       <a
                         class={
                           tabValue === 1
@@ -144,7 +150,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                         Requested Ride
                       </a>
                     </li>
-                    <li class="mr-2">
+                    <li class="md:mr-2">
                       <a
                         href="#"
                         class={
@@ -157,7 +163,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                         Your Ride
                       </a>
                     </li>
-                    <li class="mr-2">
+                    <li class="md:mr-2">
                       <a
                         class={
                           tabValue === 3
@@ -172,7 +178,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                   </ul>
                 </div>
                 <Link href="/profile/become-driver">
-                  <a className="border bg-primary rounded-md px-3 py-2 text-white">
+                  <a className="border hidden md:block bg-primary rounded-md px-3 py-2 text-white">
                     Become A Rider
                   </a>
                 </Link>
@@ -209,7 +215,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                           <h1>Rs. {value.rides.price}</h1>
                         </div>
                       </div>
-                      <div className="border-t p-3 flex justify-between items-center">
+                      <div className="border-t p-3 md:flex justify-between items-center">
                         <div className="flex space-x-3">
                           <img
                             src={value.rider.picture}
@@ -236,14 +242,14 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                             </div>
                           </div>
                         ) : (
-                          <div className="px-3 py-1 bg-blue-700 text-white rounded-lg">
+                          <div className="px-3 py-1 bg-blue-700 text-white rounded-lg w-max mt-5 md:mt-0 ">
                             No Response
                           </div>
                         )}
                       </div>
-                      <div className="border-t p-3 flex justify-between items-center">
+                      <div className="border-t p-3 md:flex justify-between items-center">
                         {!value.isAccept && (
-                          <div className="flex items-center space-x-3">
+                          <div className="md:flex items-center space-x-3">
                             <div className="flex justify-between items-center space-x-5">
                               <div
                                 className="border-2 rounded-[100%] h-8 w-8 flex justify-center border-primary cursor-pointer items-center"
@@ -272,7 +278,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                               </div>
                             </div>
                             <button
-                              className="bg-blue-500 px-3 py-1 rounded-lg text-white"
+                              className="bg-blue-500 px-3 py-1 rounded-lg text-white mt-5 md:mt-0 w-max"
                               onClick={() => handleUpdateRequest(value.uuid)}
                             >
                               Update Request
@@ -284,19 +290,19 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                             className="bg-primary px-3 py-1 rounded-lg text-white"
                             onClick={openModal}
                           >
-                            View Raider Detail
+                            View Rider Detail
                           </button>
                         )}
                         <ModalWrapper isOpen={isOpen} closeModal={closeModal} />
                         <button
-                          className="bg-red-500 px-3 py-1 rounded-lg text-white"
+                          className="bg-red-500 px-3 py-1 rounded-lg text-white mt-5 md:mt-0 w-max ml-3"
                           onClick={() =>
                             dispatch(
                               deleteRequest(value.uuid, isAuth().user.id)
                             )
                           }
                         >
-                          Cancle Request
+                          Cancel Request
                         </button>
                       </div>
                     </div>

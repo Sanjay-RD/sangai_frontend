@@ -101,16 +101,16 @@ const PublishRode = () => {
         </h1> */}
         <form
           onSubmit={handleSubmitPublishRide}
-          className="w-[600px] m-auto space-y-8 my-10"
+          className="w-full md:w-[600px] m-auto md:space-y-8 space-y-5 my-10"
         >
           <div className="flex flex-col space-y-2">
-            <label htmlFor="" className="text-3xl text-primaryDark">
+            <label htmlFor="" className="text-2xl md:text-3xl text-primaryDark">
               Where are you leaving from?
             </label>
             <input
               type="text"
               placeholder="eg.Kathmandu"
-              className="text-lg bg-[#EDEDED] appearance-none rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-[#EDEDED] focus:border-primary text-primaryDark"
+              className="text-lg bg-[#EDEDED] appearance-none rounded-md w-full py-3 px-4 leading-tight focus:outline-none focus:bg-[#EDEDED] focus:border-primary text-primaryDark"
               onChange={(e) => handleStartLocation(e.target.value)}
               value={startLocation}
             />
@@ -126,13 +126,13 @@ const PublishRode = () => {
               ))}
           </div>
           <div className="flex flex-col space-y-2">
-            <label htmlFor="" className="text-3xl text-primaryDark">
+            <label htmlFor="" className="text-2xl md:text-3xl text-primaryDark">
               Where are you heading?
             </label>
             <input
               type="text"
               placeholder="eg.Kathmandu"
-              className="text-lg bg-[#EDEDED] appearance-none rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-[#EDEDED] focus:border-primary text-primaryDark"
+              className="text-lg bg-[#EDEDED] appearance-none rounded-md w-full py-3 px-4 leading-tight focus:outline-none focus:bg-[#EDEDED] focus:border-primary text-primaryDark"
               onChange={(e) => handleEndLocation(e.target.value)}
               value={endLocation}
             />
@@ -148,7 +148,7 @@ const PublishRode = () => {
               ))}
           </div>
           <div className="flex flex-col space-y-2">
-            <label htmlFor="" className="text-3xl text-primaryDark">
+            <label htmlFor="" className="text-2xl md:text-3xl text-primaryDark">
               When are you going?
             </label>
             <DatePicker
@@ -159,17 +159,17 @@ const PublishRode = () => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <label htmlFor="" className="text-3xl text-primaryDark">
+            <label htmlFor="" className="text-2xl md:text-3xl text-primaryDark">
               At what time will you pick passengers up?
             </label>
             <input
               type="time"
-              className="text-lg bg-[#EDEDED] appearance-none rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-[#EDEDED] focus:border-primary text-primaryDark"
+              className="text-lg bg-[#EDEDED] appearance-none rounded-md w-full py-3 px-4 leading-tight focus:outline-none focus:bg-[#EDEDED] focus:border-primary text-primaryDark"
               onChange={(e) => setTime(e.target.value)}
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <label htmlFor="" className="text-3xl text-primaryDark">
+            <label htmlFor="" className="text-2xl md:text-3xl text-primaryDark">
               So how many passengers can you take?
             </label>
             <div className="flex justify-between items-center w-[300px] m-auto">
@@ -179,17 +179,19 @@ const PublishRode = () => {
               >
                 <span className="text-2xl font-light text-primary">-</span>
               </div>
-              <span className="text-3xl text-primaryDark">{seats}</span>
+              <span className="text-2xl md:text-3xl text-primaryDark">
+                {seats}
+              </span>
               <div
                 className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary cursor-pointer"
                 onClick={() => setSeats(seats + 1)}
               >
-                <span className="text-3xl font-light text-primary">+</span>
+                <span className="text-2xl font-light text-primary">+</span>
               </div>
             </div>
           </div>
           <div className="flex flex-col space-y-2">
-            <label htmlFor="" className="text-3xl text-primaryDark">
+            <label htmlFor="" className="text-2xl md:text-3xl text-primaryDark">
               Set your price per seat
             </label>
             <div className="flex justify-between items-center w-[300px] m-auto">
@@ -199,12 +201,14 @@ const PublishRode = () => {
               >
                 <span className="text-2xl font-light text-primary">-</span>
               </div>
-              <span className="text-3xl text-primaryDark">Rs.{price}</span>
+              <span className="text-2xl md:text-3xl text-primaryDark">
+                Rs.{price}
+              </span>
               <div
                 className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary cursor-pointer"
                 onClick={() => setPrice(price + 1)}
               >
-                <span className="text-3xl font-light text-primary">+</span>
+                <span className="text-2xl font-light text-primary">+</span>
               </div>
             </div>
           </div>

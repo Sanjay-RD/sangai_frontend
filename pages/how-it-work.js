@@ -14,10 +14,10 @@ const howItWork = () => {
         <div className="my-6">
           <h1 className="font-normal text-3xl text-center">How Sangai Work</h1>
           {/* work flow */}
-          <div className="w-[800px] m-auto mt-10 space-y-10">
-            <div className="flex space-x-9">
+          <div className="md:w-[800px] m-auto mt-10 space-y-10">
+            <div className="md:flex md:space-x-9">
               <img src="./laptop.png" alt="" />
-              <div>
+              <div className="hidden md:block">
                 <div className="w-[25px] h-[25px] rounded-full text-center bg-primary">
                   <span className="">1</span>
                 </div>
@@ -28,8 +28,8 @@ const howItWork = () => {
                   }}
                 ></div>
               </div>
-              <div>
-                <h1>Driver</h1>
+              <div >
+                <h1 className="text-xl">Driver</h1>
                 <p>
                   Open the Sangai app or website to publish your ride by filling
                   out a form with the necessary details. Then, confirm your
@@ -37,9 +37,9 @@ const howItWork = () => {
                 </p>
               </div>
             </div>
-            <div className="flex space-x-9">
+            <div className="md:flex md:space-x-9">
               <img src="./laptop.png" alt="" />
-              <div>
+              <div className="hidden md:block">
                 <div className="w-[25px] h-[25px] rounded-full text-center bg-primary">
                   <span className="">2</span>
                 </div>
@@ -51,7 +51,7 @@ const howItWork = () => {
                 ></div>
               </div>
               <div>
-                <h1>Passenger</h1>
+                <h1 className="text-xl">Passenger</h1>
                 <p>
                   You can request a ride by filling out the form. If your
                   request is available, just Book the ride that matches your
@@ -59,9 +59,9 @@ const howItWork = () => {
                 </p>
               </div>
             </div>
-            <div className="flex space-x-9">
+            <div className="md:flex md:space-x-9">
               <img src="./laptop.png" alt="" />
-              <div>
+              <div className="hidden md:block">
                 <div className="w-[25px] h-[25px] rounded-full text-center bg-primary">
                   <span className="">3</span>
                 </div>
@@ -73,16 +73,16 @@ const howItWork = () => {
                 ></div>
               </div>
               <div>
-                <h1>Get started to share ride</h1>
+                <h1 className="text-xl">Get started to share ride</h1>
                 <p>
                   When the published ride of the Driver matches the passenger’s
                   request and gets booked, Be ready to start your journey.
                 </p>
               </div>
             </div>
-            <div className="flex space-x-9">
+            <div className="md:flex md:space-x-9">
               <img src="./laptop.png" alt="" />
-              <div>
+              <div className="hidden md:block">
                 <div className="w-[25px] h-[25px] rounded-full text-center bg-primary">
                   <span className="">4</span>
                 </div>
@@ -94,15 +94,15 @@ const howItWork = () => {
                 ></div>
               </div>
               <div>
-                <h1>Payment</h1>
+                <h1 className="text-xl">Payment</h1>
                 <p>
                   The payment method is also done during the booking process.
                 </p>
               </div>
             </div>
-            <div className="flex space-x-9">
+            <div className="md:flex md:space-x-9">
               <img src="./laptop.png" alt="" />
-              <div>
+              <div className="hidden md:block">
                 <div className="w-[25px] h-[25px] rounded-full text-center bg-primary">
                   <span className="">5</span>
                 </div>
@@ -114,13 +114,13 @@ const howItWork = () => {
                 ></div>
               </div>
               <div>
-                <h1>Share Ride</h1>
+                <h1 className="text-xl">Share Ride</h1>
                 <p>
                   Share your ride and reach your destination on time. Enjoy the
                   ride-sharing.
                 </p>
               </div>
-            </div>
+            </div> 
           </div>
           {/* work flow end */}
         </div>
