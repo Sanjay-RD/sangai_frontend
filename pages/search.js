@@ -174,7 +174,7 @@ const search = ({ rides, searchRide }) => {
         {/* line */}
         {/* show ride available */}
         <Container>
-          <div className="py-3 px-32">
+          <div className="py-3 md:px-32">
             {isDetailShow ? (
               <>
                 <button onClick={() => setIsDetailShow(false)}>Back</button>

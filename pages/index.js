@@ -24,19 +24,19 @@ function HomePage({ getFAQ }) {
         <Showcase />
         <Search />
       </div>
-      <div className="mt-32 mb-10">
+      <div className=" mt-5 sm:mt-32 mb-3">
         <Container>
           <div>
             <h1 className="text-4xl font-[400] text-primaryDark">
               Get best Services at Sangai
             </h1>
             <div className="grid sm:grid-cols-2 md:grid-cols-2 gap-8 my-9">
-              <div className="flex space-x-5">
+              <div className="md:flex space-x-5">
                 <div>
                   <i class="fa-solid fa-piggy-bank text-8xl text-primaryDark"></i>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-medium my-1 text-primaryDark">
+                  <h1 className="text-3xl mb-1 sm:text-2xl font-medium my-1 text-primaryDark">
                     Save on travel costs
                   </h1>
                   <p className="text-primaryDark">
@@ -48,7 +48,7 @@ function HomePage({ getFAQ }) {
                   </p>
                 </div>
               </div>
-              <div className="flex space-x-5">
+              <div className="md:flex space-x-5">
                 <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +66,7 @@ function HomePage({ getFAQ }) {
                   </svg>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-medium my-1 text-primaryDark">
+                  <h1 className="text-3xl mb-1 sm:text-2xl font-medium my-1 text-primaryDark">
                     Join a trustworthy community
                   </h1>
                   <p className="text-primaryDark">
@@ -77,12 +77,12 @@ function HomePage({ getFAQ }) {
                   </p>
                 </div>
               </div>
-              <div className="flex space-x-5">
+              <div className="md:flex space-x-5">
                 <div>
                   <i class="fa-solid fa-rocket text-8xl text-primaryDark"></i>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-medium my-1 text-primaryDark">
+                  <h1 className="text-3xl mb-1 md:text-2xl font-medium my-1 text-primaryDark">
                     Sangai made simple
                   </h1>
                   <p className="text-primaryDark">
@@ -97,7 +97,7 @@ function HomePage({ getFAQ }) {
         </Container>
       </div>
       {/* Publish your ride in just minutes */}
-      <div className="my-9">
+      <div className="my-3">
         <Container>
           <h1 className="text-3xl font-[400] text-primaryDark">
             Publish your ride in just minutes
@@ -112,7 +112,7 @@ function HomePage({ getFAQ }) {
               <div className="flex items-center space-x-3">
                 <i class="fa-solid fa-user text-2xl text-primaryDark"></i>
                 <div>
-                  <h1 className="text-lg text-primaryDark">
+                  <h1 className="text-xl sm:text-lg text-primaryDark">
                     Create a Sangai account
                   </h1>
                   <p className="text-primaryDark opacity-70">
@@ -124,7 +124,7 @@ function HomePage({ getFAQ }) {
               <div className="flex items-center space-x-3">
                 <i class="fa-solid fa-car text-2xl text-primaryDark"></i>
                 <div>
-                  <h1 className="text-lg text-primaryDark">
+                  <h1 className="text-xl sm:text-lg text-primaryDark">
                     Publish your ride
                   </h1>
                   <p className=" text-primaryDark opacity-70">
@@ -137,7 +137,7 @@ function HomePage({ getFAQ }) {
               <div className="flex items-center space-x-3">
                 <i class="fa-solid fa-bolt-lightning text-2xl text-primaryDark"></i>
                 <div>
-                  <h1 className="text-lg text-primaryDark">
+                  <h1 className="text-xl sm:text-lg text-primaryDark">
                     Accept booking requests
                   </h1>
                   <p className="text-primaryDark opacity-70">

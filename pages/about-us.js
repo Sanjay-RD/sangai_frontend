@@ -13,7 +13,7 @@ const AboutUs = () => {
         </div>
       </div>
       <Container>
-        <div className="grid grid-cols-12 gap-10 my-5">
+        <div className="grid md:grid-cols-12 gap-10 my-5">
           <div className="col-span-4">
             <img src="/sharing.jpeg" alt="" />
           </div>
@@ -28,7 +28,10 @@ const AboutUs = () => {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-12 gap-10 my-10">
+        <div className="grid md:grid-cols-12 gap-10 my-10">
+        <div className="col-span-4 md:hidden">
+            <img src="/sharing1.jpeg" alt="" />
+          </div>
           <div className="col-span-8">
             <h1 className="text-3xl text-primaryDark underline mb-2">
               Our Story and Mission
@@ -48,7 +51,7 @@ const AboutUs = () => {
               low cost.
             </p>
           </div>
-          <div className="col-span-4">
+          <div className="col-span-4 hidden md:block">
             <img src="/sharing1.jpeg" alt="" />
           </div>
         </div>

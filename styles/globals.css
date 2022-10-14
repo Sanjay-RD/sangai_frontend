@@ -27,9 +27,13 @@
 /* .react-datepicker{
   width: 100%;
 } */
- /* .react-datepicker__month-container{
-  width: 50%;
-} */
+ 
+@media screen and (max-width: 570px) {
+  .react-datepicker__month-container{
+    width: 100%;
+  }
+}
+
 /* .react-datepicker__month-container */
 .react-datepicker__day--keyboard-selected{
   border-radius: 1.3rem !important;

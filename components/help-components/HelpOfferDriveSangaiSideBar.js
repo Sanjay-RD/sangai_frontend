@@ -19,7 +19,7 @@ const HelpOfferDriveSangaiSidebar = () => {
   const [isGettingPaidShown, setIsGettingPaidShown] = useState(false);
 
   const handlePublishingRideClick = (e) => {
-    setPublishingRideShown(!isPublishingRideShown);
+    setPublishingRideShown((current) => !current);
   };
   const handleManagingPublicationsClick = (e) => {
     setIsManagingPublicationsShown((current) => !current);

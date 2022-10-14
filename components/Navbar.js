@@ -2,8 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
 import Container from "./Container";
-import steeringWheel from "../public/steering-wheel.svg";
-import passengerSeat from "../public/passenger-seat.svg";
 import { isAuth } from "../redux/utils";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -19,7 +17,6 @@ const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   console.log("isLoggedIn", isLoggedIn);
   useEffect(() => {
-    // const isAuthValue = isAuth();
     if (isAuth()) {
       setIsLoggedIn(true);
     } else {
@@ -29,18 +26,17 @@ const Navbar = () => {
   return (
     <nav className="">
       <Container>
-        <div className="flex justify-between items-center">
-          {/* logo */}
+        <div className="flex space-x-4 lg:space-x-8 justify-between items-center">
           <div>
             <Link href="/">
-              <a className="text-primary text-3xl font-medium">संगै</a>
+              <a className="text-primary text-2xl md:text-3xl lg:text-4xl font-medium mx-2 md:mx-0">संगै</a>
             </Link>
           </div>
           {/* logo end */}
-          <ul className="flex space-x-4 md:space-x-8 items-center">
+          <ul className="flex space-x-4 md:space-x-8 lg:space-x-12 items-center">
             <li>
               <Link href="/publish-ride">
-                <a className="text-primary text-lg font-medium flex items-center space-x-2">
+                <a className="text-primary hidden text-lg md:text-xl lg:text-2xl  font-medium sm:flex items-center space-x-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -60,9 +56,6 @@ const Navbar = () => {
                 </a>
               </Link>
             </li>
-            {/* {!isLoggedIn && (
-              
-            )} */}
             {isLoggedIn ? (
               <li>
                 <Menu as="div" className="relative inline-block text-left">
@@ -119,6 +112,18 @@ const Navbar = () => {
                           </Link>
                         </li>
                         <li>
+                          <Link
+                            href="/publish-ride"
+                          >
+                            <a
+                              // onClick={() => setToggleMenu(false)}
+                              class="cursor-pointer sm:hidden block py-2 px-4 hover:bg-gray-100 rounded-md"
+                            >
+                              Publish a ride
+                            </a>
+                          </Link>
+                        </li>
+                        <li>
                           <a
                             onClick={() => dispatch(logout())}
                             class="block py-2 px-4 text-gray-700 hover:bg-gray-100 cursor-pointer rounded-md"
@@ -134,7 +139,7 @@ const Navbar = () => {
             ) : (
               <li>
                 <Link href="/login">
-                  <a className="text-primary text-lg font-medium flex items-center space-x-2">
+                  <a className="text-primary text-lg md:text-xl lg:text-2xl font-medium flex items-center space-x-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

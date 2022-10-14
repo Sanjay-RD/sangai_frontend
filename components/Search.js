@@ -21,7 +21,7 @@ const Search = () => {
     );
   };
   return (
-    <div className="px-20 absolute left-0 right-0 bottom-[40px]">
+    <div className="px-20 absolute left-0 right-0 bottom-[40px] hidden sm:block">
       {/* <div className="border bg-white h-[150px] m-auto rounded-2xl">
         <div className="p-5">
           <h1 className="text-xl mb-2">Search Ride</h1>
