@@ -20,6 +20,7 @@ import KhaltiCheckout from "khalti-checkout-web";
 import Router from "next/router";
 import { isAuth } from "../../redux/utils";
 import ModalWrapper from "../../components/ModalWrapper";
+import myKey from "../../components/khalti/KhaltiKey";
 
 const ProfileDetail = ({ userData, requestedRide }) => {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
   const [seats, setSeats] = useState(1);
   const [index, setIndex] = useState(0);
   let [isOpen, setIsOpen] = useState(false);
+  const [stage, setStage] = useState(1);
 
   function openModal() {
     setIsOpen(true);
@@ -65,17 +67,19 @@ const ProfileDetail = ({ userData, requestedRide }) => {
     }
   }, [acceptSuccess, requestSuccess, deleteSuccess, paySuccess]);
 
-  useEffect(() => {
+  const handlePay = (uuid) => {
+    // minimum transaction amount must be 10, i.e 1000 in paisa.
     let config = {
       // replace this key with yours
-      publicKey: "live_public_key_546eb6da05544d7d88961db04fdb9721",
-      productIdentity: "1234567890",
-      productName: "Drogon",
-      productUrl: "http://gameofthrones.com/buy/Dragons",
+      publicKey: myKey.publicTestKey,
+      productIdentity: "1",
+      productName: "Sangai",
+      productUrl: "http://localhost:3000",
       eventHandler: {
         onSuccess(payload) {
           // hit merchant api for initiating verfication
           console.log(payload);
+          dispatch(updateRequestToPay(uuid));
         },
         // onError handler is optional
         onError(error) {
@@ -96,12 +100,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
     };
     let checkout = new KhaltiCheckout(config);
     setCheckout(checkout);
-  }, []);
-
-  const handlePay = (uuid) => {
-    // minimum transaction amount must be 10, i.e 1000 in paisa.
-    // checkout.show({ amount: 1000 });
-    dispatch(updateRequestToPay(uuid));
+    checkout.show({ amount: 1000 });
   };
 
   const handleUpdateRequest = (uuid) => {
@@ -232,10 +231,12 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                         {value.isAccept ? (
                           <div className="flex space-x-4">
                             <button
-                              className="px-3 py-1 border rounded-lg"
-                              onClick={() => handlePay(value.uuid)}
+                              className="px-3 py-1 border rounded-lg bg-purple-700 text-white"
+                              onClick={() => {
+                                handlePay(value.uuid);
+                              }}
                             >
-                              Pay
+                              Pay via Khalti
                             </button>
                             <div className="px-3 py-1 bg-primary text-white rounded-lg">
                               Your Request has been accept
@@ -294,6 +295,329 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                           </button>
                         )}
                         <ModalWrapper isOpen={isOpen} closeModal={closeModal} />
+                        <ModalWrapper
+                          title="Rider Details"
+                          closeModal={closeModal}
+                          isOpen={isOpen}
+                        >
+                          {/* <div className="relative p-6 flex-auto"> */}
+                          <div
+                            className="border rounded-xl  my-5"
+                            style={{
+                              boxShadow:
+                                "3px 3px 23px -8px rgba(117,165,105,0.59)",
+                            }}
+                          >
+                            <div className="border-b p-3 flex space-x-3 items-center">
+                              <img
+                                src={value.rider && value.rider.picture}
+                                alt=""
+                                width={50}
+                                height={50}
+                                className="rounded-full"
+                              />
+                              <div>
+                                <h1 className="text-xl">
+                                  {value.rider && value.rider.name}
+                                </h1>
+                              </div>
+                            </div>
+                            <div className="px-6 py-4 border-b">
+                              <div className="grid grid-cols-12 gap-7">
+                                <div className="col-span-4">
+                                  <button
+                                    className={
+                                      stage === 1
+                                        ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded"
+                                        : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded border-primary"
+                                    }
+                                    onClick={() => setStage(1)}
+                                  >
+                                    <h1>Basic Information</h1>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-5 h-5"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                                      />
+                                    </svg>
+                                  </button>
+                                  <button
+                                    className={
+                                      stage === 2
+                                        ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded my-3"
+                                        : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
+                                    }
+                                    onClick={() => setStage(2)}
+                                  >
+                                    <h1>Driver License</h1>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-5 h-5"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                                      />
+                                    </svg>
+                                  </button>
+                                  <button
+                                    className={
+                                      stage === 3
+                                        ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded my-3"
+                                        : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
+                                    }
+                                    onClick={() => setStage(3)}
+                                  >
+                                    <h1>ID Information</h1>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-5 h-5"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                                      />
+                                    </svg>
+                                  </button>
+                                  <button
+                                    className={
+                                      stage === 4
+                                        ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded my-3"
+                                        : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
+                                    }
+                                    onClick={() => setStage(4)}
+                                  >
+                                    <h1>Vehicle Information</h1>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-5 h-5"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                                      />
+                                    </svg>
+                                  </button>
+                                </div>
+                                <div className="col-span-8">
+                                  {stage === 1 && (
+                                    <div className="border rounded-md">
+                                      <div className="border-b px-5 py-3 bg-lime-600 text-white rounded-t-md">
+                                        <h1 className="text-xl">
+                                          Basic Information
+                                        </h1>
+                                      </div>
+                                      <div className="px-6 py-5">
+                                        <h1>
+                                          First Name :{" "}
+                                          {value.rider && value.rider.name}
+                                        </h1>
+                                        <h1>Last Name : </h1>
+                                        <h1>
+                                          Date of Birth :{" "}
+                                          {/* {ride &&
+                                            ride.driverInfo.date_of_birth} */}
+                                        </h1>
+                                        <h1>
+                                          Email :{" "}
+                                          {value.rider && value.rider.email}
+                                        </h1>
+                                      </div>
+                                    </div>
+                                  )}
+                                  {stage === 2 && (
+                                    <div className="border rounded-md">
+                                      <div className="border-b px-5 py-3  bg-lime-600 text-white rounded-t-md">
+                                        <h1 className="text-xl">
+                                          Driver License
+                                        </h1>
+                                      </div>
+                                      <div className="px-6 py-5">
+                                        <h1>
+                                          Driving License Number :{" "}
+                                          {/* {ride &&
+                                            ride.licenseInfo.license_number} */}
+                                        </h1>
+                                        <div>
+                                          <h1>License Front Image : </h1>
+                                          {/* <a
+                                            href={`${url}/${
+                                              ride &&
+                                              ride.licenseInfo
+                                                .license_front_image
+                                            }`}
+                                            target="_blank"
+                                          >
+                                            <img
+                                              src={`${url}/${
+                                                ride &&
+                                                ride.licenseInfo
+                                                  .license_front_image
+                                              }`}
+                                              alt=""
+                                              style={{
+                                                height: "250px",
+                                                objectFit: "cover",
+                                              }}
+                                            />
+                                          </a> */}
+                                        </div>
+                                        <div>
+                                          <h1>License Back Image : </h1>
+
+                                          {/* <a
+                                            href={`${url}/${
+                                              ride &&
+                                              ride.licenseInfo
+                                                .license_back_image
+                                            }`}
+                                            target="_blank"
+                                          >
+                                            <img
+                                              src={`${url}/${
+                                                ride &&
+                                                ride.licenseInfo
+                                                  .license_back_image
+                                              }`}
+                                              alt=""
+                                              style={{
+                                                height: "250px",
+                                                objectFit: "cover",
+                                              }}
+                                            />
+                                          </a> */}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+                                  {stage === 3 && (
+                                    <div className="border rounded-md">
+                                      <div className="border-b px-5 py-3  bg-lime-600 text-white rounded-t-md">
+                                        <h1 className="text-xl">
+                                          ID Information
+                                        </h1>
+                                      </div>
+                                      <div className="px-6 py-5">
+                                        <div>
+                                          <h1>Id Image</h1>
+                                          {/* <a
+                                            href={`${url}/${
+                                              ride && ride.IdInfo.id_information
+                                            }`}
+                                            target="_blank"
+                                          >
+                                            <img
+                                              src={`${url}/${
+                                                ride &&
+                                                ride.IdInfo.id_information
+                                              }`}
+                                              alt=""
+                                              style={{
+                                                height: "250px",
+                                                objectFit: "cover",
+                                              }}
+                                            />
+                                          </a> */}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+                                  {stage === 4 && (
+                                    <div className="border rounded-md">
+                                      <div className="border-b px-5 py-3  bg-lime-600 text-white rounded-t-md">
+                                        <h1 className="text-xl">
+                                          Vehicle Information
+                                        </h1>
+                                      </div>
+                                      <div className="px-6 py-5">
+                                        <h1>
+                                          Vehicle Type :{" "}
+                                          {/* {ride &&
+                                            ride.vehicleInfo.select_vehicle} */}
+                                        </h1>
+                                        <h1>
+                                          Vehicle Number Plate :{" "}
+                                          {/* {ride &&
+                                            ride.vehicleInfo.number_plate} */}
+                                        </h1>
+                                        <div>
+                                          <h1>Vehicle Image</h1>
+
+                                          {/* <a
+                                            href={`${url}/${
+                                              ride &&
+                                              ride.vehicleInfo.vehicle_image
+                                            }`}
+                                            target="_blank"
+                                          >
+                                            <img
+                                              src={`${url}/${
+                                                ride &&
+                                                ride.vehicleInfo.vehicle_image
+                                              }`}
+                                              alt=""
+                                              style={{
+                                                height: "250px",
+                                                objectFit: "cover",
+                                              }}
+                                            />
+                                          </a> */}
+                                        </div>
+                                        <div>
+                                          <h1>Billbook Image</h1>
+
+                                          {/* <a
+                                            href={`${url}/${
+                                              ride &&
+                                              ride.vehicleInfo.billbook_image
+                                            }`}
+                                            target="_blank"
+                                          >
+                                            <img
+                                              src={`${url}/${
+                                                ride &&
+                                                ride.vehicleInfo.billbook_image
+                                              }`}
+                                              alt=""
+                                              style={{
+                                                height: "250px",
+                                                objectFit: "cover",
+                                              }}
+                                            />
+                                          </a> */}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {/* </div> */}
+                        </ModalWrapper>
                         <button
                           className="bg-red-500 px-3 py-1 rounded-lg text-white mt-5 md:mt-0 w-max ml-3"
                           onClick={() =>
