@@ -7,7 +7,6 @@ import { API } from "../../config";
 import moment from "moment";
 import Link from "next/link";
 import Footer from "../../components/Footer";
-import { getRide } from "../../redux/actions/rideAction";
 import {
   deleteRequest,
   getAllRequestByRideId,
@@ -21,6 +20,7 @@ import Router from "next/router";
 import { isAuth } from "../../redux/utils";
 import ModalWrapper from "../../components/ModalWrapper";
 import myKey from "../../components/khalti/KhaltiKey";
+import { getUser } from "../../redux/actions/userAction";
 
 const ProfileDetail = ({ userData, requestedRide }) => {
   const dispatch = useDispatch();
@@ -28,6 +28,9 @@ const ProfileDetail = ({ userData, requestedRide }) => {
   console.log("requestedRide", requestedRide);
   const userLoginState = useSelector((state) => state.userLogin);
   const { userInfo } = userLoginState;
+  const userDetailState = useSelector((state) => state.userDetail);
+  const { user: userDetail } = userDetailState;
+  console.log("userDetail", userDetail);
   const listRequestByRideIdState = useSelector(
     (state) => state.listRequestByRideId
   );
@@ -52,8 +55,9 @@ const ProfileDetail = ({ userData, requestedRide }) => {
   let [isOpen, setIsOpen] = useState(false);
   const [stage, setStage] = useState(1);
 
-  function openModal() {
+  function openModal(uuid) {
     setIsOpen(true);
+    dispatch(getUser(uuid));
   }
 
   function closeModal() {
@@ -289,18 +293,16 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                         {value.isPaid && (
                           <button
                             className="bg-primary px-3 py-1 rounded-lg text-white"
-                            onClick={openModal}
+                            onClick={() => openModal(value.rider.uuid)}
                           >
                             View Rider Detail
                           </button>
                         )}
-                        <ModalWrapper isOpen={isOpen} closeModal={closeModal} />
                         <ModalWrapper
                           title="Rider Details"
                           closeModal={closeModal}
                           isOpen={isOpen}
                         >
-                          {/* <div className="relative p-6 flex-auto"> */}
                           <div
                             className="border rounded-xl  my-5"
                             style={{
@@ -616,7 +618,6 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                               </div>
                             </div>
                           </div>
-                          {/* </div> */}
                         </ModalWrapper>
                         <button
                           className="bg-red-500 px-3 py-1 rounded-lg text-white mt-5 md:mt-0 w-max ml-3"
