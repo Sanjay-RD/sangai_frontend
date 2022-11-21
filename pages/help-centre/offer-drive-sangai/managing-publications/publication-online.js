@@ -35,7 +35,7 @@ const PublicationOnline = ({ getHelp }) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const getHelp = await axios.get(`${API}/help/publication-online`);
   return {
     props: {
