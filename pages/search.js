@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { getRide } from "../redux/actions/rideAction";
 import { createRequest } from "../redux/actions/requestAction";
 import { getLocalStorage, isAuth, setLocalStorage } from "../redux/utils";
+import Image from "next/image";
 
 const search = ({ rides, searchRide }) => {
   console.log("rides", rides);
@@ -28,6 +29,9 @@ const search = ({ rides, searchRide }) => {
   const [stage, setStage] = useState(1);
   const [leaving, setLeaving] = useState("");
   const [heading, setHeading] = useState("");
+  const [location, setLocation] = useState([]);
+  const [startSuggestions, setStartSuggestions] = useState([]);
+  const [endSuggestions, setEndSuggestions] = useState([]);
   const [date, setDate] = useState("");
   const [seat, setSeat] = useState("");
   const [activeTag, setActiveTag] = useState("all");
@@ -69,6 +73,12 @@ const search = ({ rides, searchRide }) => {
   );
 
   useEffect(() => {
+    const loadLocations = async () => {
+      const res = await axios.get("https://fakestoreapi.com/products");
+
+      setLocation(res.data);
+    };
+    loadLocations();
     if (isAuth()) {
       setIsLoggedIn(true);
     } else {
@@ -113,6 +123,36 @@ const search = ({ rides, searchRide }) => {
       // setLocalStorage("rideData", { isDetailShow: true, rideId: rideId });
     }
   };
+  const handleStartLocation = (leaving) => {
+    let matches = [];
+    if (leaving.length > 0) {
+      matches = location.filter((location) => {
+        const regex = new RegExp(`${leaving}`, "gi");
+        return location.title.match(regex);
+      });
+    }
+    setStartSuggestions(matches);
+    setLeaving(leaving);
+  };
+  const handleStartSuggestion = (leaving) => {
+    setLeaving(leaving);
+    setStartSuggestions([]);
+  };
+  const handleEndLocation = (heading) => {
+    let matches = [];
+    if (heading.length > 0) {
+      matches = location.filter((location) => {
+        const regex = new RegExp(`${heading}`, "gi");
+        return location.title.match(regex);
+      });
+    }
+    setEndSuggestions(matches);
+    setHeading(heading);
+  };
+  const handleEndSuggestion = (heading) => {
+    setHeading(heading);
+    setEndSuggestions([]);
+  };
 
   return (
     <div>
@@ -129,18 +169,46 @@ const search = ({ rides, searchRide }) => {
                 type="text"
                 placeholder="Leaving From"
                 className="border px-2 py-2 border-[#d0d0d0] rounded-md"
-                onChange={(e) => setLeaving(e.target.value)}
+                onChange={(e) => handleStartLocation(e.target.value)}
                 defaultValue={leaving}
+                value={leaving}
               />
+              <div className="shadow-2xl bg-white">
+                {startSuggestions &&
+                  startSuggestions.map((startSuggestion, i) => (
+                    <div
+                      key={i}
+                      className="cursor-pointer mt-2 w-full text-lg font-normal py-2 text-gray-900  border-b border-gray-200"
+                      onClick={() =>
+                        handleStartSuggestion(startSuggestion.title)
+                      }
+                    >
+                      {startSuggestion.title}
+                    </div>
+                  ))}
+              </div>
             </div>
             <div className="flex flex-col col-span-3">
               <input
                 type="text"
                 placeholder="Leaving From"
                 className="border px-2 py-2 border-[#d0d0d0] rounded-md"
-                onChange={(e) => setHeading(e.target.value)}
+                onChange={(e) => handleEndLocation(e.target.value)}
                 defaultValue={heading}
+                value={heading}
               />
+              <div className="shadow-2xl bg-white">
+                {endSuggestions &&
+                  endSuggestions.map((endSuggestion, i) => (
+                    <div
+                      key={i}
+                      className="cursor-pointer mt-2 w-full text-lg font-normal py-2 text-gray-900  border-b border-gray-200"
+                      onClick={() => handleEndSuggestion(endSuggestion.title)}
+                    >
+                      {endSuggestion.title}
+                    </div>
+                  ))}
+              </div>
             </div>
             <div className="flex flex-col col-span-3">
               <input
@@ -715,42 +783,64 @@ const search = ({ rides, searchRide }) => {
                     </li>
                   </ul>
                 </div>
-                {searchRide.map((value) => (
-                  <>
-                    <div
-                      className="border rounded-xl  my-5"
-                      style={{
-                        boxShadow: "3px 3px 23px -8px rgba(117,165,105,0.59)",
-                      }}
-                    >
-                      <div className="flex justify-between px-6 py-4">
-                        <div>
-                          <h1>
-                            {value.rides.leaving} to {value.rides.heading}
-                          </h1>
-                          <p>{moment(value.date).format("MMMM Do YYYY")}</p>
-                          <p>{value.rides.seat} Seats</p>
+                {searchRide ? (
+                  <div>
+                    {searchRide.map((value) => (
+                      <>
+                        <div
+                          className="border rounded-xl  my-5"
+                          style={{
+                            boxShadow:
+                              "3px 3px 23px -8px rgba(117,165,105,0.59)",
+                          }}
+                        >
+                          <div className="flex justify-between px-6 py-4">
+                            <div>
+                              <h1>
+                                {value.rides.leaving} to {value.rides.heading}
+                              </h1>
+                              <p>{moment(value.date).format("MMMM Do YYYY")}</p>
+                              <p>{value.rides.seat} Seats</p>
+                            </div>
+                            <div>
+                              <h1>Rs. {value.rides.price}</h1>
+                            </div>
+                          </div>
+                          <div className="border-t p-3 flex space-x-3">
+                            <img
+                              src={value.rides.users.picture}
+                              alt=""
+                              width={50}
+                              height={50}
+                              className="rounded-full"
+                            />
+                            <div>
+                              <h1>{value.rides.users.name}</h1>
+                              <h1>{value.rides.users.email}</h1>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <h1>Rs. {value.rides.price}</h1>
-                        </div>
-                      </div>
-                      <div className="border-t p-3 flex space-x-3">
-                        <img
-                          src={value.rides.users.picture}
-                          alt=""
-                          width={50}
-                          height={50}
-                          className="rounded-full"
-                        />
-                        <div>
-                          <h1>{value.rides.users.name}</h1>
-                          <h1>{value.rides.users.email}</h1>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ))}
+                      </>
+                    ))}
+                  </div>
+                ) : (
+                  <div
+                    className="border rounded-xl  my-5"
+                    style={{
+                      boxShadow: "3px 3px 23px -8px rgba(117,165,105,0.59)",
+                    }}
+                  >
+                    <Image
+                      alt="Mountains"
+                      src="/no-ride.png"
+                      objectFit="cover"
+                    />
+                    <h1 className="text-xl text-primaryDark">
+                      No Bus Found We have no buses for this route.<br></br> You
+                      may select other nearby routes where we have bus services
+                    </h1>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="">
@@ -839,12 +929,19 @@ const search = ({ rides, searchRide }) => {
                         <div className="flex justify-between px-6 py-4">
                           <div>
                             <h1>
-                              {value.rides.leaving} to {value.rides.heading}
+                              <i class="fa-solid fa-location-dot text-green-400 text-xl"></i>{" "}
+                              {value.rides.leaving}{" "}
+                              <i class="fa-solid fa-arrow-right"></i>{" "}
+                              {value.rides.heading}
                             </h1>
                             <p>
+                              <i class="fa-solid fa-calendar-days text-red-600 text-xl"></i>{" "}
                               {moment(value.rides.date).format("MMMM Do YYYY")}
                             </p>
-                            <p>{value.rides.seat} Seats</p>
+                            <p>
+                              <i class="fa-regular fa-user  text-xl"></i>{" "}
+                              {value.rides.seat} Seats
+                            </p>
                             {/* <p>{value.availableSeat} Seats</p> */}
                             {value.bookedSeat !== 0 &&
                               (value.bookedSeat === value.rides.seat ? (

@@ -8,11 +8,18 @@ import Footer from "../../components/Footer";
 import { API } from "../../config";
 import Link from "next/link";
 
-const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookingConfirmed,cancellingBookingRequest,seatAssignment }) => {
+const HelpCentre = ({
+  chooseRoute,
+  howToSearch,
+  travellingWithChildren,
+  checkBookingConfirmed,
+  cancellingBookingRequest,
+  seatAssignment,
+}) => {
   return (
     <div>
       <Navbar />
-      <div className="w-full h-[300px] relative">
+      <div className="w-full h-[500px] relative">
         <Image
           alt="Mountains"
           src="/sharing1.jpeg"
@@ -30,7 +37,7 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
         <h1 className="font-bold text-2xl mb-3 text-primaryDark opacity-90">
           Popular articles
         </h1>
-        <div class="grid grid-cols-3 gap-10 mb-3">
+        <div class="md:grid grid-cols-3 gap-10 mb-3">
           <div>
             <div class="p-6 max-w-sm bg-white rounded-lg  flex">
               <div>
@@ -46,12 +53,16 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">{chooseRoute.tag}</h5>
+                <h5 class="mb-2 text-xl font-bold text-gray-900">
+                  {chooseRoute.tag}
+                </h5>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: chooseRoute.description.split(" ")
-                    .slice(0, 20)
-                    .join(" ") + "...",
+                    __html:
+                      chooseRoute.description
+                        .split(" ")
+                        .slice(0, 20)
+                        .join(" ") + "...",
                   }}
                   className="mb-3 font-normal text-lg text-gray-700"
                 ></div>
@@ -92,12 +103,16 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">{howToSearch.tag}</h5>
+                <h5 class="mb-2 text-xl font-bold text-gray-900">
+                  {howToSearch.tag}
+                </h5>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: howToSearch.description.split(" ")
-                    .slice(0, 20)
-                    .join(" ") + "...",
+                    __html:
+                      howToSearch.description
+                        .split(" ")
+                        .slice(0, 20)
+                        .join(" ") + "...",
                   }}
                   className="mb-3 font-normal text-lg text-gray-700"
                 ></div>
@@ -138,12 +153,16 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">{travellingWithChildren.tag}</h5>
+                <h5 class="mb-2 text-xl font-bold text-gray-900">
+                  {travellingWithChildren.tag}
+                </h5>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: travellingWithChildren.description.split(" ")
-                    .slice(0, 20)
-                    .join(" ") + "...",
+                    __html:
+                      travellingWithChildren.description
+                        .split(" ")
+                        .slice(0, 20)
+                        .join(" ") + "...",
                   }}
                   className="mb-3 font-normal text-lg text-gray-700"
                 ></div>
@@ -184,12 +203,16 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">{checkBookingConfirmed.tag}</h5>
+                <h5 class="mb-2 text-xl font-bold text-gray-900">
+                  {checkBookingConfirmed.tag}
+                </h5>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: checkBookingConfirmed.description.split(" ")
-                    .slice(0, 20)
-                    .join(" ") + "...",
+                    __html:
+                      checkBookingConfirmed.description
+                        .split(" ")
+                        .slice(0, 20)
+                        .join(" ") + "...",
                   }}
                   className="mb-3 font-normal text-lg text-gray-700"
                 ></div>
@@ -230,12 +253,16 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">{cancellingBookingRequest.tag}</h5>
+                <h5 class="mb-2 text-xl font-bold text-gray-900">
+                  {cancellingBookingRequest.tag}
+                </h5>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: cancellingBookingRequest.description.split(" ")
-                    .slice(0, 20)
-                    .join(" ") + "...",
+                    __html:
+                      cancellingBookingRequest.description
+                        .split(" ")
+                        .slice(0, 20)
+                        .join(" ") + "...",
                   }}
                   className="mb-3 font-normal text-lg text-gray-700"
                 ></div>
@@ -276,12 +303,16 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
                 </svg>
               </div>
               <div className="ml-2">
-                <h5 class="mb-2 text-xl font-bold text-gray-900">{seatAssignment.tag}</h5>
+                <h5 class="mb-2 text-xl font-bold text-gray-900">
+                  {seatAssignment.tag}
+                </h5>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: seatAssignment.description.split(" ")
-                    .slice(0, 20)
-                    .join(" ") + "...",
+                    __html:
+                      seatAssignment.description
+                        .split(" ")
+                        .slice(0, 20)
+                        .join(" ") + "...",
                   }}
                   className="mb-3 font-normal text-lg text-gray-700"
                 ></div>
@@ -311,10 +342,10 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
         <h1 className="text-center font-bold text-2xl mb-3">
           Different help sections
         </h1>
-        <div class="grid grid-cols-3 gap-10 mb-3">
+        <div class="md:grid grid-cols-3 gap-16 mb-3 space-y-5 md:space-y-0">
           <div>
             <div class="max-w-sm rounded overflow-hidden border border-gray-300">
-              <img class="w-full h-40" src="/sharing1.jpeg" />
+              <img class="w-full h-60" src="/sharing1.jpeg" />
               <Link href="/help-centre/offer-drive-sangai">
                 <div class="px-6 py-4">
                   <div class="font-bold text-xl mb-2 cursor-pointer">
@@ -327,7 +358,7 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
 
           <div>
             <div class="max-w-sm rounded overflow-hidden border border-gray-300">
-              <img class="w-full h-40" src="/sharing.jpeg" />
+              <img class="w-full h-60" src="/sharing.jpeg" />
               <Link href="/help-centre/book-travel-sangai">
                 <div class="px-6 py-4">
                   <div class="font-bold text-xl mb-2 cursor-pointer">
@@ -340,7 +371,7 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
 
           <div>
             <div class="max-w-sm rounded overflow-hidden border border-gray-300">
-              <img class="w-full h-40" src="/laptop.png" />
+              <img class="w-full h-60" src="/laptop.png" />
               <Link href="/help-centre/book-travel-bus/">
                 <div class="px-6 py-4">
                   <div class="font-bold text-xl mb-2 cursor-pointer">
@@ -357,13 +388,18 @@ const HelpCentre = ({ chooseRoute,howToSearch,travellingWithChildren,checkBookin
   );
 };
 
-
 export async function getStaticProps() {
   const chooseRoute = await axios.get(`${API}/help/choosing-route`);
   const howToSearch = await axios.get(`${API}/help/how-to-search`);
-  const travellingWithChildren = await axios.get(`${API}/help/travelling-with-children`);
-  const checkBookingConfirmed = await axios.get(`${API}/help/check-booking-confirmed`);
-  const cancellingBookingRequest = await axios.get(`${API}/help/cancelling-booking-request`);
+  const travellingWithChildren = await axios.get(
+    `${API}/help/travelling-with-children`
+  );
+  const checkBookingConfirmed = await axios.get(
+    `${API}/help/check-booking-confirmed`
+  );
+  const cancellingBookingRequest = await axios.get(
+    `${API}/help/cancelling-booking-request`
+  );
   const seatAssignment = await axios.get(`${API}/help/seat-assignment`);
   return {
     props: {

@@ -28,7 +28,7 @@ const howItWork = () => {
                   }}
                 ></div>
               </div>
-              <div >
+              <div>
                 <h1 className="text-xl">Driver</h1>
                 <p>
                   Open the Sangai app or website to publish your ride by filling
@@ -120,7 +120,7 @@ const howItWork = () => {
                   ride-sharing.
                 </p>
               </div>
-            </div> 
+            </div>
           </div>
           {/* work flow end */}
         </div>

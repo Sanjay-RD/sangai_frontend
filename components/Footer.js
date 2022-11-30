@@ -68,17 +68,17 @@ const Footer = () => {
             <ul className="flex space-x-6 text-primaryDark">
               <li>
                 <a href="/">
-                  <i class="fa-brands fa-facebook text-3xl"></i>
+                  <i class="fa-brands fa-facebook text-3xl text-blue-600"></i>
                 </a>
               </li>
               <li>
                 <a href="/">
-                  <i class="fa-brands fa-instagram text-3xl"></i>
+                  <i class="fa-brands fa-instagram text-3xl text-red-600"></i>
                 </a>
               </li>
               <li>
                 <a href="/">
-                  <i class="fa-brands fa-twitter text-3xl"></i>
+                  <i class="fa-brands fa-twitter text-3xl text-sky-600"></i>
                 </a>
               </li>
             </ul>

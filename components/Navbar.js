@@ -24,12 +24,14 @@ const Navbar = () => {
     }
   }, [userInfo]);
   return (
-    <nav className="">
+    <nav className="sticky top-0 z-50 bg-white border-b-2 shadow-lg">
       <Container>
         <div className="flex space-x-4 lg:space-x-8 justify-between items-center">
           <div>
             <Link href="/">
-              <a className="text-primary text-2xl md:text-3xl lg:text-4xl font-medium mx-2 md:mx-0">संगै</a>
+              <a className="text-primary text-2xl md:text-3xl lg:text-4xl font-medium mx-2 md:mx-0">
+                संगै
+              </a>
             </Link>
           </div>
           {/* logo end */}
@@ -69,10 +71,12 @@ const Navbar = () => {
                           className="rounded-full"
                         />
                         <div className="flex">
-                          {isAuth() && isAuth().user.name}
+                          <h1 className="text-lg md:text-xl lg:text-2xl  font-medium text-primary">
+                            {isAuth() && isAuth().user.name}
+                          </h1>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="ml-2 -mr-1 h-5 w-5 text-gray-400 hover:text-gray-600"
+                            className="ml-2 -mr-1 h-5 w-5 text-gray-400 hover:text-gray-600 mt-1"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -112,9 +116,7 @@ const Navbar = () => {
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            href="/publish-ride"
-                          >
+                          <Link href="/publish-ride">
                             <a
                               // onClick={() => setToggleMenu(false)}
                               class="cursor-pointer sm:hidden block py-2 px-4 hover:bg-gray-100 rounded-md"
