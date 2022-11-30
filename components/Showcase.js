@@ -3,7 +3,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Container from "./Container";
 import { useDispatch, useSelector } from "react-redux";
-
+import Typed from "typed.js";
+import { useTypewriter } from "react-simple-typewriter";
 const Showcase = () => {
   const dispatch = useDispatch();
 
@@ -45,24 +46,32 @@ const Showcase = () => {
       createMate(name, email, address, phone, leaving, going, date, seats)
     );
   };
+  const [text] = useTypewriter({
+    words: ["Ride", "Travelling Cost"],
+    loop: 0,
+    typeSpeed: 80,
+    deleteSpeed: 50,
+    delaySpeed: 2000,
+  });
 
   return (
     <div>
       <div className=" w-full h-[30vh] sm:h-[70vh] overflow-hidden bg-gray-200 relative">
         <Image
-          alt="Mountains"
-          src="/showcase1.jpeg"
+          alt="Sangai banner"
+          src="/banner.jpeg"
           priority
           objectFit="cover"
           layout="fill"
+          // className="object-no-repeat object-cover object-center object-fixed"
         />
-        <div className="absolute top-[10%] md:top-[20%] w-full text-center">
-          <h1 className="text-2xl md:text-4xl text-gray-700 capitalize">
-            Share your ride, Share your traveling cost.
+        <div className="absolute top-[10%] md:top-[25%] w-full text-center">
+          <h1 className="text-2xl md:text-6xl text-gray-800 capitalize font-extrabold mb-24">
+            Share your <span className="text-red-900">{text}</span>
           </h1>
           <div className="flex justify-center items-center mt-16 sm:mt-14 space-x-10">
             <Link href="/publish-ride">
-              <a className="border px-2 py-0 md:px-4  md:py-1 rounded-lg bg-white text-sm sm:text-lg flex items-center space-x-2">
+              <a className="border px-2 py-0 md:px-4  md:py-2 rounded-lg bg-white text-sm sm:text-lg flex items-center space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -81,7 +90,7 @@ const Showcase = () => {
               </a>
             </Link>
             <Link href="/search">
-              <a className="border px-2 py-0 md:px-4  md:py-1 rounded-lg bg-white text-sm sm:text-lg items-center flex space-x-2">
+              <a className="border px-2 py-0 md:px-4  md:py-2 rounded-lg bg-white text-sm sm:text-lg items-center flex space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

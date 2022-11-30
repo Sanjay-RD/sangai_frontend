@@ -3,7 +3,7 @@ import Container from "../../components/Container";
 import Navbar from "../../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { API } from "../../config";
+import { API, baseUrl } from "../../config";
 import moment from "moment";
 import Link from "next/link";
 import Footer from "../../components/Footer";
@@ -71,8 +71,9 @@ const ProfileDetail = ({ userData, requestedRide }) => {
     }
   }, [acceptSuccess, requestSuccess, deleteSuccess, paySuccess]);
 
-  const handlePay = (uuid) => {
+  const handlePay = (uuid, price) => {
     // minimum transaction amount must be 10, i.e 1000 in paisa.
+    console.log("first", price);
     let config = {
       // replace this key with yours
       publicKey: myKey.publicTestKey,
@@ -104,7 +105,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
     };
     let checkout = new KhaltiCheckout(config);
     setCheckout(checkout);
-    checkout.show({ amount: 1000 });
+    checkout.show({ amount: price * 100 });
   };
 
   const handleUpdateRequest = (uuid) => {
@@ -199,12 +200,19 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                       <div className="flex justify-between px-6 py-4">
                         <div>
                           <h1>
-                            {value.rides.leaving} to {value.rides.heading}
+                            <i class="fa-solid fa-location-dot text-green-400 text-xl"></i>{" "}
+                            {value.rides.leaving}{" "}
+                            <i class="fa-solid fa-arrow-right"></i>{" "}
+                            {value.rides.heading}
                           </h1>
                           <p>
+                            <i class="fa-solid fa-calendar-days text-red-600 text-xl"></i>{" "}
                             {moment(value.rides.date).format("MMMM Do YYYY")}
                           </p>
-                          <p>{value.rides.seat} Seats</p>
+                          <p>
+                            <i class="fa-regular fa-user  text-xl"></i>{" "}
+                            {value.rides.seat} Seats
+                          </p>
                           {value.isAccept && (
                             <div>
                               <h1 className="text-primary">
@@ -237,7 +245,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                             <button
                               className="px-3 py-1 border rounded-lg bg-purple-700 text-white"
                               onClick={() => {
-                                handlePay(value.uuid);
+                                handlePay(value.uuid, value.rides.price);
                               }}
                             >
                               Pay via Khalti
@@ -298,327 +306,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                             View Rider Detail
                           </button>
                         )}
-                        <ModalWrapper
-                          title="Rider Details"
-                          closeModal={closeModal}
-                          isOpen={isOpen}
-                        >
-                          <div
-                            className="border rounded-xl  my-5"
-                            style={{
-                              boxShadow:
-                                "3px 3px 23px -8px rgba(117,165,105,0.59)",
-                            }}
-                          >
-                            <div className="border-b p-3 flex space-x-3 items-center">
-                              <img
-                                src={value.rider && value.rider.picture}
-                                alt=""
-                                width={50}
-                                height={50}
-                                className="rounded-full"
-                              />
-                              <div>
-                                <h1 className="text-xl">
-                                  {value.rider && value.rider.name}
-                                </h1>
-                              </div>
-                            </div>
-                            <div className="px-6 py-4 border-b">
-                              <div className="grid grid-cols-12 gap-7">
-                                <div className="col-span-4">
-                                  <button
-                                    className={
-                                      stage === 1
-                                        ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded"
-                                        : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded border-primary"
-                                    }
-                                    onClick={() => setStage(1)}
-                                  >
-                                    <h1>Basic Information</h1>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke-width="1.5"
-                                      stroke="currentColor"
-                                      class="w-5 h-5"
-                                    >
-                                      <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                                      />
-                                    </svg>
-                                  </button>
-                                  <button
-                                    className={
-                                      stage === 2
-                                        ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded my-3"
-                                        : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
-                                    }
-                                    onClick={() => setStage(2)}
-                                  >
-                                    <h1>Driver License</h1>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke-width="1.5"
-                                      stroke="currentColor"
-                                      class="w-5 h-5"
-                                    >
-                                      <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                                      />
-                                    </svg>
-                                  </button>
-                                  <button
-                                    className={
-                                      stage === 3
-                                        ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded my-3"
-                                        : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
-                                    }
-                                    onClick={() => setStage(3)}
-                                  >
-                                    <h1>ID Information</h1>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke-width="1.5"
-                                      stroke="currentColor"
-                                      class="w-5 h-5"
-                                    >
-                                      <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                                      />
-                                    </svg>
-                                  </button>
-                                  <button
-                                    className={
-                                      stage === 4
-                                        ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded my-3"
-                                        : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
-                                    }
-                                    onClick={() => setStage(4)}
-                                  >
-                                    <h1>Vehicle Information</h1>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke-width="1.5"
-                                      stroke="currentColor"
-                                      class="w-5 h-5"
-                                    >
-                                      <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                                      />
-                                    </svg>
-                                  </button>
-                                </div>
-                                <div className="col-span-8">
-                                  {stage === 1 && (
-                                    <div className="border rounded-md">
-                                      <div className="border-b px-5 py-3 bg-lime-600 text-white rounded-t-md">
-                                        <h1 className="text-xl">
-                                          Basic Information
-                                        </h1>
-                                      </div>
-                                      <div className="px-6 py-5">
-                                        <h1>
-                                          First Name :{" "}
-                                          {value.rider && value.rider.name}
-                                        </h1>
-                                        <h1>Last Name : </h1>
-                                        <h1>
-                                          Date of Birth :{" "}
-                                          {/* {ride &&
-                                            ride.driverInfo.date_of_birth} */}
-                                        </h1>
-                                        <h1>
-                                          Email :{" "}
-                                          {value.rider && value.rider.email}
-                                        </h1>
-                                      </div>
-                                    </div>
-                                  )}
-                                  {stage === 2 && (
-                                    <div className="border rounded-md">
-                                      <div className="border-b px-5 py-3  bg-lime-600 text-white rounded-t-md">
-                                        <h1 className="text-xl">
-                                          Driver License
-                                        </h1>
-                                      </div>
-                                      <div className="px-6 py-5">
-                                        <h1>
-                                          Driving License Number :{" "}
-                                          {/* {ride &&
-                                            ride.licenseInfo.license_number} */}
-                                        </h1>
-                                        <div>
-                                          <h1>License Front Image : </h1>
-                                          {/* <a
-                                            href={`${url}/${
-                                              ride &&
-                                              ride.licenseInfo
-                                                .license_front_image
-                                            }`}
-                                            target="_blank"
-                                          >
-                                            <img
-                                              src={`${url}/${
-                                                ride &&
-                                                ride.licenseInfo
-                                                  .license_front_image
-                                              }`}
-                                              alt=""
-                                              style={{
-                                                height: "250px",
-                                                objectFit: "cover",
-                                              }}
-                                            />
-                                          </a> */}
-                                        </div>
-                                        <div>
-                                          <h1>License Back Image : </h1>
 
-                                          {/* <a
-                                            href={`${url}/${
-                                              ride &&
-                                              ride.licenseInfo
-                                                .license_back_image
-                                            }`}
-                                            target="_blank"
-                                          >
-                                            <img
-                                              src={`${url}/${
-                                                ride &&
-                                                ride.licenseInfo
-                                                  .license_back_image
-                                              }`}
-                                              alt=""
-                                              style={{
-                                                height: "250px",
-                                                objectFit: "cover",
-                                              }}
-                                            />
-                                          </a> */}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  )}
-                                  {stage === 3 && (
-                                    <div className="border rounded-md">
-                                      <div className="border-b px-5 py-3  bg-lime-600 text-white rounded-t-md">
-                                        <h1 className="text-xl">
-                                          ID Information
-                                        </h1>
-                                      </div>
-                                      <div className="px-6 py-5">
-                                        <div>
-                                          <h1>Id Image</h1>
-                                          {/* <a
-                                            href={`${url}/${
-                                              ride && ride.IdInfo.id_information
-                                            }`}
-                                            target="_blank"
-                                          >
-                                            <img
-                                              src={`${url}/${
-                                                ride &&
-                                                ride.IdInfo.id_information
-                                              }`}
-                                              alt=""
-                                              style={{
-                                                height: "250px",
-                                                objectFit: "cover",
-                                              }}
-                                            />
-                                          </a> */}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  )}
-                                  {stage === 4 && (
-                                    <div className="border rounded-md">
-                                      <div className="border-b px-5 py-3  bg-lime-600 text-white rounded-t-md">
-                                        <h1 className="text-xl">
-                                          Vehicle Information
-                                        </h1>
-                                      </div>
-                                      <div className="px-6 py-5">
-                                        <h1>
-                                          Vehicle Type :{" "}
-                                          {/* {ride &&
-                                            ride.vehicleInfo.select_vehicle} */}
-                                        </h1>
-                                        <h1>
-                                          Vehicle Number Plate :{" "}
-                                          {/* {ride &&
-                                            ride.vehicleInfo.number_plate} */}
-                                        </h1>
-                                        <div>
-                                          <h1>Vehicle Image</h1>
-
-                                          {/* <a
-                                            href={`${url}/${
-                                              ride &&
-                                              ride.vehicleInfo.vehicle_image
-                                            }`}
-                                            target="_blank"
-                                          >
-                                            <img
-                                              src={`${url}/${
-                                                ride &&
-                                                ride.vehicleInfo.vehicle_image
-                                              }`}
-                                              alt=""
-                                              style={{
-                                                height: "250px",
-                                                objectFit: "cover",
-                                              }}
-                                            />
-                                          </a> */}
-                                        </div>
-                                        <div>
-                                          <h1>Billbook Image</h1>
-
-                                          {/* <a
-                                            href={`${url}/${
-                                              ride &&
-                                              ride.vehicleInfo.billbook_image
-                                            }`}
-                                            target="_blank"
-                                          >
-                                            <img
-                                              src={`${url}/${
-                                                ride &&
-                                                ride.vehicleInfo.billbook_image
-                                              }`}
-                                              alt=""
-                                              style={{
-                                                height: "250px",
-                                                objectFit: "cover",
-                                              }}
-                                            />
-                                          </a> */}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </ModalWrapper>
                         <button
                           className="bg-red-500 px-3 py-1 rounded-lg text-white mt-5 md:mt-0 w-max ml-3"
                           onClick={() =>
@@ -634,6 +322,339 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                   ))}
                 </div>
               )}
+              <ModalWrapper
+                title="Rider Details"
+                closeModal={closeModal}
+                isOpen={isOpen}
+              >
+                <div
+                  className="border rounded-xl  my-5"
+                  style={{
+                    boxShadow: "3px 3px 23px -8px rgba(117,165,105,0.59)",
+                  }}
+                >
+                  <div className="border-b p-3 flex space-x-3 items-center">
+                    <img
+                      src={userDetail && userDetail.picture}
+                      alt=""
+                      width={50}
+                      height={50}
+                      className="rounded-full"
+                    />
+                    <div>
+                      <h1 className="text-xl">
+                        {userDetail && userDetail.name}
+                      </h1>
+                    </div>
+                  </div>
+                  <div className="px-6 py-4 border-b">
+                    <div className="grid grid-cols-12 gap-7">
+                      <div className="col-span-4">
+                        <button
+                          className={
+                            stage === 1
+                              ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded"
+                              : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded border-primary"
+                          }
+                          onClick={() => setStage(1)}
+                        >
+                          <h1>Basic Information</h1>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          className={
+                            stage === 2
+                              ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded my-3"
+                              : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
+                          }
+                          onClick={() => setStage(2)}
+                        >
+                          <h1>Driver License</h1>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          className={
+                            stage === 3
+                              ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded my-3"
+                              : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
+                          }
+                          onClick={() => setStage(3)}
+                        >
+                          <h1>ID Information</h1>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          className={
+                            stage === 4
+                              ? "border px-3 py-2  bg-lime-600 text-white w-full flex justify-between items-center rounded my-3"
+                              : "border px-3 py-2 bg-white w-full flex justify-between items-center rounded my-3 border-primary"
+                          }
+                          onClick={() => setStage(4)}
+                        >
+                          <h1>Vehicle Information</h1>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div className="col-span-8">
+                        {stage === 1 && (
+                          <div className="border rounded-md">
+                            <div className="border-b px-5 py-3 bg-lime-600 text-white rounded-t-md">
+                              <h1 className="text-xl">Basic Information</h1>
+                            </div>
+                            <div className="px-6 py-5">
+                              <h1>
+                                First Name :{" "}
+                                {userDetail &&
+                                  userDetail.informations[0] &&
+                                  userDetail.informations[0].first_name}
+                              </h1>
+                              <h1>
+                                Last Name :{" "}
+                                {userDetail &&
+                                  userDetail.informations[0] &&
+                                  userDetail.informations[0].last_name}
+                              </h1>
+                              <h1>
+                                Date of Birth :{" "}
+                                {userDetail &&
+                                  userDetail.informations[0] &&
+                                  userDetail.informations[0].date_of_birth}
+                              </h1>
+                              <h1>
+                                Email :{" "}
+                                {/* {value.rider && value.rider.email} */}
+                                {userDetail &&
+                                  userDetail.informations[0] &&
+                                  userDetail.informations[0].email}
+                              </h1>
+                            </div>
+                          </div>
+                        )}
+                        {stage === 2 && (
+                          <div className="border rounded-md">
+                            <div className="border-b px-5 py-3  bg-lime-600 text-white rounded-t-md">
+                              <h1 className="text-xl">Driver License</h1>
+                            </div>
+                            <div className="px-6 py-5">
+                              <h1>
+                                Driving License Number :{" "}
+                                {userDetail &&
+                                  userDetail.license[0] &&
+                                  userDetail.license[0].license_number}
+                              </h1>
+                              <div>
+                                <h1>License Front Image : </h1>
+                                <a
+                                  href={`${baseUrl}/${
+                                    userDetail &&
+                                    userDetail.license[0] &&
+                                    userDetail.license[0].license_front_image
+                                  }`}
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={`${baseUrl}/${
+                                      userDetail &&
+                                      userDetail.license[0] &&
+                                      userDetail.license[0].license_front_image
+                                    }`}
+                                    alt=""
+                                    style={{
+                                      height: "250px",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                </a>
+                              </div>
+                              <div>
+                                <h1>License Back Image : </h1>
+
+                                <a
+                                  href={`${baseUrl}/${
+                                    userDetail &&
+                                    userDetail.license[0] &&
+                                    userDetail.license[0].license_back_image
+                                  }`}
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={`${baseUrl}/${
+                                      userDetail &&
+                                      userDetail.license[0] &&
+                                      userDetail.license[0].license_back_image
+                                    }`}
+                                    alt=""
+                                    style={{
+                                      height: "250px",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {stage === 3 && (
+                          <div className="border rounded-md">
+                            <div className="border-b px-5 py-3  bg-lime-600 text-white rounded-t-md">
+                              <h1 className="text-xl">ID Information</h1>
+                            </div>
+                            <div className="px-6 py-5">
+                              <div>
+                                <h1>Id Image</h1>
+                                <a
+                                  href={`${baseUrl}/${
+                                    userDetail &&
+                                    userDetail.idinformations[0] &&
+                                    userDetail.idinformations[0].idinformation
+                                  }`}
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={`${baseUrl}/${
+                                      userDetail &&
+                                      userDetail.idinformations[0] &&
+                                      userDetail.idinformations[0].idinformation
+                                    }`}
+                                    alt=""
+                                    style={{
+                                      height: "250px",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {stage === 4 && (
+                          <div className="border rounded-md">
+                            <div className="border-b px-5 py-3  bg-lime-600 text-white rounded-t-md">
+                              <h1 className="text-xl">Vehicle Information</h1>
+                            </div>
+                            <div className="px-6 py-5">
+                              <h1>
+                                Vehicle Type :{" "}
+                                {userDetail &&
+                                  userDetail.vehicles[0] &&
+                                  userDetail.vehicles[0].select_vehicle}
+                              </h1>
+                              <h1>
+                                Vehicle Number Plate :{" "}
+                                {userDetail &&
+                                  userDetail.vehicles[0] &&
+                                  userDetail.vehicles[0].number_plate}
+                              </h1>
+                              <div>
+                                <h1>Vehicle Image</h1>
+
+                                <a
+                                  href={`${baseUrl}/${
+                                    userDetail &&
+                                    userDetail.vehicles[0] &&
+                                    userDetail.vehicles[0].vehicle_image
+                                  }`}
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={`${baseUrl}/${
+                                      userDetail &&
+                                      userDetail.vehicles[0] &&
+                                      userDetail.vehicles[0].vehicle_image
+                                    }`}
+                                    alt=""
+                                    style={{
+                                      height: "250px",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                </a>
+                              </div>
+                              <div>
+                                <h1>Billbook Image</h1>
+
+                                <a
+                                  href={`${baseUrl}/${
+                                    userDetail &&
+                                    userDetail.vehicles[0] &&
+                                    userDetail.vehicles[0].billbook_image
+                                  }`}
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={`${baseUrl}/${
+                                      userDetail &&
+                                      userDetail.vehicles[0] &&
+                                      userDetail.vehicles[0].billbook_image
+                                    }`}
+                                    alt=""
+                                    style={{
+                                      height: "250px",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ModalWrapper>
               {tabValue === 2 && (
                 <div>
                   {userData.rides.map((value, i) => (

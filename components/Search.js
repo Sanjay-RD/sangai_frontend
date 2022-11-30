@@ -4,22 +4,66 @@ import { useRouter } from "next/router";
 import DatePicker from "react-datepicker";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Search = () => {
   const router = useRouter();
-  const [leaving, setLeaving] = useState("");
-  const [heading, setHeading] = useState("");
   const [date, setDate] = useState("");
   const [seat, setSeat] = useState("");
   const [seats, setSeats] = useState(1);
   const [startDate, setStartDate] = useState(new Date());
+  const [location, setLocation] = useState([]);
+  const [startLocation, setStartLocation] = useState("");
+  const [endLocation, setEndLocation] = useState("");
+  const [startSuggestions, setStartSuggestions] = useState([]);
+  const [endSuggestions, setEndSuggestions] = useState([]);
   console.log("startDate", startDate);
   const handleSubmitSearch = (e) => {
     e.preventDefault();
     router.push(
-      `/search?heading=${heading}&&leaving=${leaving}&&date=${startDate}&&seat=${seats}&&vehicle=all`
+      `/search?heading=${endLocation}&&leaving=${startLocation}&&date=${startDate}&&seat=${seats}&&vehicle=all`
     );
   };
+  useEffect(() => {
+    const loadLocations = async () => {
+      const res = await axios.get("https://fakestoreapi.com/products");
+
+      setLocation(res.data);
+    };
+    loadLocations();
+  }, []);
+  const handleStartLocation = (startLocation) => {
+    let matches = [];
+    if (startLocation.length > 0) {
+      matches = location.filter((location) => {
+        const regex = new RegExp(`${startLocation}`, "gi");
+        return location.title.match(regex);
+      });
+    }
+    setStartSuggestions(matches);
+    setStartLocation(startLocation);
+  };
+  const handleStartSuggestion = (startLocation) => {
+    setStartLocation(startLocation);
+    setStartSuggestions([]);
+  };
+  const handleEndLocation = (endLocation) => {
+    let matches = [];
+    if (endLocation.length > 0) {
+      matches = location.filter((location) => {
+        const regex = new RegExp(`${endLocation}`, "gi");
+        return location.title.match(regex);
+      });
+    }
+    setEndSuggestions(matches);
+    setEndLocation(endLocation);
+  };
+  const handleEndSuggestion = (endLocation) => {
+    setEndLocation(endLocation);
+    setEndSuggestions([]);
+  };
+
   return (
     <div className="px-20 absolute left-0 right-0 bottom-[40px] hidden sm:block">
       {/* <div className="border bg-white h-[150px] m-auto rounded-2xl">
@@ -86,34 +130,73 @@ const Search = () => {
       <form onSubmit={handleSubmitSearch}>
         <div className="bg-white rounded-xl grid grid-cols-12 h-[56px]">
           <div className="col-span-10">
-            <div className="grid grid-cols-12 px-5">
-              <div className="flex col-span-4 items-center">
-                <div className="flex items-center space-x-2 h-[56px]">
-                  <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
-                  <input
-                    type="text"
-                    placeholder="Leaving From..."
-                    className="text-primary outline-none  w-full text-lg py-1"
-                    onChange={(e) => setLeaving(e.target.value)}
-                  />
+            <div className="grid grid-cols-4 gap-2 px-2">
+              <div>
+                <div>
+                  <div className="flex items-center space-x-2 h-[56px]">
+                    {/* <i class="fa-regular fa-circle "></i> */}
+                    <i class="fa-solid fa-location-dot text-green-400 text-xl"></i>
+                    <input
+                      type="text"
+                      placeholder="Leaving From..."
+                      className="text-primary outline-none  w-full text-lg py-1"
+                      onChange={(e) => handleStartLocation(e.target.value)}
+                      value={startLocation}
+                    />
+                  </div>
+                  <div className="bg-white rounded shadow-2xl">
+                    {startSuggestions &&
+                      startSuggestions.map((startSuggestion, i) => (
+                        <div
+                          key={i}
+                          className="cursor-pointer mt-2 w-full text-lg font-normal py-2 text-gray-900  border-b border-gray-200"
+                          onClick={() =>
+                            handleStartSuggestion(startSuggestion.title)
+                          }
+                        >
+                          {startSuggestion.title}
+                        </div>
+                      ))}
+                  </div>
+                </div>
+
+                <div className="border-r border-gray-300 ml-14 h-[40px]"></div>
+              </div>
+              <div>
+                <div>
+                  <div className="flex items-center space-x-2 h-[56px]">
+                    {/* <i class="fa-regular fa-circle text-gray-400 text-xl"></i> */}
+                    <i class="fa-solid fa-location-dot text-green-400 text-xl"></i>
+
+                    <input
+                      type="text"
+                      placeholder="Going to..."
+                      className="text-primary outline-none  w-full text-lg py-1"
+                      onChange={(e) => handleEndLocation(e.target.value)}
+                      value={endLocation}
+                    />
+                  </div>
+                  <div className="bg-white rounded shadow-2xl">
+                    {endSuggestions &&
+                      endSuggestions.map((endSuggestion, i) => (
+                        <div
+                          key={i}
+                          className="cursor-pointer mt-2 w-full text-lg font-normal py-2 text-gray-900  border-b border-gray-200"
+                          onClick={() =>
+                            handleEndSuggestion(endSuggestion.title)
+                          }
+                        >
+                          {endSuggestion.title}
+                        </div>
+                      ))}
+                  </div>
                 </div>
                 <div className="border-r border-gray-300 ml-14 h-[40px]"></div>
               </div>
-              <div className="flex col-span-4 items-center">
+              <div>
                 <div className="flex items-center space-x-2 h-[56px]">
-                  <i class="fa-regular fa-circle text-gray-400 text-xl"></i>
-                  <input
-                    type="text"
-                    placeholder="Going to..."
-                    className="text-primary outline-none  w-full text-lg py-1"
-                    onChange={(e) => setHeading(e.target.value)}
-                  />
-                </div>
-                <div className="border-r border-gray-300 ml-14 h-[40px]"></div>
-              </div>
-              <div className="flex col-span-3 items-center">
-                <div className="flex items-center space-x-2 h-[56px]">
-                  <i class="fa-regular fa-address-book text-gray-400 text-xl"></i>
+                  {/* <i class="fa-regular fa-address-book text-gray-400 text-xl"></i> */}
+                  <i class="fa-solid fa-calendar-days text-red-600 text-xl"></i>
                   {/* <input
                     type="text"
                     placeholder="Today"
@@ -128,9 +211,9 @@ const Search = () => {
                 </div>
                 <div className="border-r border-gray-300 mx-3 h-[40px]"></div>
               </div>
-              <div className="flex col-span-1 items-center relative">
+              <div>
                 <div className="flex items-center space-x-2 h-[56px]">
-                  <i class="fa-regular fa-user text-gray-400 text-xl"></i>
+                  <i class="fa-regular fa-user  text-xl"></i>
 
                   <Menu as="div" className="relative inline-block text-left">
                     <div>

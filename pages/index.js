@@ -24,16 +24,21 @@ function HomePage({ getFAQ }) {
         <Showcase />
         <Search />
       </div>
-      <div className=" mt-5 sm:mt-32 mb-3">
+      <div className=" mt-5 sm:mt-12 mb-3">
         <Container>
           <div>
-            <h1 className="text-4xl font-[400] text-primaryDark">
+            {/* <h1 className="text-4xl font-[400] text-primaryDark">
               Get best Services at Sangai
+            </h1> */}
+            <h1 className="text-primaryDark font-bold text-4xl">
+              Get best Services at{" "}
+              <span className="text-green-700">Sangai</span>
             </h1>
+
             <div className="grid sm:grid-cols-2 md:grid-cols-2 gap-8 my-9">
               <div className="md:flex space-x-5">
                 <div>
-                  <i class="fa-solid fa-piggy-bank text-8xl text-primaryDark"></i>
+                  <i class="fa-solid fa-piggy-bank text-8xl text-yellow-600"></i>
                 </div>
                 <div>
                   <h1 className="text-3xl mb-1 sm:text-2xl font-medium my-1 text-primaryDark">
@@ -56,7 +61,7 @@ function HomePage({ getFAQ }) {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-[96px] h-[96px] text-primaryDark"
+                    class="w-[96px] h-[96px] text-green-500"
                   >
                     <path
                       stroke-linecap="round"
@@ -79,7 +84,7 @@ function HomePage({ getFAQ }) {
               </div>
               <div className="md:flex space-x-5">
                 <div>
-                  <i class="fa-solid fa-rocket text-8xl text-primaryDark"></i>
+                  <i class="fa-solid fa-rocket text-8xl text-red-700"></i>
                 </div>
                 <div>
                   <h1 className="text-3xl mb-1 md:text-2xl font-medium my-1 text-primaryDark">
@@ -110,7 +115,7 @@ function HomePage({ getFAQ }) {
             </div>
             <div className="space-y-7">
               <div className="flex items-center space-x-3">
-                <i class="fa-solid fa-user text-2xl text-primaryDark"></i>
+                <i class="fa-solid fa-user text-2xl"></i>
                 <div>
                   <h1 className="text-xl sm:text-lg text-primaryDark">
                     Create a Sangai account
@@ -122,7 +127,7 @@ function HomePage({ getFAQ }) {
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <i class="fa-solid fa-car text-2xl text-primaryDark"></i>
+                <i class="fa-solid fa-car text-2xl text-blue-600"></i>
                 <div>
                   <h1 className="text-xl sm:text-lg text-primaryDark">
                     Publish your ride
@@ -135,7 +140,7 @@ function HomePage({ getFAQ }) {
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <i class="fa-solid fa-bolt-lightning text-2xl text-primaryDark"></i>
+                <i class="fa-solid fa-bolt-lightning text-2xl text-yellow-400"></i>
                 <div>
                   <h1 className="text-xl sm:text-lg text-primaryDark">
                     Accept booking requests
@@ -167,7 +172,7 @@ function HomePage({ getFAQ }) {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-9 h-9 text-primaryDark"
+                    class="w-9 h-9 text-red-600"
                   >
                     <path
                       stroke-linecap="round"
@@ -188,7 +193,7 @@ function HomePage({ getFAQ }) {
               </div>
               <div>
                 <div>
-                  <i class="fa-solid fa-car text-3xl text-primaryDark"></i>
+                  <i class="fa-solid fa-car text-3xl text-blue-600"></i>
                 </div>
                 <div>
                   <h1 className="text-xl font-medium my-1 text-primaryDark">
@@ -208,7 +213,7 @@ function HomePage({ getFAQ }) {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-9 h-9 text-primaryDark"
+                    class="w-9 h-9 text-green-500"
                   >
                     <path
                       stroke-linecap="round"

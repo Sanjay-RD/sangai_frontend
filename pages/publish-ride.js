@@ -65,8 +65,8 @@ const PublishRode = () => {
     setEndSuggestions(matches);
     setEndLocation(endLocation);
   };
-  const handleEndSuggestion = (startLocation) => {
-    setEndLocation(startLocation);
+  const handleEndSuggestion = (endLocation) => {
+    setEndLocation(endLocation);
     setEndSuggestions([]);
   };
 
@@ -101,7 +101,7 @@ const PublishRode = () => {
         </h1> */}
         <form
           onSubmit={handleSubmitPublishRide}
-          className="w-full md:w-[600px] m-auto md:space-y-8 space-y-5 my-10"
+          className="w-full md:w-[600px] m-auto md:space-y-8 space-y-5 my-10 "
         >
           <div className="flex flex-col space-y-2">
             <label htmlFor="" className="text-2xl md:text-3xl text-primaryDark">
@@ -194,6 +194,9 @@ const PublishRode = () => {
             <label htmlFor="" className="text-2xl md:text-3xl text-primaryDark">
               Set your price per seat
             </label>
+            <span className="mt-4 bg-red-100 text-red-800 text-2xl font-semibold mr-2 px-2.5 py-0.5 rounded">
+              ~The recommended fare is NPR 100
+            </span>
             <div className="flex justify-between items-center w-[300px] m-auto">
               <div
                 className="border-2 rounded-[100%] h-10 w-10 flex justify-center border-primary cursor-pointer"
