@@ -3,7 +3,6 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Container from "./Container";
 import { useDispatch, useSelector } from "react-redux";
-import Typed from "typed.js";
 import { useTypewriter } from "react-simple-typewriter";
 const Showcase = () => {
   const dispatch = useDispatch();
@@ -51,12 +50,12 @@ const Showcase = () => {
     loop: 0,
     typeSpeed: 80,
     deleteSpeed: 50,
-    delaySpeed: 2000,
+    delaySpeed: 1500,
   });
 
   return (
     <div>
-      <div className=" w-full h-[30vh] sm:h-[70vh] overflow-hidden bg-gray-200 relative">
+      <div className=" w-full h-[50vh] md:h-[70vh] overflow-hidden bg-gray-200 relative">
         <Image
           alt="Sangai banner"
           src="/banner.jpeg"
@@ -65,11 +64,11 @@ const Showcase = () => {
           layout="fill"
           // className="object-no-repeat object-cover object-center object-fixed"
         />
-        <div className="absolute top-[10%] md:top-[25%] w-full text-center">
-          <h1 className="text-2xl md:text-6xl text-gray-800 capitalize font-extrabold mb-24">
+        <div className="absolute top-[25%] md:top-[25%] w-full text-center">
+          <h1 className="text-2xl md:text-6xl text-gray-800 capitalize font-extrabold mb-10 md:mb-24">
             Share your <span className="text-red-900">{text}</span>
           </h1>
-          <div className="flex justify-center items-center mt-16 sm:mt-14 space-x-10">
+          <div className="flex justify-center items-center mt-16 sm:mt-14 space-x-3 md:space-x-10">
             <Link href="/publish-ride">
               <a className="border px-2 py-0 md:px-4  md:py-2 rounded-lg bg-white text-sm sm:text-lg flex items-center space-x-2">
                 <svg

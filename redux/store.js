@@ -50,6 +50,7 @@ import {
   deleteRequestReducer,
   updateRequestToPayReducer,
 } from "./reducers/requestReducer";
+import { listLocationsReducer } from "./reducers/locationReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -82,6 +83,7 @@ const reducer = combineReducers({
   updateRequestToPay: updateRequestToPayReducer,
   updateRequest: updateRequestReducer,
   deleteRequest: deleteRequestReducer,
+  getLocations: listLocationsReducer,
 });
 
 const adminInfoFromStrorage =

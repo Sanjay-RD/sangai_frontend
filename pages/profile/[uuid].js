@@ -38,6 +38,7 @@ const ProfileDetail = ({ userData, requestedRide }) => {
   const updateRequestToAcceptState = useSelector(
     (state) => state.updateRequestToAccept
   );
+  console.log("first", requestRideData);
   const { success: acceptSuccess } = updateRequestToAcceptState;
   const updateRequestSuccess = useSelector((state) => state.updateRequest);
   const { success: requestSuccess } = updateRequestSuccess;
@@ -190,136 +191,152 @@ const ProfileDetail = ({ userData, requestedRide }) => {
 
               {tabValue === 1 && (
                 <div>
-                  {requestedRide.map((value, i) => (
-                    <div
-                      className="border rounded-xl  my-5"
-                      style={{
-                        boxShadow: "3px 3px 23px -8px rgba(117,165,105,0.59)",
-                      }}
-                    >
-                      <div className="flex justify-between px-6 py-4">
-                        <div>
-                          <h1>
-                            <i class="fa-solid fa-location-dot text-green-400 text-xl"></i>{" "}
-                            {value.rides.leaving}{" "}
-                            <i class="fa-solid fa-arrow-right"></i>{" "}
-                            {value.rides.heading}
-                          </h1>
-                          <p>
-                            <i class="fa-solid fa-calendar-days text-red-600 text-xl"></i>{" "}
-                            {moment(value.rides.date).format("MMMM Do YYYY")}
-                          </p>
-                          <p>
-                            <i class="fa-regular fa-user  text-xl"></i>{" "}
-                            {value.rides.seat} Seats
-                          </p>
-                          {value.isAccept && (
-                            <div>
-                              <h1 className="text-primary">
-                                {value.seat} seat is booked{" "}
-                                {value.rides.seat - value.seat} seat Available
-                              </h1>
-                            </div>
-                          )}
-                        </div>
-                        <div>
-                          <h1>Rs. {value.rides.price}</h1>
-                        </div>
-                      </div>
-                      <div className="border-t p-3 md:flex justify-between items-center">
-                        <div className="flex space-x-3">
-                          <img
-                            src={value.rider.picture}
-                            alt=""
-                            width={50}
-                            height={50}
-                            className="rounded-full"
-                          />
-                          <div>
-                            <h1>{value.rider.name}</h1>
-                            <h1>{value.rider.email}</h1>
-                          </div>
-                        </div>
-                        {value.isAccept ? (
-                          <div className="flex space-x-4">
-                            <button
-                              className="px-3 py-1 border rounded-lg bg-purple-700 text-white"
-                              onClick={() => {
-                                handlePay(value.uuid, value.rides.price);
-                              }}
-                            >
-                              Pay via Khalti
-                            </button>
-                            <div className="px-3 py-1 bg-primary text-white rounded-lg">
-                              Your Request has been accept
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="px-3 py-1 bg-blue-700 text-white rounded-lg w-max mt-5 md:mt-0 ">
-                            No Response
-                          </div>
-                        )}
-                      </div>
-                      <div className="border-t p-3 md:flex justify-between items-center">
-                        {!value.isAccept && (
-                          <div className="md:flex items-center space-x-3">
-                            <div className="flex justify-between items-center space-x-5">
-                              <div
-                                className="border-2 rounded-[100%] h-8 w-8 flex justify-center border-primary cursor-pointer items-center"
-                                onClick={() =>
-                                  seats > 1 &&
-                                  (setSeats(seats - 1), setIndex(i + 1))
-                                }
-                              >
-                                <span className="text-3xl font-light text-primary items-center">
-                                  -
-                                </span>
-                              </div>
-                              <span className="text-2xl text-primaryDark">
-                                {index === i + 1 ? seats : value.seat}
-                              </span>
-                              <div
-                                className="border-2 rounded-[100%] h-8 w-8 flex justify-center border-primary cursor-pointer items-center"
-                                onClick={() => {
-                                  value.rides.seat > seats &&
-                                    (setSeats(seats + 1), setIndex(i + 1));
-                                }}
-                              >
-                                <span className="text-2xl font-light text-primary items-center">
-                                  +
-                                </span>
-                              </div>
-                            </div>
-                            <button
-                              className="bg-blue-500 px-3 py-1 rounded-lg text-white mt-5 md:mt-0 w-max"
-                              onClick={() => handleUpdateRequest(value.uuid)}
-                            >
-                              Update Request
-                            </button>
-                          </div>
-                        )}
-                        {value.isPaid && (
-                          <button
-                            className="bg-primary px-3 py-1 rounded-lg text-white"
-                            onClick={() => openModal(value.rider.uuid)}
-                          >
-                            View Rider Detail
-                          </button>
-                        )}
-
-                        <button
-                          className="bg-red-500 px-3 py-1 rounded-lg text-white mt-5 md:mt-0 w-max ml-3"
-                          onClick={() =>
-                            dispatch(
-                              deleteRequest(value.uuid, isAuth().user.id)
-                            )
-                          }
+                  {requestedRide && requestedRide.length > 0 ? (
+                    <div>
+                      {requestedRide.map((value, i) => (
+                        <div
+                          className="border rounded-xl  my-5"
+                          style={{
+                            boxShadow:
+                              "3px 3px 23px -8px rgba(117,165,105,0.59)",
+                          }}
                         >
-                          Cancel Request
-                        </button>
-                      </div>
+                          <div className="flex justify-between px-6 py-4">
+                            <div>
+                              <h1>
+                                <i class="fa-solid fa-location-dot text-green-400 text-xl"></i>{" "}
+                                {value.rides.leaving}{" "}
+                                <i class="fa-solid fa-arrow-right"></i>{" "}
+                                {value.rides.heading}
+                              </h1>
+                              <p>
+                                <i class="fa-solid fa-calendar-days text-red-600 text-xl"></i>{" "}
+                                {moment(value.rides.date).format(
+                                  "MMMM Do YYYY"
+                                )}
+                              </p>
+                              <p>
+                                <i class="fa-regular fa-user  text-xl"></i>{" "}
+                                {value.rides.seat} Seats
+                              </p>
+                              {value.isAccept && (
+                                <div>
+                                  <h1 className="text-primary">
+                                    {value.seat} seat is booked{" "}
+                                    {value.rides.seat - value.seat} seat
+                                    Available
+                                  </h1>
+                                </div>
+                              )}
+                            </div>
+                            <div>
+                              <h1>Rs. {value.rides.price}</h1>
+                            </div>
+                          </div>
+                          <div className="border-t p-3 md:flex justify-between items-center">
+                            <div className="flex space-x-3">
+                              <img
+                                src={value.rider.picture}
+                                alt=""
+                                width={50}
+                                height={50}
+                                className="rounded-full"
+                              />
+                              <div>
+                                <h1>{value.rider.name}</h1>
+                                <h1>{value.rider.email}</h1>
+                              </div>
+                            </div>
+                            {value.isAccept ? (
+                              <div className="flex space-x-4">
+                                <button
+                                  className="px-3 py-1 border rounded-lg bg-purple-700 text-white"
+                                  onClick={() => {
+                                    handlePay(value.uuid, value.rides.price);
+                                  }}
+                                >
+                                  Pay via Khalti
+                                </button>
+                                <div className="px-3 py-1 bg-primary text-white rounded-lg">
+                                  Your Request has been accept
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="px-3 py-1 bg-blue-700 text-white rounded-lg w-max mt-5 md:mt-0 ">
+                                No Response
+                              </div>
+                            )}
+                          </div>
+                          <div className="border-t p-3 md:flex justify-between items-center">
+                            {!value.isAccept && (
+                              <div className="md:flex items-center space-x-3">
+                                <div className="flex justify-between items-center space-x-5">
+                                  <div
+                                    className="border-2 rounded-[100%] h-8 w-8 flex justify-center border-primary cursor-pointer items-center"
+                                    onClick={() =>
+                                      seats > 1 &&
+                                      (setSeats(seats - 1), setIndex(i + 1))
+                                    }
+                                  >
+                                    <span className="text-3xl font-light text-primary items-center">
+                                      -
+                                    </span>
+                                  </div>
+                                  <span className="text-2xl text-primaryDark">
+                                    {index === i + 1 ? seats : value.seat}
+                                  </span>
+                                  <div
+                                    className="border-2 rounded-[100%] h-8 w-8 flex justify-center border-primary cursor-pointer items-center"
+                                    onClick={() => {
+                                      value.rides.seat > seats &&
+                                        (setSeats(seats + 1), setIndex(i + 1));
+                                    }}
+                                  >
+                                    <span className="text-2xl font-light text-primary items-center">
+                                      +
+                                    </span>
+                                  </div>
+                                </div>
+                                <button
+                                  className="bg-blue-500 px-3 py-1 rounded-lg text-white mt-5 md:mt-0 w-max"
+                                  onClick={() =>
+                                    handleUpdateRequest(value.uuid)
+                                  }
+                                >
+                                  Update Request
+                                </button>
+                              </div>
+                            )}
+                            {value.isPaid && (
+                              <button
+                                className="bg-primary px-3 py-1 rounded-lg text-white"
+                                onClick={() => openModal(value.rider.uuid)}
+                              >
+                                View Rider Detail
+                              </button>
+                            )}
+
+                            <button
+                              className="bg-red-500 px-3 py-1 rounded-lg text-white mt-5 md:mt-0 w-max ml-3"
+                              onClick={() =>
+                                dispatch(
+                                  deleteRequest(value.uuid, isAuth().user.id)
+                                )
+                              }
+                            >
+                              Cancel Request
+                            </button>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  ) : (
+                    <div>
+                      <h1 className="text-lg px-5 text-gray-600 mt-3">
+                        You have'nt requested for any rides
+                      </h1>
+                    </div>
+                  )}
                 </div>
               )}
               <ModalWrapper
@@ -657,26 +674,36 @@ const ProfileDetail = ({ userData, requestedRide }) => {
               </ModalWrapper>
               {tabValue === 2 && (
                 <div>
-                  {userData.rides.map((value, i) => (
-                    <div
-                      className="border rounded-xl  my-5"
-                      style={{
-                        boxShadow: "3px 3px 23px -8px rgba(117,165,105,0.59)",
-                      }}
-                    >
-                      <div className="flex justify-between px-6 py-4">
-                        <div>
-                          <h1>
-                            {value.leaving} to {value.heading}
-                          </h1>
-                          <p>{moment(value.date).format("MMMM Do YYYY")}</p>
-                          <p>{value.seat} Seats</p>
-                        </div>
-                        <div>
-                          <h1>Rs. {value.price}</h1>
-                        </div>
-                      </div>
-                      {/* <div className="border-t p-3 flex space-x-3">
+                  {userData.rides && userData.rides.length > 0 ? (
+                    <div>
+                      {userData.rides.map((value, i) => (
+                        <div
+                          className="border rounded-xl  my-5"
+                          style={{
+                            boxShadow:
+                              "3px 3px 23px -8px rgba(117,165,105,0.59)",
+                          }}
+                        >
+                          <div className="flex justify-between px-6 py-4">
+                            <div>
+                              <h1>
+                                <i class="fa-solid fa-location-dot text-green-400 text-xl"></i>{" "}
+                                {value.leaving} to {value.heading}
+                              </h1>
+                              <p>
+                                <i class="fa-solid fa-calendar-days text-red-600 text-xl"></i>{" "}
+                                {moment(value.date).format("MMMM Do YYYY")}
+                              </p>
+                              <p>
+                                <i class="fa-regular fa-user  text-xl"></i>{" "}
+                                {value.seat} Seats
+                              </p>
+                            </div>
+                            <div>
+                              <h1>Rs. {value.price}</h1>
+                            </div>
+                          </div>
+                          {/* <div className="border-t p-3 flex space-x-3">
                       <img
                         src={userData.picture}
                         alt=""
@@ -689,70 +716,175 @@ const ProfileDetail = ({ userData, requestedRide }) => {
                         <h1>{userData.email}</h1>
                       </div>
                     </div> */}
-                      <div className="border-t p-3">
-                        <button
-                          className="mb-2 bg-primary px-3 py-1 rounded-lg text-white"
-                          onClick={() => (
-                            setIsDetailShow(i),
-                            dispatch(getAllRequestByRideId(value.id))
-                          )}
-                        >
-                          View Requested Ride
-                        </button>
-                        {isDetailShow === i &&
-                          (requestRideData && requestRideData.length === 0 ? (
-                            <h1 className="text-lg px-5 text-gray-600">
-                              No One Have Requested For This Ride
-                            </h1>
-                          ) : (
-                            requestRideData &&
-                            requestRideData.map((value) => (
-                              <div className="flex justify-between items-center px-5 py-2">
-                                <div>
-                                  <div className=" flex space-x-3">
-                                    <img
-                                      src={value.users.picture}
-                                      alt=""
-                                      width={50}
-                                      height={50}
-                                      className="rounded-full"
-                                    />
+                          <div className="border-t p-3 flex justify-between">
+                            <div>
+                              <button
+                                className="mb-2 bg-primary px-3 py-1 rounded-lg text-white"
+                                onClick={() => (
+                                  setIsDetailShow(i),
+                                  dispatch(getAllRequestByRideId(value.id))
+                                )}
+                              >
+                                View Requested Ride
+                              </button>
+                            </div>
+                            <div>
+                              <button
+                                className="mb-2 bg-red-500 px-3 py-1 rounded-lg text-white"
+                                // onClick={() =>
+                                //   dispatch(
+                                //     deleteRequest(value.uuid, isAuth().user.id)
+                                //   )
+                                // }
+                              >
+                                Cancel Request
+                              </button>
+                            </div>
+                          </div>
+                          <div>
+                            {isDetailShow === i &&
+                              (requestRideData &&
+                              requestRideData.length === 0 ? (
+                                <h1 className="text-lg px-5 text-gray-600">
+                                  No One Have Requested For This Ride
+                                </h1>
+                              ) : (
+                                requestRideData &&
+                                requestRideData.map((value) => (
+                                  <div className="flex justify-between px-5  space-x-7">
                                     <div>
-                                      <h1>{value.users.name}</h1>
-                                      <h1>{value.users.email}</h1>
+                                      <div className=" flex space-x-3">
+                                        <img
+                                          src={value.users.picture}
+                                          alt=""
+                                          width={50}
+                                          height={50}
+                                          className="rounded-full"
+                                        />
+                                        <div>
+                                          <h1>{value.users.name}</h1>
+                                          <h1>{value.users.email}</h1>
+                                        </div>
+                                      </div>
+                                      <div className="mt-3">
+                                        Booked Seat : {value.seat}
+                                      </div>
+                                    </div>
+                                    <div>
+                                      {value.isAccept ? (
+                                        <div className="bg-gray-600 px-3 py-1 rounded-lg text-white">
+                                          Accepted
+                                        </div>
+                                      ) : (
+                                        <button
+                                          className="bg-primary px-3 py-1 rounded-lg text-white"
+                                          onClick={() =>
+                                            dispatch(
+                                              updateRequestToAccept(
+                                                true,
+                                                value.uuid
+                                              )
+                                            )
+                                          }
+                                        >
+                                          Accept
+                                        </button>
+                                      )}
                                     </div>
                                   </div>
-                                  <div className="mt-3">
-                                    Booked Seat : {value.seat}
+                                ))
+                              ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div>
+                      <h1 className="text-lg px-5 text-gray-600 mt-3">
+                        You have'nt published any rides
+                      </h1>
+                    </div>
+                  )}
+                </div>
+              )}
+              {tabValue === 3 && (
+                <div>
+                  {requestRideData &&
+                    requestRideData.map((value) => (
+                      <div>
+                        {value.isAccept ? (
+                          <div>
+                            {userData.rides.map((value, i) => (
+                              <div
+                                className="border rounded-xl  my-5"
+                                style={{
+                                  boxShadow:
+                                    "3px 3px 23px -8px rgba(117,165,105,0.59)",
+                                }}
+                              >
+                                <div className="flex justify-between px-6 py-4">
+                                  <div>
+                                    <h1>
+                                      <i class="fa-solid fa-location-dot text-green-400 text-xl"></i>{" "}
+                                      {value.leaving} to {value.heading}
+                                    </h1>
+                                    <p>
+                                      <i class="fa-solid fa-calendar-days text-red-600 text-xl"></i>{" "}
+                                      {moment(value.date).format(
+                                        "MMMM Do YYYY"
+                                      )}
+                                    </p>
+                                    <p>
+                                      <i class="fa-regular fa-user  text-xl"></i>{" "}
+                                      {value.seat} Seats
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <h1>Rs. {value.price}</h1>
                                   </div>
                                 </div>
                                 <div>
-                                  {value.isAccept ? (
-                                    <div className="bg-gray-600 px-3 py-1 rounded-lg text-white">
-                                      Accepted
-                                    </div>
-                                  ) : (
-                                    <button
-                                      className="bg-primary px-3 py-1 rounded-lg text-white"
-                                      onClick={() =>
-                                        dispatch(
-                                          updateRequestToAccept(
-                                            true,
-                                            value.uuid
-                                          )
-                                        )
-                                      }
-                                    >
-                                      Accept
-                                    </button>
-                                  )}
+                                  {requestRideData &&
+                                    requestRideData.map((value) => (
+                                      <div className="flex justify-between px-5  space-x-7">
+                                        <div>
+                                          <div className=" flex space-x-3">
+                                            <img
+                                              src={value.users.picture}
+                                              alt=""
+                                              width={50}
+                                              height={50}
+                                              className="rounded-full"
+                                            />
+                                            <div>
+                                              <h1>{value.users.name}</h1>
+                                              <h1>{value.users.email}</h1>
+                                            </div>
+                                          </div>
+                                          <div className="mt-3">
+                                            Booked Seat : {value.seat}
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <div className="bg-gray-600 px-3 py-1 rounded-lg text-white">
+                                            Accepted
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ))}
                                 </div>
                               </div>
-                            ))
-                          ))}
+                            ))}
+                          </div>
+                        ) : (
+                          <div>
+                            <h1 className="text-lg px-5 text-gray-600">
+                              You have'nt accepted any Requested rides
+                            </h1>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               )}
             </div>

@@ -6,18 +6,22 @@ import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { useEffect } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getLocations } from "../redux/actions/locationAction";
 
 const Search = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [date, setDate] = useState("");
   const [seat, setSeat] = useState("");
   const [seats, setSeats] = useState(1);
   const [startDate, setStartDate] = useState(new Date());
-  const [location, setLocation] = useState([]);
   const [startLocation, setStartLocation] = useState("");
   const [endLocation, setEndLocation] = useState("");
   const [startSuggestions, setStartSuggestions] = useState([]);
   const [endSuggestions, setEndSuggestions] = useState([]);
+  const listLocationState = useSelector((state) => state.getLocations);
+  const { locations } = listLocationState;
   console.log("startDate", startDate);
   const handleSubmitSearch = (e) => {
     e.preventDefault();
@@ -26,19 +30,15 @@ const Search = () => {
     );
   };
   useEffect(() => {
-    const loadLocations = async () => {
-      const res = await axios.get("https://fakestoreapi.com/products");
-
-      setLocation(res.data);
-    };
-    loadLocations();
+    dispatch(getLocations());
   }, []);
+  // console.log("first", location);
   const handleStartLocation = (startLocation) => {
     let matches = [];
     if (startLocation.length > 0) {
-      matches = location.filter((location) => {
+      matches = locations.filter((location) => {
         const regex = new RegExp(`${startLocation}`, "gi");
-        return location.title.match(regex);
+        return location.name.match(regex);
       });
     }
     setStartSuggestions(matches);
@@ -51,9 +51,9 @@ const Search = () => {
   const handleEndLocation = (endLocation) => {
     let matches = [];
     if (endLocation.length > 0) {
-      matches = location.filter((location) => {
+      matches = locations.filter((location) => {
         const regex = new RegExp(`${endLocation}`, "gi");
-        return location.title.match(regex);
+        return location.name.match(regex);
       });
     }
     setEndSuggestions(matches);
@@ -66,67 +66,6 @@ const Search = () => {
 
   return (
     <div className="px-20 absolute left-0 right-0 bottom-[40px] hidden sm:block">
-      {/* <div className="border bg-white h-[150px] m-auto rounded-2xl">
-        <div className="p-5">
-          <h1 className="text-xl mb-2">Search Ride</h1>
-          <form
-            className="grid grid-cols-12 gap-8"
-            onSubmit={handleSubmitSearch}
-          >
-            <div className="flex flex-col col-span-3">
-              <label className="text-xl mb-1 text-[#686868] font-normal">
-                Leaving From
-              </label>
-              <input
-                type="text"
-                placeholder="Leaving from ..."
-                className="border px-2 py-1 border-[#d0d0d0] rounded-md"
-                onChange={(e) => setLeaving(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col col-span-3">
-              <label className="text-xl mb-1 text-[#686868] font-normal">
-                Going To
-              </label>
-              <input
-                type="text"
-                placeholder="Going to ..."
-                className="border px-2 py-1 border-[#d0d0d0] rounded-md"
-                onChange={(e) => setHeading(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col col-span-3">
-              <label className="text-xl mb-1 text-[#686868] font-normal">
-                Date
-              </label>
-              <input
-                type="date"
-                placeholder="Leaving From"
-                className="border px-2 py-1 border-[#d0d0d0] rounded-md text-[#686868]"
-                onChange={(e) => setDate(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col col-span-2">
-              <label className="text-xl mb-1 text-[#686868] font-normal">
-                Passenger
-              </label>
-              <input
-                type="number"
-                placeholder="Leaving From"
-                className="border px-2 py-1 border-[#d0d0d0] rounded-md"
-                onChange={(e) => setSeat(e.target.value)}
-              />
-            </div>
-            <div className="mt-8 col-span-1">
-              <input
-                type="submit"
-                value="Search"
-                className="rounded-md cursor-pointer py-1 w-full bg-primary text-white"
-              />
-            </div>
-          </form>
-        </div>
-      </div> */}
       <form onSubmit={handleSubmitSearch}>
         <div className="bg-white rounded-xl grid grid-cols-12 h-[56px]">
           <div className="col-span-10">
@@ -151,10 +90,10 @@ const Search = () => {
                           key={i}
                           className="cursor-pointer mt-2 w-full text-lg font-normal py-2 text-gray-900  border-b border-gray-200"
                           onClick={() =>
-                            handleStartSuggestion(startSuggestion.title)
+                            handleStartSuggestion(startSuggestion.name)
                           }
                         >
-                          {startSuggestion.title}
+                          {startSuggestion.name}
                         </div>
                       ))}
                   </div>
@@ -183,10 +122,10 @@ const Search = () => {
                           key={i}
                           className="cursor-pointer mt-2 w-full text-lg font-normal py-2 text-gray-900  border-b border-gray-200"
                           onClick={() =>
-                            handleEndSuggestion(endSuggestion.title)
+                            handleEndSuggestion(endSuggestion.name)
                           }
                         >
-                          {endSuggestion.title}
+                          {endSuggestion.name}
                         </div>
                       ))}
                   </div>

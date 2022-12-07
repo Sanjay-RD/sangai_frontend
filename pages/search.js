@@ -13,11 +13,14 @@ import { getRide } from "../redux/actions/rideAction";
 import { createRequest } from "../redux/actions/requestAction";
 import { getLocalStorage, isAuth, setLocalStorage } from "../redux/utils";
 import Image from "next/image";
+import { getLocations } from "../redux/actions/locationAction";
 
 const search = ({ rides, searchRide }) => {
   console.log("rides", rides);
   const dispatch = useDispatch();
   const router = useRouter();
+  const listLocationState = useSelector((state) => state.getLocations);
+  const { locations } = listLocationState;
   const userLoginState = useSelector((state) => state.userLogin);
   const { userInfo } = userLoginState;
   // const { user: userData } = userInfo;
@@ -29,7 +32,6 @@ const search = ({ rides, searchRide }) => {
   const [stage, setStage] = useState(1);
   const [leaving, setLeaving] = useState("");
   const [heading, setHeading] = useState("");
-  const [location, setLocation] = useState([]);
   const [startSuggestions, setStartSuggestions] = useState([]);
   const [endSuggestions, setEndSuggestions] = useState([]);
   const [date, setDate] = useState("");
@@ -73,12 +75,7 @@ const search = ({ rides, searchRide }) => {
   );
 
   useEffect(() => {
-    const loadLocations = async () => {
-      const res = await axios.get("https://fakestoreapi.com/products");
-
-      setLocation(res.data);
-    };
-    loadLocations();
+    dispatch(getLocations());
     if (isAuth()) {
       setIsLoggedIn(true);
     } else {
@@ -126,9 +123,9 @@ const search = ({ rides, searchRide }) => {
   const handleStartLocation = (leaving) => {
     let matches = [];
     if (leaving.length > 0) {
-      matches = location.filter((location) => {
+      matches = locations.filter((location) => {
         const regex = new RegExp(`${leaving}`, "gi");
-        return location.title.match(regex);
+        return location.name.match(regex);
       });
     }
     setStartSuggestions(matches);
@@ -141,9 +138,9 @@ const search = ({ rides, searchRide }) => {
   const handleEndLocation = (heading) => {
     let matches = [];
     if (heading.length > 0) {
-      matches = location.filter((location) => {
+      matches = locations.filter((location) => {
         const regex = new RegExp(`${heading}`, "gi");
-        return location.title.match(regex);
+        return location.name.match(regex);
       });
     }
     setEndSuggestions(matches);
@@ -180,10 +177,10 @@ const search = ({ rides, searchRide }) => {
                       key={i}
                       className="cursor-pointer mt-2 w-full text-lg font-normal py-2 text-gray-900  border-b border-gray-200"
                       onClick={() =>
-                        handleStartSuggestion(startSuggestion.title)
+                        handleStartSuggestion(startSuggestion.name)
                       }
                     >
-                      {startSuggestion.title}
+                      {startSuggestion.name}
                     </div>
                   ))}
               </div>
@@ -203,9 +200,9 @@ const search = ({ rides, searchRide }) => {
                     <div
                       key={i}
                       className="cursor-pointer mt-2 w-full text-lg font-normal py-2 text-gray-900  border-b border-gray-200"
-                      onClick={() => handleEndSuggestion(endSuggestion.title)}
+                      onClick={() => handleEndSuggestion(endSuggestion.name)}
                     >
-                      {endSuggestion.title}
+                      {endSuggestion.name}
                     </div>
                   ))}
               </div>
@@ -269,26 +266,33 @@ const search = ({ rides, searchRide }) => {
                   <div className="border-b flex justify-between px-6 py-4">
                     <div>
                       <div className="flex items-center">
-                        <h2 className="text-lg font-medium">Location : </h2>
+                        <h2 className="text-lg font-medium">
+                          Location{" "}
+                          <i class="fa-solid fa-location-dot text-green-400 text-xl"></i>{" "}
+                          :{" "}
+                        </h2>
                         <div className="flex space-x-2 items-center">
                           <h2 className="text-lg">
                             {rideDetail && rideDetail.rides.leaving}
                           </h2>
-                          <span>to</span>{" "}
+                          <i class="fa-solid fa-arrow-right"></i>{" "}
                           <h2 className="text-lg">
                             {rideDetail && rideDetail.rides.heading}
                           </h2>
                         </div>
                       </div>
                       <h1 className="text-lg">
-                        Date :{" "}
+                        Date{" "}
+                        <i class="fa-solid fa-calendar-days text-red-600 text-xl"></i>{" "}
+                        :{" "}
                         {moment(rideDetail && rideDetail.rides.date).format(
                           "MMMM Do YYYY"
                         )}
                       </h1>
                       <p className="text-lg">
-                        Availalble Seats : {rideDetail && rideDetail.rides.seat}{" "}
-                        Seats
+                        Availalble Seats{" "}
+                        <i class="fa-regular fa-user  text-xl"></i> :{" "}
+                        {rideDetail && rideDetail.rides.seat} Seats
                       </p>
                       {rideDetail &&
                         rideDetail.bookedSeat !== 0 &&

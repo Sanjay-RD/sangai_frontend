@@ -10,41 +10,43 @@ import { createRide, getRides } from "../redux/actions/rideAction";
 import { API } from "../config";
 import { isAuth } from "../redux/utils";
 import { useRouter } from "next/router";
+import { getLocations } from "../redux/actions/locationAction";
 
 const PublishRode = () => {
   const dispatch = useDispatch();
   const userLoginState = useSelector((state) => state.userLogin);
   const { userInfo } = userLoginState;
   const router = useRouter();
-  const [location, setLocation] = useState([]);
   const [startLocation, setStartLocation] = useState("");
   const [endLocation, setEndLocation] = useState("");
   const [startSuggestions, setStartSuggestions] = useState([]);
   const [endSuggestions, setEndSuggestions] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
+  const [route, setRoute] = useState();
   const [time, setTime] = useState();
   const [seats, setSeats] = useState(1);
   const [price, setPrice] = useState(100);
-
+  const listLocationState = useSelector((state) => state.getLocations);
+  const { locations } = listLocationState;
+  const rideAddState = useSelector((state) => state.createRide);
+  const { success } = rideAddState;
   useEffect(() => {
-    const loadLocations = async () => {
-      const res = await axios.get("https://fakestoreapi.com/products");
-
-      setLocation(res.data);
-    };
-    loadLocations();
+    dispatch(getLocations());
     // dispatch(getRides());
     if (!isAuth()) {
       router.push("/login");
     }
-  }, [userInfo]);
+    if (success) {
+      router.push(`/profile/${isAuth() && isAuth().user.uuid}`);
+    }
+  }, [userInfo, success]);
 
   const handleStartLocation = (startLocation) => {
     let matches = [];
     if (startLocation.length > 0) {
-      matches = location.filter((location) => {
+      matches = locations.filter((location) => {
         const regex = new RegExp(`${startLocation}`, "gi");
-        return location.title.match(regex);
+        return location.name.match(regex);
       });
     }
     setStartSuggestions(matches);
@@ -57,9 +59,9 @@ const PublishRode = () => {
   const handleEndLocation = (endLocation) => {
     let matches = [];
     if (endLocation.length > 0) {
-      matches = location.filter((location) => {
+      matches = locations.filter((location) => {
         const regex = new RegExp(`${endLocation}`, "gi");
-        return location.title.match(regex);
+        return location.name.match(regex);
       });
     }
     setEndSuggestions(matches);
@@ -119,9 +121,9 @@ const PublishRode = () => {
                 <div
                   key={i}
                   className="cursor-pointer mt-2 w-full text-lg font-normal py-2 text-gray-900  border-b border-gray-200"
-                  onClick={() => handleStartSuggestion(startSuggestion.title)}
+                  onClick={() => handleStartSuggestion(startSuggestion.name)}
                 >
-                  {startSuggestion.title}
+                  {startSuggestion.name}
                 </div>
               ))}
           </div>
@@ -141,11 +143,27 @@ const PublishRode = () => {
                 <div
                   key={i}
                   className="cursor-pointer mt-2 w-full text-lg font-normal py-2 text-gray-900  border-b border-gray-200"
-                  onClick={() => handleEndSuggestion(endSuggestion.title)}
+                  onClick={() => handleEndSuggestion(endSuggestion.name)}
                 >
-                  {endSuggestion.title}
+                  {endSuggestion.name}
                 </div>
               ))}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label htmlFor="" className="text-2xl md:text-3xl text-primaryDark">
+              Through which route?
+            </label>
+            <select
+              className="text-lg bg-[#EDEDED] appearance-none rounded-md w-full py-3 px-4 leading-tight focus:outline-none focus:bg-[#EDEDED] focus:border-primary text-primaryDark"
+              onChange={(e) => setRoute(e.target.value)}
+              // required
+            >
+              <option value="">Select Location</option>
+              {/* {locations &&
+                locations.map((value) => (
+                  <option value={value.name}>{value.name}</option>
+                ))} */}
+            </select>
           </div>
           <div className="flex flex-col space-y-2">
             <label htmlFor="" className="text-2xl md:text-3xl text-primaryDark">
